@@ -1,0 +1,21 @@
+diff --git a/RemotePlayWhatever/CMakeLists.txt b/RemotePlayWhatever/CMakeLists.txt
+index 22bbab3..a9b308c 100644
+--- a/RemotePlayWhatever/CMakeLists.txt
++++ b/RemotePlayWhatever/CMakeLists.txt
+@@ -93,16 +93,5 @@ if(${SYSTEM_OS} STREQUAL "Linux")
+     target_link_libraries(RemotePlayWhatever ${CMAKE_DL_LIBS})
+     set_target_properties(RemotePlayWhatever PROPERTIES OUTPUT_NAME "remoteplaywhatever")
+     install(TARGETS RemotePlayWhatever DESTINATION "bin")
+-
+-    file(READ "/etc/issue" ISSUE)
+-    string(REGEX MATCH "Debian|Ubuntu" DISTRO ${ISSUE})
+-    if(DISTRO MATCHES "Ubuntu" OR DISTRO MATCHES "Debian")
+-        set(CPACK_GENERATOR "DEB")
+-        set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Lets you force steam remote play together for any game")
+-        set(CPACK_PACKAGE_DESCRIPTION "Tiny app that lets you force steam remote play together for any game")
+-        set(CPACK_DEBIAN_PACKAGE_MAINTAINER "m4dEngi")
+-        set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+-        include(CPack)
+-    endif()
+ endif()
+ 
