@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v17
+        with:
+          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+          diagnostic-endpoint: ""
+          extra-conf: |
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= just-one-more-cache.cachix.org-1:4nShcKEgcUEVlJqKFrgDwoGfqLnw5KPG4UDTV02jnr4=
+            substituters = https://cache.nixos.org/ https://just-one-more-cache.cachix.org/
+      - uses: yaxitech/nix-install-pkgs-action@v6
+        with:
+          packages: "nixpkgs#omnix"
+      - uses: cachix/cachix-action@v16
+        with:
+          name: just-one-more-cache
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: om ci run --include-all-dependencies | xargs cachix push just-one-more-cache

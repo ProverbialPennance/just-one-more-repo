@@ -1,0 +1,97 @@
+name: Update all
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+jobs:
+  define-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.define.outputs.packages }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v17
+        with:
+          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+          diagnostic-endpoint: ""
+
+      - uses: yaxitech/nix-install-pkgs-action@v6
+        with:
+          packages: "nixpkgs#jq, nixpkgs#gawk"
+
+      - run: |
+          mkdir -p ~/.config/nixpkgs
+          echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
+
+      - name: Define packages matrix
+        id: define
+        run: |
+          nix flake show --json \
+          | jq --compact-output --arg keyName x86_64-linux '.packages.[$keyName]|keys' \
+          | awk '{print "packages="$1}' >> "$GITHUB_OUTPUT"
+
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    needs: define-matrix
+    strategy:
+      max-parallel: 1
+      matrix:
+        package: ${{ fromJSON(needs.define-matrix.outputs.packages) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v17
+        with:
+          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+          diagnostic-endpoint: ""
+
+      - uses: yaxitech/nix-install-pkgs-action@v6
+        with:
+          # There's a fun little happenstance where upstream tries fetching from an invalid url
+          # packages: "github:Mic92/nix-update, nixpkgs#jq"
+          packages: "github:ProverbialPennance/nix-update, nixpkgs#jq"
+
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - run: |
+          mkdir -p ~/.config/nixpkgs
+          echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
+
+      - name: Update package
+        id: update-package
+        run: |
+          nix-update ${{ matrix.package }} --flake --commit --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)' --version=unstable
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update-packages/update-${{ matrix.package }}
+          branch-suffix: short-commit-hash
+          delete-branch: true
+          committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit-message: "pkgs: update ${{ matrix.package }}}"
+          title: "Update ${{ matrix.package }}) package"
+          labels: "github_actions, update"
+          body: |
+            Automated update of ${{ matrix.package }}
+
+      - uses: benc-uk/workflow-dispatch@v1
+        if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
+        with:
+          workflow: build.yml
+          ref: refs/heads/update_bump_${{ matrix.package }}_action
