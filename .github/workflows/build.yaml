@@ -31,7 +31,7 @@ jobs:
           extra-conf: |
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.nixos.org/
-      - uses: yaxitech/nix-install-pkgs-action@v3
+      - uses: yaxitech/nix-install-pkgs-action@v6
         with:
           packages: "nixpkgs#nixci"
       - uses: cachix/cachix-action@v14
