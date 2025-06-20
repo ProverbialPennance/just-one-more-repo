@@ -40,7 +40,7 @@ jobs:
           nix flake show --json \
             | jq --arg keyName x86_64-linux '.packages.[$keyName]|keys[]' \
             | sed 's/\"//g' \
-            | xargs -I % nix-update % --flake --commit
+            | xargs -I % nix-update % --flake --commit --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)'
 
       - name: Create Pull Request
         id: cpr
