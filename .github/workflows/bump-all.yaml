@@ -1,0 +1,44 @@
+name: Update
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Bump (all)
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v17
+        with:
+          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+          diagnostic-endpoint: ""
+
+      - id: bump-all-packages
+        uses: yaxitech/nix-install-pkgs-action@v6
+        with:
+          packages: "nixpkgs#nix-update, nixpkgs#jq"
+      - run: nix flake show --json | jq -c --arg keyName x86_64-linux '.packages.[$keyName]|keys[]' | xargs -I % nix-update --flake '%'
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: "Bump (all) packages"
+          labels: "github_actions, bump"
+          sign-commits: true
+          branch: update-packages/bump-all
+          branch-suffix: short-commit-hash
+
+      - uses: benc-uk/workflow-dispatch@v1
+        if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
+        with:
+          workflow: build.yml
+          ref: refs/heads/update_bump_all_action
