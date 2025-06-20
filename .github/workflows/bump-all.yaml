@@ -24,9 +24,23 @@ jobs:
       - uses: yaxitech/nix-install-pkgs-action@v6
         with:
           packages: "nixpkgs#nix-update, nixpkgs#jq"
+
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - run: |
+          mkdir -p ~/.config/nixpkgs
+          echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
+
       - name: Bump all packages
         id: bump-all-packages
-        run: "nix flake show --json | jq --arg keyName x86_64-linux '.packages.[$keyName]|keys[]' | xargs -I % nix-update --flake '%'"
+        run: |
+          nix flake show --json \
+            | jq --arg keyName x86_64-linux '.packages.[$keyName]|keys[]' \
+            | sed 's/\"//g' \
+            | xargs -I % nix-update % --flake --commit
 
       - name: Create Pull Request
         id: cpr
