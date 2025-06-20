@@ -19,13 +19,13 @@
 }:
 stdenv.mkDerivation (finalAtrrs: {
   pname = "sm64coopdx";
-  version = "1.3.1";
+  version = "1.3.2";
 
   src = fetchFromGitHub {
     owner = "coop-deluxe";
     repo = "sm64coopdx";
     tag = "v${finalAtrrs.version}";
-    hash = "sha256-I/Rk8oLc/CP9izK7E2OnL8Afmc6/rqVqzWGqSENvqcs=";
+    hash = "sha256-FHH3+pGowkT8asDmU9qxPNDKy4VPKlkA0X7e4gnX9KY=";
   };
 
   nativeBuildInputs = [
