@@ -46,11 +46,16 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
-          title: "Bump (all) packages"
-          labels: "github_actions, bump"
-          sign-commits: true
           branch: update-packages/bump-all
           branch-suffix: short-commit-hash
+          delete-branch: true
+          committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit-message: "pkgs: bump all"
+          title: "Bump (all) packages"
+          labels: "github_actions, bump"
+          body: |
+            Automated bump of repo
 
       - uses: benc-uk/workflow-dispatch@v1
         if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
