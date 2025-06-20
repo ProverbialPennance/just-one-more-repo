@@ -17,7 +17,7 @@
   useGameMode ? false,
   nvngxPath ? "",
 }: let
-  tag = "rb-v1.1.2.2";
+  tag = "1.1.2.2";
 in
   buildDotnetModule rec {
     pname = "xivlauncher-rb";
@@ -26,7 +26,7 @@ in
     src = fetchFromGitHub {
       owner = "rankynbass";
       repo = "XIVLauncher.Core";
-      rev = "${tag}";
+      rev = "rb-v${tag}";
       hash = "sha256-iRjReUa9JQ8PuvPnnl+dZWbe+Jk6QCNQkpXmEZA9+qA=";
       fetchSubmodules = true;
     };
