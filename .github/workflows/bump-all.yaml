@@ -21,12 +21,12 @@ jobs:
           source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
           diagnostic-endpoint: ""
 
-      - name: Bump all packages
-        id: bump-all-packages
-        uses: yaxitech/nix-install-pkgs-action@v6
+      - uses: yaxitech/nix-install-pkgs-action@v6
         with:
           packages: "nixpkgs#nix-update, nixpkgs#jq"
-      - run: "nix flake show --json | jq -c --arg keyName x86_64-linux '.packages.[$keyName]|keys[]' | xargs -I % nix-update --flake '%'"
+      - name: Bump all packages
+        id: bump-all-packages
+        run: "nix flake show --json | jq --arg keyName x86_64-linux '.packages.[$keyName]|keys[]' | xargs -I % nix-update --flake '%'"
 
       - name: Create Pull Request
         id: cpr
