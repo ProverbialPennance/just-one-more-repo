@@ -1,4 +1,4 @@
-name: Bump all
+name: Update all
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   update:
-    name: Bump (all)
+    name: Update (all)
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -23,7 +23,9 @@ jobs:
 
       - uses: yaxitech/nix-install-pkgs-action@v6
         with:
-          packages: "nixpkgs#nix-update, nixpkgs#jq"
+          # There's a fun little happenstance where upstream tries fetching from an invalid url
+          # packages: "github:Mic92/nix-update, nixpkgs#jq"
+          packages: "github:ProverbialPennance/nix-update, nixpkgs#jq"
 
       - name: Configure git
         run: |
@@ -34,8 +36,8 @@ jobs:
           mkdir -p ~/.config/nixpkgs
           echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
 
-      - name: Bump all packages
-        id: bump-all-packages
+      - name: Update all packages
+        id: update-all-packages
         run: |
           nix flake show --json \
             | jq --arg keyName x86_64-linux '.packages.[$keyName]|keys[]' \
@@ -46,16 +48,16 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: update-packages/bump-all
+          branch: update-packages/update-all
           branch-suffix: short-commit-hash
           delete-branch: true
           committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
           author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
-          commit-message: "pkgs: bump all"
-          title: "Bump (all) packages"
-          labels: "github_actions, bump"
+          commit-message: "pkgs: update all"
+          title: "Update (all) packages"
+          labels: "github_actions, update"
           body: |
-            Automated bump of repo
+            Automated update of repo
 
       - uses: benc-uk/workflow-dispatch@v1
         if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}

@@ -1,0 +1,66 @@
+name: Update
+
+on:
+  schedule:
+    - cron: "0 10 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    strategy:
+      matrix:
+        package: [RemotePlayWhatever]
+    name: Update unstable
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v17
+        with:
+          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+          diagnostic-endpoint: ""
+
+      - uses: yaxitech/nix-install-pkgs-action@v6
+        with:
+          # There's a fun little happenstance where upstream tries fetching from an invalid url
+          # packages: "github:Mic92/nix-update, nixpkgs#jq"
+          packages: "github:ProverbialPennance/nix-update"
+
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - run: |
+          mkdir -p ~/.config/nixpkgs
+          echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
+
+      - name: Update unstable package
+        id: update-unstable-packages
+        run: |
+          nix-update ${{ matrix.package }} --version=unstable --flake --commit --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)'
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update-packages/update-unstable
+          branch-suffix: short-commit-hash
+          delete-branch: true
+          committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit-message: "pkgs: update ${{ matrix.package }}"
+          title: "Update: ${{ matrix.package }} "
+          labels: "github_actions, update"
+          body: |
+            Automated update of ${{ matrix.package }}
+
+      - uses: benc-uk/workflow-dispatch@v1
+        if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
+        with:
+          workflow: build.yml
+          ref: refs/heads/update_bump_unstable_action
