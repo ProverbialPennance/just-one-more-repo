@@ -13,7 +13,8 @@ Just add it to your flake.nix as usual:
 ```nix
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"; # NOTE: replace nixos-25.05 with the desired version, such as nixos-unstable
+    # NOTE: replace nixos-25.05 with the desired version, such as nixos-unstable
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     just-one-more-repo = {
         url = "github:ProverbialPennance/just-one-more-repo";
@@ -40,7 +41,8 @@ Just add it to your flake.nix as usual:
 }
 ```
 
-and then you can either add packages to `environment.systemPackages` as usual, or you can use our modules like so:
+and then you can either add packages to `environment.systemPackages` as usual,
+or you can use our modules like so:
 
 ```nix
 {
