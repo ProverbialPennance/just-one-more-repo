@@ -55,3 +55,18 @@ or you can use our modules like so:
   };
 }
 ```
+
+## cachix
+
+The cachix instance should be regularly updated, the following should be enough to start using it
+
+```nix
+nixConfig = {
+    extra-substituters = [
+      "https://just-one-more-cache.cachix.org/"
+    ];
+    extra-trusted-public-keys = [
+      "just-one-more-cache.cachix.org-1:4nShcKEgcUEVlJqKFrgDwoGfqLnw5KPG4UDTV02jnr4="
+    ];
+  };
+```
