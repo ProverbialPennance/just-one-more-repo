@@ -204,7 +204,7 @@ in
 
     postBuild = ''
       cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
-      ./TorchExternal/src/TorchExternal-build/torch pack ../port spaghetti.o2r o2r
+      ./TorchExternal/src/TorchExternal-build/torch pack ../assets spaghetti.o2r o2r
     '';
 
     postInstall = ''
@@ -227,6 +227,12 @@ in
     postFixup = ''
       wrapProgram $out/bin/spaghetti-kart \
         --prefix PATH ":" ${lib.makeBinPath [zenity]} \
+        --run 'mkdir -p ~/.local/share/spaghetti-kart' \
+        --run "ln -sf $out/share/spaghetti-kart/spaghetti.o2r ~/.local/share/spaghetti-kart/spaghetti.o2r" \
+        --run "ln -sf $out/share/spaghetti-kart/config.yml ~/.local/share/spaghetti-kart/config.yml" \
+        --run "ln -sfT $out/share/spaghetti-kart/yamls ~/.local/share/spaghetti-kart/yamls" \
+        --run "ln -sf $out/share/spaghetti-kart/gamecontrollerdb.txt ~/.local/share/spaghetti-kart/gamecontrollerdb.txt" \
+        --run 'cd ~/.local/share/spaghetti-kart'
     '';
 
     desktopItems = makeDesktopItem {
