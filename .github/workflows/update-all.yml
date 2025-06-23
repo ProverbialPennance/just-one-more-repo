@@ -59,7 +59,7 @@ jobs:
         with:
           # There's a fun little happenstance where upstream tries fetching from an invalid url
           # packages: "github:Mic92/nix-update, nixpkgs#jq"
-          packages: "github:ProverbialPennance/nix-update, nixpkgs#jq"
+          packages: "github:ProverbialPennance/nix-update"
 
       - name: Configure git
         run: |
@@ -73,6 +73,8 @@ jobs:
       - name: Update package
         id: update-package
         run: |
+          echo "${{ matrix.package }}" | grep '\-git' >/dev/null && \
+          nix-update ${{ matrix.package }} --flake --commit --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)' --version=branch || \
           nix-update ${{ matrix.package }} --flake --commit --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)' --version=unstable
 
       - name: Create Pull Request
