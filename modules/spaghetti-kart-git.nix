@@ -5,21 +5,21 @@
   ...
 }:
 with lib; let
-  cfg = config.programs.spaghetti-kart;
+  cfg = config.programs.spaghetti-kart-git;
 in {
-  options.programs.spaghetti-kart = {
+  options.programs.spaghetti-kart-git = {
     enable = mkOption {
       type = types.bool;
       default = false;
       description = lib.mdDoc ''
-        Whether to enable spaghetti-kart.
+        Whether to enable spaghetti-kart-git.
       '';
     };
     package = mkOption {
       type = types.package;
-      default = pkgs.spaghetti-kart;
+      default = pkgs.spaghetti-kart-git;
       description = lib.mdDoc ''
-        spaghetti-kart package to use.
+        spaghetti-kart-git package to use.
       '';
     };
   };

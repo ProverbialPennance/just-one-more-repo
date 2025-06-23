@@ -2,7 +2,7 @@ final: prev: {
   remote-play-whatever = final.callPackage ./pkgs/RemotePlayWhatever {};
   sm64coopdx = final.callPackage ./pkgs/sm64coopdx {};
   xivlauncher-rb = final.callPackage ./pkgs/xivlauncher-rb {};
-  spaghetti-kart = final.callPackage ./pkgs/spaghetti-kart {};
+  spaghetti-kart-git = final.callPackage ./pkgs/spaghetti-kart-git {};
   starship-sf64 = final.callPackage ./pkgs/starship-sf64 {};
   _2ship2harkinian-git = final.callPackage ./pkgs/_2ship2harkinian-git {};
   perfect-dark-git = final.callPackage ./pkgs/perfect-dark-git {};

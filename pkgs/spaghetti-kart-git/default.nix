@@ -32,7 +32,7 @@
   makeDesktopItem,
   copyDesktopItems,
   makeWrapper,
-  spaghetti-kart,
+  spaghetti-kart-git,
 }: let
   dr-libs = fetchFromGitHub {
     owner = "mackron";
@@ -56,7 +56,7 @@
       hash = "sha256-mQOJ6jCN+7VopgZ61yzaCnt4R1QLrW7+47xxMhFRHLQ=";
     };
     patches = [
-      "${spaghetti-kart.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
+      "${spaghetti-kart-git.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
     ];
   };
 
@@ -96,7 +96,7 @@
       hash = "sha256-HTi2FKzKCbRaP13XERUmHkJgw8IfKaRJvsK3+YxFFdc=";
     };
     patches = [
-      "${spaghetti-kart.src}/libultraship/cmake/dependencies/patches/stormlib-optimizations.patch"
+      "${spaghetti-kart-git.src}/libultraship/cmake/dependencies/patches/stormlib-optimizations.patch"
     ];
   };
 
