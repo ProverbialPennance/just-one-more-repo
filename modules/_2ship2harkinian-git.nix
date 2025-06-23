@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  ...
 }:
 with lib; let
   cfg = config.programs._2ship2harkinian-git;
