@@ -5,6 +5,7 @@
     ./xivlauncher-rb.nix
     ./spaghetti-kart.nix
     ./starship-sf64.nix
+    ./_2ship2harkinian-git.nix
   ];
 
   nixpkgs.overlays = [
