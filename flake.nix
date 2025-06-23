@@ -29,6 +29,15 @@
 
     overlays.default = import ./overlay.nix;
     nixosModules.default = import ./modules;
+
+    formatter = forAllSystems (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+      in
+        pkgs.alejandra
+    );
   };
 
   nixConfig = {
