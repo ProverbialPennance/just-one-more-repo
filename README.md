@@ -51,7 +51,7 @@ or you can use our modules like so:
 }: {
   programs.sm64coopdx = {
     enable = true;
-    openFirewall = true;
+    coopNet.openFirewall = true;
   };
 }
 ```
