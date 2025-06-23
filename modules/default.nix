@@ -6,7 +6,7 @@
     ./spaghetti-kart.nix
     ./starship-sf64.nix
     ./_2ship2harkinian-git.nix
-    ./perfect-dark.nix
+    ./perfect-dark-git.nix
   ];
 
   nixpkgs.overlays = [
