@@ -1,8 +1,4 @@
-{
-  flakes ? {},
-  nixpkgs ? flakes.nixpkgs,
-  self ? flakes.self,
-}: final: prev: {
+final: prev: {
   remote-play-whatever = final.callPackage ./pkgs/RemotePlayWhatever {};
   sm64coopdx = final.callPackage ./pkgs/sm64coopdx {};
   xivlauncher-rb = final.callPackage ./pkgs/xivlauncher-rb {};

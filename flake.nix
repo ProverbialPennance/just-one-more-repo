@@ -27,7 +27,7 @@
     inherit (import ./flake.nix) nixConfig;
     packages = forAllSystems pkgsFor;
 
-    overlays.default = import ./overlay.nix {flakes = inputs;};
+    overlays.default = import ./overlay.nix;
     nixosModules.default = import ./modules;
   };
 
