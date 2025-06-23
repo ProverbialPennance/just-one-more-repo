@@ -45,7 +45,7 @@ in
     desktopItems = makeDesktopItem {
       name = "RemotePlayWhatever";
       icon = "RemotePlayWhatever";
-      exec = "RemotePlayWhatever";
+      exec = "remoteplaywhatever";
       comment = finalAtrrs.meta.description;
       desktopName = "RemotePlayWhatever";
       categories = ["Game" "Network"];
@@ -75,7 +75,7 @@ in
       '';
       license = lib.licenses.mit;
       platforms = lib.platforms.x86;
-      mainProgram = "RemotePlayWhatever";
+      mainProgram = "remoteplaywhatever";
       homepage = "https://github.com/m4dEngi/RemotePlayWhatever";
       changelog = "https://github.com/m4dEngi/RemotePlayWhatever/releases/tag/${finalAtrrs.version}";
     };
