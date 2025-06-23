@@ -215,7 +215,6 @@ in
       mkdir -p $out/share/spaghetti-kart/
       cp -r yamls $out/share/spaghetti-kart
       install -Dm644 -t $out/share/spaghetti-kart {spaghetti.o2r,config.yml,gamecontrollerdb.txt}
-      # TODO: icon
       install -Dm644 ../icon.png $out/share/pixmaps/spaghetti-kart.png
       # TODO: there isn't a license in the upstream yet
       # install -Dm644 -t $out/share/licenses/spaghetti-kart ../LICENSE.md
