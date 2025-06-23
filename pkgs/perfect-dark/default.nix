@@ -82,7 +82,7 @@ in
       desktopItems = makeDesktopItem {
         name = "Perfect Dark";
         icon = "io.github.fgsfdsfgs.perfect_dark";
-        exec = "perfect-dark";
+        exec = "pd";
         comment = meta.description;
         genericName = "perfect-dark";
         desktopName = "perfect-dark";
