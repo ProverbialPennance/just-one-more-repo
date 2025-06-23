@@ -4,6 +4,7 @@
     ./sm64coopdx.nix
     ./xivlauncher-rb.nix
     ./spaghetti-kart.nix
+    ./starship-sf64.nix
   ];
 
   nixpkgs.overlays = [
