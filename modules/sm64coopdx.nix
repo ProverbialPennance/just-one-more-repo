@@ -38,7 +38,7 @@ in {
       ((lib.mkIf cfg.coopNet.openFirewall) {
         # TODO: check whether sm64coopdx uses TCP or UDP for co-op
         allowedTCPPorts = [7777 34197];
-        allowedUdpPorts = [7777 34197];
+        allowedUDPPorts = [7777 34197];
       })
     ];
   };
