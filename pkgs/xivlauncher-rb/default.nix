@@ -1,3 +1,7 @@
+# Forked from: https://github.com/drakon64/nixos-xivlauncher-rb
+# MIT License
+#
+# Copyright (c) 2018 Francesco Gazzetta
 {
   lib,
   buildDotnetModule,
