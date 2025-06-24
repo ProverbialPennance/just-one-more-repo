@@ -79,13 +79,17 @@ in
         runHook postInstall
       '';
 
+      postFixup = ''
+        rm $out/share/applications/io.github.fgsfdsfgs.perfect_dark.desktop
+      '';
+
       desktopItems = makeDesktopItem {
-        name = "Perfect Dark";
+        name = "perfect-dark";
         icon = "io.github.fgsfdsfgs.perfect_dark";
         exec = "pd";
         comment = meta.description;
         genericName = "perfect-dark";
-        desktopName = "perfect-dark";
+        desktopName = "Perfect Dark";
         categories = ["Game"];
       };
 
