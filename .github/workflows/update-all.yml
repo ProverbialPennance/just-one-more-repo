@@ -96,4 +96,4 @@ jobs:
         if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
         with:
           workflow: build.yml
-          ref: refs/heads/update_bump_${{ matrix.package }}_action
+          # ref: refs/heads/update_bump_${{ matrix.package }}_action
