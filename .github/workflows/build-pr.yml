@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  get-pr-title:
+    name: Print Title of PR
+    runs-on: ubuntu-latest
+    outputs:
+      clean_title: ${{ steps.pr_title.outputs.CLEAN_TITLE }}
+    steps:
+      - id: pr_title
+        env:
+          TITLE: ${{ github.event.pull_request_title }}
+        run: |
+          CLEAN_TITLE=$(echo $TITLE | sed 's/["'\''`]/ /g')
+          echo "CLEAN_TITLE=$CLEAN_TITLE" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    needs: get-pr-title
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v17
+        with:
+          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+          diagnostic-endpoint: ""
+          extra-conf: |
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= just-one-more-cache.cachix.org-1:4nShcKEgcUEVlJqKFrgDwoGfqLnw5KPG4UDTV02jnr4=
+            substituters = https://cache.nixos.org/ https://just-one-more-cache.cachix.org/
+      - uses: yaxitech/nix-install-pkgs-action@v6
+        with:
+          packages: "nixpkgs#omnix"
+      - uses: cachix/cachix-action@v16
+        with:
+          name: just-one-more-cache
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: nix build $(echo "${{ needs.get-pr-title.outputs.clean_title }}" | awk '{split($0,a," "); print a[3]}' | awk '{print ".#"$1}' | sed 's/\n//g' ) --no-link --print-paths  | cachix push just-one-more-cache
