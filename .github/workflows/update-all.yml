@@ -81,13 +81,12 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: update-packages/update-${{ matrix.package }}
-          branch-suffix: short-commit-hash
+          branch: update_${{ matrix.package }}
           delete-branch: true
           committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
           author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
           commit-message: "pkgs: update ${{ matrix.package }}}"
-          title: "Update ${{ matrix.package }}) package"
+          title: "pkgs: update ${{ matrix.package }}"
           labels: "github_actions, update"
           body: |
             Automated update of ${{ matrix.package }}
@@ -96,4 +95,4 @@ jobs:
         if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
         with:
           workflow: build.yml
-          # ref: refs/heads/update_bump_${{ matrix.package }}_action
+          ref: refs/heads/update_${{ matrix.package }}
