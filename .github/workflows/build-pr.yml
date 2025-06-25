@@ -1,4 +1,4 @@
-name: Build
+name: Build pr
 
 on:
   workflow_dispatch:
