@@ -99,7 +99,7 @@ in
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "2ship2harkinian";
-      rev = "${rev'}";
+      rev = rev';
       hash = "sha256-lTICV519xZEDT+mVheWA1r9cDovhGlkBnptDJwrDP7I=";
       fetchSubmodules = true;
     };
