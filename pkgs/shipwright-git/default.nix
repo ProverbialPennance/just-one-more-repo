@@ -214,13 +214,13 @@ in
       cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
       mv ../libultraship/src/graphic/Fast3D/shaders ../soh/assets/custom
       pushd ../OTRExporter
-      python3 ./extract_assets.py -z ../build/ZAPD/ZAPD.out --norom --xml-root ../soh/assets/xml --custom-assets-path ../soh/assets/custom --custom-otr-file soh.otr --port-ver $port_ver
+      python3 ./extract_assets.py -z ../build/ZAPD/ZAPD.out --norom --xml-root ../soh/assets/xml --custom-assets-path ../soh/assets/custom --custom-otr-file soh.o2r --port-ver $port_ver
       popd
     '';
 
     preInstall = ''
       # Cmake likes it here for its install paths
-      cp ../OTRExporter/soh.otr soh/soh.otr
+      cp ../OTRExporter/soh.o2r soh/soh.o2r
     '';
 
     postInstall =
