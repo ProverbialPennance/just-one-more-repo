@@ -1,6 +1,11 @@
 name: Build pr
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "*pkgs/*"
   workflow_dispatch:
 
 jobs:
