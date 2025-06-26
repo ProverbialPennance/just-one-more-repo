@@ -1,47 +1,53 @@
 {
   lib,
+  fetchFromGitHub,
+  applyPatches,
+  _2ship2harkinian-git,
+  fetchurl,
+  writeTextFile,
   stdenv,
-  SDL2,
+  replaceVars,
   cmake,
   copyDesktopItems,
-  fetchFromGitHub,
-  fetchpatch,
-  fetchurl,
   imagemagick,
-  imgui,
+  lsb-release,
+  makeWrapper,
+  ninja,
+  pkg-config,
+  python3,
+  libGL,
+  libvorbis,
+  libogg,
+  libopus,
   libpng,
   libpulseaudio,
   libzip,
-  lsb-release,
-  makeDesktopItem,
-  makeWrapper,
-  ninja,
   nlohmann_json,
-  pkg-config,
-  python3,
+  opusfile,
+  SDL2,
   spdlog,
-  stormlib,
   tinyxml-2,
-  writeTextFile,
   zenity,
+  makeDesktopItem,
 }: let
-  # This would get fetched at build time otherwise, see:
-  # https://github.com/HarbourMasters/2ship2harkinian/blob/1.0.2/mm/CMakeLists.txt#L708
-  gamecontrollerdb = fetchurl {
-    name = "gamecontrollerdb.txt";
-    url = "https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/b1759cf84028aab89caa1c395e198c340b8dfd89/gamecontrollerdb.txt";
-    hash = "sha256-7C5EkqBIhLGNJuhi3832y0ffW5Ep7iuTYXb1bL5h2Js=";
+  # The following are either normally fetched during build time or a specific version is required
+  gamecontrollerdb = fetchFromGitHub {
+    owner = "mdqinc";
+    repo = "SDL_GameControllerDB";
+    rev = "e84a52679007c6a6346794cda1fdbcb941ac6494";
+    hash = "sha256-npgsTvRQRQkgT8C1nwisJqq2m+DT9q/r/Zev2NipGcU=";
   };
 
-  # 2ship needs a specific imgui version
-  imgui' = imgui.overrideAttrs rec {
-    version = "1.90.6";
+  imgui' = applyPatches {
     src = fetchFromGitHub {
       owner = "ocornut";
       repo = "imgui";
-      rev = "v${version}-docking";
-      hash = "sha256-Y8lZb1cLJF48sbuxQ3vXq6GLru/WThR78pq7LlORIzc=";
+      tag = "v1.91.6-docking";
+      hash = "sha256-28wyzzwXE02W5vbEdRCw2iOF8ONkb3M3Al8XlYBvz1A=";
     };
+    patches = [
+      "${_2ship2harkinian-git.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
+    ];
   };
 
   libgfxd = fetchFromGitHub {
@@ -65,31 +71,22 @@
     hash = "sha256-xUsVponmofMsdeLsI6+kQuPg436JS3PBl00IZ5sg3Vw=";
   };
 
-  # Apply 2ship's patch for stormlib
-  stormlib' = stormlib.overrideAttrs (prev: rec {
-    version = "9.25";
+  stormlib' = applyPatches {
     src = fetchFromGitHub {
       owner = "ladislav-zezula";
       repo = "StormLib";
-      rev = "v${version}";
+      tag = "v9.25";
       hash = "sha256-HTi2FKzKCbRaP13XERUmHkJgw8IfKaRJvsK3+YxFFdc=";
     };
-    nativeBuildInputs = prev.nativeBuildInputs ++ [pkg-config];
-    patches =
-      (prev.patches or [])
-      ++ [
-        (fetchpatch {
-          name = "stormlib-optimizations.patch";
-          url = "https://github.com/briaguya-ai/StormLib/commit/ff338b230544f8b2bb68d2fbe075175ed2fd758c.patch";
-          hash = "sha256-Jbnsu5E6PkBifcx/yULMVC//ab7tszYgktS09Azs5+4=";
-        })
-      ];
-  });
+    patches = [
+      "${_2ship2harkinian-git.src}/libultraship/cmake/dependencies/patches/stormlib-optimizations.patch"
+    ];
+  };
 
   thread_pool = fetchFromGitHub {
     owner = "bshoshany";
     repo = "thread-pool";
-    rev = "v4.1.0";
+    tag = "v4.1.0";
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
@@ -103,13 +100,34 @@ in
       owner = "HarbourMasters";
       repo = "2ship2harkinian";
       rev = "${rev'}";
-      hash = "sha256-1iSFzroKxwFpsIGNMetSlQKTKRWCy7QtgCTepFdSeY8=";
+      hash = "sha256-lTICV519xZEDT+mVheWA1r9cDovhGlkBnptDJwrDP7I=";
       fetchSubmodules = true;
     };
 
     patches = [
       # remove fetching stb as we will patch our own
       ./0001-deps.patch
+      (replaceVars ./0002-lus-git-deps.patch {
+        prism_src = fetchFromGitHub {
+          owner = "KiritoDv";
+          repo = "prism-processor";
+          rev = "493974843e910d0fac4e3bb1ec52656728b875b4";
+          hash = "sha256-Bq1+deZ2BL1wNxw4qs53EEnc1IFsNyK4wpLimkzFK9w=";
+        };
+      })
+      (replaceVars ./0003-mm-git-deps.patch {
+        dr_libs_src = fetchFromGitHub {
+          owner = "mackron";
+          repo = "dr_libs";
+          rev = "da35f9d6c7374a95353fd1df1d394d44ab66cf01";
+          hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
+        };
+
+        boost_src = fetchurl {
+          url = "https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.gz";
+          hash = "sha256-IFZm3qn2p8/th8em3761KiwbneVXEsnBqHc11xgUUrY=";
+        };
+      })
     ];
 
     nativeBuildInputs = [
@@ -124,12 +142,17 @@ in
     ];
 
     buildInputs = [
-      SDL2
       imgui'
       libpng
       libpulseaudio
       libzip
       nlohmann_json
+      libGL
+      libvorbis
+      libogg
+      libopus
+      opusfile
+      SDL2
       spdlog
       stormlib'
       tinyxml-2
@@ -139,7 +162,8 @@ in
     cmakeFlags = [
       (lib.cmakeBool "NON_PORTABLE" true)
       (lib.cmakeFeature "CMAKE_INSTALL_PREFIX" "${placeholder "out"}/2s2h")
-      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMGUI" "${imgui'.src}")
+      (lib.cmakeFeature "OPUSFILE_INCLUDE_DIR" "${opusfile.dev}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMGUI" "${imgui'}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_LIBGFXD" "${libgfxd}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
@@ -160,11 +184,11 @@ in
       cp ${stb_impl} ./stb/${stb_impl.name}
 
       substituteInPlace libultraship/cmake/dependencies/common.cmake \
-        --replace-fail "\''${STB_DIR}" "/build/source/stb"
+            --replace-fail "\''${STB_DIR}" "$(readlink -f ./stb)"
     '';
 
     postBuild = ''
-      cp ${gamecontrollerdb} ${gamecontrollerdb.name}
+        cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
       pushd ../OTRExporter
       python3 ./extract_assets.py -z ../build/ZAPD/ZAPD.out --norom --xml-root ../mm/assets/xml --custom-assets-path ../mm/assets/custom --custom-otr-file 2ship.o2r --port-ver ${finalAttrs.version}
       popd
@@ -179,6 +203,14 @@ in
       mkdir -p $out/bin
       ln -s $out/2s2h/2s2h.elf $out/bin/2s2h-git
       install -Dm644 ../mm/linux/2s2hIcon.png $out/share/pixmaps/2s2h.png
+
+      install -Dm644 -t $out/share/licenses/2ship2harkinian ../LICENSE
+      install -Dm644 -t $out/share/licenses/2ship2harkinian/OTRExporter ../OTRExporter/LICENSE
+      install -Dm644 -t $out/share/licenses/2ship2harkinian/SDL_GameControllerDB ${gamecontrollerdb}/LICENSE
+      install -Dm644 -t $out/share/licenses/2ship2harkinian/ZAPDTR ../ZAPDTR/LICENSE
+      install -Dm644 -t $out/share/licenses/2ship2harkinian/libgfxd ${libgfxd}/LICENSE
+      install -Dm644 -t $out/share/licenses/2ship2harkinian/libultraship ../libultraship/LICENSE
+      install -Dm644 -t $out/share/licenses/2ship2harkinian/thread_pool ${thread_pool}/LICENSE.txt
     '';
 
     postFixup = ''
@@ -204,7 +236,7 @@ in
       platforms = ["x86_64-linux"];
       maintainers = with lib.maintainers; [qubitnano];
       license = with lib.licenses; [
-        # OTRExporter, OTRGui, ZAPDTR, libultraship
+        # OTRExporter, OTRGui, ZAPDTR, libultraship, libgfxd, thread_pool
         mit
         # 2 Ship 2 Harkinian
         cc0

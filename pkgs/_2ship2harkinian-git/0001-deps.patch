@@ -1,9 +1,9 @@
 Submodule libultraship contains modified content
 diff --git a/libultraship/cmake/dependencies/common.cmake b/libultraship/cmake/dependencies/common.cmake
-index 596158c..c62d7b2 100644
+index 5ca477b..26d8bf1 100644
 --- a/libultraship/cmake/dependencies/common.cmake
 +++ b/libultraship/cmake/dependencies/common.cmake
-@@ -47,10 +47,6 @@ set(stormlib_optimizations_patch git apply ${CMAKE_CURRENT_SOURCE_DIR}/cmake/dep
+@@ -51,10 +51,6 @@ if(NOT EXCLUDE_MPQ_SUPPORT)
  endif()
 
  #=================== STB ===================
