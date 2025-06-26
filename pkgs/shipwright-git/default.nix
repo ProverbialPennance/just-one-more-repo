@@ -226,7 +226,7 @@ in
     postInstall =
       lib.optionalString stdenv.hostPlatform.isLinux ''
         mkdir -p $out/bin
-        ln -s $out/lib/soh.elf $out/bin/soh
+        ln -s $out/lib/soh.elf $out/bin/soh-git
         install -Dm644 ../soh/macosx/sohIcon.png $out/share/pixmaps/soh.png
       ''
       + lib.optionalString stdenv.hostPlatform.isDarwin ''
@@ -261,12 +261,12 @@ in
 
     desktopItems = [
       (makeDesktopItem {
-        name = "soh";
+        name = "soh-git";
         icon = "soh";
-        exec = "soh";
+        exec = "soh-git";
         comment = finalAttrs.meta.description;
-        genericName = "Ship of Harkinian";
-        desktopName = "soh";
+        genericName = "Ship of Harkinian (git)";
+        desktopName = "soh-git";
         categories = ["Game"];
       })
     ];

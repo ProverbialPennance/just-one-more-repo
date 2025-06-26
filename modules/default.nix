@@ -6,6 +6,7 @@
     ./spaghetti-kart-git.nix
     ./starship-sf64.nix
     ./_2ship2harkinian-git.nix
+    ./shipwright-git.nix
     ./perfect-dark-git.nix
   ];
 

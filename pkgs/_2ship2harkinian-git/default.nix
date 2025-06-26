@@ -177,7 +177,7 @@ in
 
     postInstall = ''
       mkdir -p $out/bin
-      ln -s $out/2s2h/2s2h.elf $out/bin/2s2h
+      ln -s $out/2s2h/2s2h.elf $out/bin/2s2h-git
       install -Dm644 ../mm/linux/2s2hIcon.png $out/share/pixmaps/2s2h.png
     '';
 
@@ -187,12 +187,12 @@ in
 
     desktopItems = [
       (makeDesktopItem {
-        name = "2s2h";
+        name = "2s2h-git";
         icon = "2s2h";
-        exec = "2s2h";
+        exec = "2s2h-git";
         comment = finalAttrs.meta.description;
-        genericName = "2 Ship 2 Harkinian";
-        desktopName = "2s2h";
+        genericName = "2 Ship 2 Harkinian (git)";
+        desktopName = "2s2h-git";
         categories = ["Game"];
       })
     ];
