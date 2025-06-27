@@ -232,7 +232,7 @@ in
     meta = {
       homepage = "https://github.com/HarbourMasters/2ship2harkinian";
       description = "A PC port of Majora's Mask with modern controls, widescreen, high-resolution, and more";
-      mainProgram = "2s2h";
+      mainProgram = "2s2h-git";
       platforms = ["x86_64-linux"];
       maintainers = with lib.maintainers; [qubitnano];
       license = with lib.licenses; [
