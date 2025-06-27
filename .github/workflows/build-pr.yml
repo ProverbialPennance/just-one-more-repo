@@ -1,11 +1,20 @@
 name: Build pr
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
   pull_request:
     branches:
       - main
     paths:
-      - pkgs/*
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
   workflow_dispatch:
 
 jobs:
