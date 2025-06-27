@@ -39,7 +39,7 @@ jobs:
 
     needs: get-pr-title
 
-    if: ${{ needs.get-pr-title.outputs.is_pkg_update }}
+    if: ${{ needs.get-pr-title.outputs.is_pkg_update == 'true' }}
 
     steps:
       - uses: actions/checkout@v4
