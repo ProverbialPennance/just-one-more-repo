@@ -1,6 +1,7 @@
 {
   apple-sdk_13,
   stdenv,
+  replaceVars,
   cmake,
   lsb-release,
   ninja,
@@ -22,6 +23,10 @@
   makeWrapper,
   darwin,
   libicns,
+  libvorbis,
+  libogg,
+  libopus,
+  opusfile,
   libzip,
   nlohmann_json,
   tinyxml-2,
@@ -129,6 +134,14 @@ in
     patches = [
       ./darwin-fixes.patch
       ./disable-downloading-stb_image.patch
+      (replaceVars ./dont-fetch-dr_libs.patch {
+        dr_libs_src = fetchFromGitHub {
+          owner = "mackron";
+          repo = "dr_libs";
+          rev = "da35f9d6c7374a95353fd1df1d394d44ab66cf01";
+          hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
+        };
+      })
     ];
 
     nativeBuildInputs =
@@ -161,6 +174,10 @@ in
         nlohmann_json
         tinyxml-2
         spdlog
+        libvorbis
+        libogg
+        libopus
+        opusfile
       ]
       ++ lib.optionals stdenv.hostPlatform.isLinux [
         libpulseaudio
@@ -176,6 +193,7 @@ in
         (lib.cmakeBool "BUILD_REMOTE_CONTROL" true)
         (lib.cmakeBool "NON_PORTABLE" true)
         (lib.cmakeFeature "CMAKE_INSTALL_PREFIX" "${placeholder "out"}/lib")
+        (lib.cmakeFeature "OPUSFILE_INCLUDE_DIR" "${opusfile.dev}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMGUI" "${imgui'}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_LIBGFXD" "${libgfxd}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
