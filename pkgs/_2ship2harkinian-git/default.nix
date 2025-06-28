@@ -90,17 +90,17 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "620859447c6bddcdf1dded50a7a4110f825536bf";
+  rev' = "eb7d1f00a810d4c1e2e4323e4fd628ad01739fb5";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "2ship2harkinian";
-    version = "1.1.2-unstable-2025-06-16";
+    version = "1.1.2-unstable-2025-06-28";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "2ship2harkinian";
       rev = rev';
-      hash = "sha256-lTICV519xZEDT+mVheWA1r9cDovhGlkBnptDJwrDP7I=";
+      hash = "sha256-pcm8XdE4pchftYwIAHtebCuoI8FB8tcWl5e/QTWcmsQ=";
       fetchSubmodules = true;
     };
 
