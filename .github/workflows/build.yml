@@ -38,4 +38,6 @@ jobs:
         with:
           name: just-one-more-cache
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - run: om ci run --include-all-dependencies | xargs cachix push just-one-more-cache
+      - run: |
+          set -euxo pipefail
+          om ci run --include-all-dependencies | xargs cachix push just-one-more-cache
