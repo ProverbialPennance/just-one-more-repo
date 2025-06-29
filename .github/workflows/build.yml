@@ -20,7 +20,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: [self-hosted]
+    runs-on: [X64, Linux]
 
     steps:
       - uses: actions/checkout@v4

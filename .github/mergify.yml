@@ -5,9 +5,8 @@ pull_request_rules:
           - author=dependabot[bot]
           - author=github-actions[bot]
       - label=dependencies
-      - or:
-          - check-success=Build
-          - check-success=Build pr
+      - check-success=Build
+
     actions:
       merge:
         method: rebase

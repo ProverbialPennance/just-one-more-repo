@@ -95,5 +95,5 @@ jobs:
       - uses: benc-uk/workflow-dispatch@v1
         if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
         with:
-          workflow: build-pr.yml
+          workflow: build.yml
           ref: refs/heads/update_${{ matrix.package }}
