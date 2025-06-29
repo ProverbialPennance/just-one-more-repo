@@ -90,7 +90,7 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "eb7d1f00a810d4c1e2e4323e4fd628ad01739fb5";
+  rev' = "5994836a12485eb9ec792e7802dd5ea9a18fa9b9";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "2ship2harkinian";
@@ -100,7 +100,7 @@ in
       owner = "HarbourMasters";
       repo = "2ship2harkinian";
       rev = rev';
-      hash = "sha256-pcm8XdE4pchftYwIAHtebCuoI8FB8tcWl5e/QTWcmsQ=";
+      hash = "sha256-BHx3FKm81xaSlGZMKtaSVIUNIYEKxiAqJ9ScYlte45Q=";
       fetchSubmodules = true;
     };
 
