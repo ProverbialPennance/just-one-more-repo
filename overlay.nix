@@ -7,6 +7,7 @@ final: prev: {
   _2ship2harkinian-git = final.callPackage ./pkgs/_2ship2harkinian-git {};
   shipwright-git = final.callPackage ./pkgs/shipwright-git {};
   perfect-dark-git = final.callPackage ./pkgs/perfect-dark-git {};
+  dolphin-memory-engine = final.callPackage ./pkgs/dolphin-memory-engine {};
   # sm64baserom = final.callPackage ./pkgs/sm64baserom {};
   # sm64ex-ap = final.callPackage ./pkgs/sm64ex-ap {sm64baserom = final.callPackage ./pkgs/sm64baserom {};};
 }
