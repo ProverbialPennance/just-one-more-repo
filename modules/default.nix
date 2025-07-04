@@ -8,6 +8,7 @@
     ./_2ship2harkinian-git.nix
     ./shipwright-git.nix
     ./perfect-dark-git.nix
+    ./dolphin-memory-engine.nix
   ];
 
   nixpkgs.overlays = [
