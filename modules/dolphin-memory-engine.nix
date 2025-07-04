@@ -35,10 +35,10 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = [cfg.package];
 
-    security.wrappers.dolphin-memory-engine = mkIf cfg.setCap {
+    security.wrappers.dolphin-memory-engine-ptrace = mkIf cfg.setCap {
       owner = "root";
       group = "root";
-      capabilities = "cap_sys_ptrace=eip";
+      capabilities = "cap_sys_ptrace+eip";
       source = "${cfg.package}/bin/dolphin-memory-engine";
     };
   };
