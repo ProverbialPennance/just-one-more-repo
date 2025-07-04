@@ -40,4 +40,4 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - run: |
           set -euxo pipefail
-          om ci run --include-all-dependencies | xargs cachix push just-one-more-cache
+          om ci run --include-all-dependencies -- --show-trace | xargs cachix push just-one-more-cache
