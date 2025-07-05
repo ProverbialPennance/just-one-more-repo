@@ -22,24 +22,9 @@ in {
         dolphin-memory-engine package to use.
       '';
     };
-
-    setCap = mkOption {
-      type = types.bool;
-      default = false;
-      description = lib.mdDoc ''
-        whether to set default capabilities such that dolphin-memory-engine can attach to dolphin.
-      '';
-    };
   };
 
   config = mkIf cfg.enable {
     environment.systemPackages = [cfg.package];
-
-    security.wrappers.dolphin-memory-engine-ptrace = mkIf cfg.setCap {
-      owner = "root";
-      group = "root";
-      capabilities = "cap_sys_ptrace+eip";
-      source = "${cfg.package}/bin/dolphin-memory-engine";
-    };
   };
 }
