@@ -21,7 +21,7 @@
   useGameMode ? false,
   nvngxPath ? "",
 }: let
-  tag = "1.1.2.4";
+  tag = "1.2.1.1-beta";
 in
   buildDotnetModule rec {
     pname = "xivlauncher-rb";
