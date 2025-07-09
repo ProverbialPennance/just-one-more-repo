@@ -25,7 +25,9 @@ stdenv.mkDerivation (finalAtrrs: {
     owner = "coop-deluxe";
     repo = "sm64coopdx";
     tag = "v${finalAtrrs.version}";
-    hash = "sha256-FHH3+pGowkT8asDmU9qxPNDKy4VPKlkA0X7e4gnX9KY=";
+    hash = "sha256-zJ5xHVUDbCduDFZWOux5VDA/CGrLW9iEwPxk7kP8D/s=";
+    deepClone = true;
+    leaveDotGit = true;
   };
 
   nativeBuildInputs = [
@@ -44,9 +46,12 @@ stdenv.mkDerivation (finalAtrrs: {
 
   enableParallelBuilding = true;
 
+  SM64COOPDX_VERSION = "v${finalAtrrs.version}";
+
   makeFlags =
     [
       "BREW_PREFIX=/not-exist"
+      "DEBUG=0"
       "COOPNET=${
         if enableCoopNet
         then "1"
