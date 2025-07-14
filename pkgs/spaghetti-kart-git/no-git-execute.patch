@@ -1,0 +1,18 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2c62337c2..4d9d21920 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -11,12 +11,7 @@ set(NATO_PHONETIC_ALPHABET
+   "Xray" "Yankee" "Zulu"
+ )
+
+-execute_process(
+-  COMMAND git describe --tags
+-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+-  OUTPUT_VARIABLE PROJECT_VERSION
+-  OUTPUT_STRIP_TRAILING_WHITESPACE
+-)
++
+ string(REPLACE "-" ";" PROJECT_VERSION_LIST "${PROJECT_VERSION}")
+ list(GET PROJECT_VERSION_LIST 0 PROJECT_VERSION_PATCH)
+ string(REPLACE "." ";" PROJECT_VERSION_LIST "${PROJECT_VERSION_PATCH}")
