@@ -119,9 +119,16 @@ in
       rev = "${rev'}";
       hash = "sha256-ISNpc9cEvOmXgAYdR9B+8RPPtgMXu0gmq3BUNY1Wruo=";
       fetchSubmodules = true;
+      deepClone = true;
+      postFetch = ''
+        cd $out
+        (git describe --tags HEAD 2>/dev/null || echo "") > PROJECT_VERSION
+        rm -rf .git
+      '';
     };
 
     patches = [
+      ./no-git-execute.patch
       ./dont-fetch-stb.patch
 
       (replaceVars ./git-deps.patch {
