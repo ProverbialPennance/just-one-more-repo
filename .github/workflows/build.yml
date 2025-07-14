@@ -9,8 +9,7 @@ on:
       - flake.lock
       - .github/workflows/*.yml
   pull_request:
-    branches:
-      - main
+    branches: ["*"]
     paths:
       - "**.nix"
       - flake.lock
