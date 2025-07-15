@@ -107,7 +107,7 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "d5b455af741b7900631182714294bb22e12b97bd";
+  rev' = "01f6b9a1ce73b96921e401957bc66cd24fe70264";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "spaghetti-kart";
@@ -117,7 +117,7 @@ in
       owner = "HarbourMasters";
       repo = "SpaghettiKart";
       rev = "${rev'}";
-      hash = "sha256-ISNpc9cEvOmXgAYdR9B+8RPPtgMXu0gmq3BUNY1Wruo=";
+      hash = "sha256-6qJ2yC7HaKkOQdUDO+vFQ8/zB6J0+lOlxigABKWECgc=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
