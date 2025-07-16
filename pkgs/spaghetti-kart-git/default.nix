@@ -254,7 +254,7 @@ in
     meta = {
       description = "Mario Kart 64 PC port";
       license = lib.licenses.unfree;
-      mainProgram = "SpaghettiKart";
+      mainProgram = "spaghetti-kart";
       homepage = "https://github.com/HarbourMasters/SpaghettiKart";
       changelog = "https://github.com/HarbourMasters/SpaghettiKart/releases/tag/Latest";
       sourceProvenance = with lib.sourceTypes; [
