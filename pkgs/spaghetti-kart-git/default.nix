@@ -128,7 +128,7 @@ in
     };
 
     patches = [
-      ./no-git-execute.patch
+      ./version-information.patch
       ./dont-fetch-stb.patch
 
       (replaceVars ./git-deps.patch {
