@@ -8,13 +8,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "cockatrice";
-  version = "2025-04-03-Release-2.10.2";
+  version = "fe7853a3896b9bbe021085264f0f0fdfa9fd07f7";
 
   src = fetchFromGitHub {
     owner = "Cockatrice";
     repo = "Cockatrice";
     rev = finalAttrs.version;
-    sha256 = "sha256-zXAK830SdGT3xN3ST8h9LLy/oWr4MH6TZf57gLfI0e8=";
+    sha256 = "sha256-kKHoNtqnmoByS3e5Qeq76e/ARUlv7w4BgOGp9AWCt7E=";
   };
 
   buildInputs = [
