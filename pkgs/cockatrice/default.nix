@@ -1,37 +1,33 @@
 {
   lib,
   fetchFromGitHub,
-  mkDerivation,
+  stdenv,
   cmake,
   protobuf,
-  qtbase,
-  qtmultimedia,
-  qttools,
-  qtwebsockets,
-  wrapQtAppsHook,
+  kdePackages,
 }:
-mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "cockatrice";
   version = "2025-04-03-Release-2.10.2";
 
   src = fetchFromGitHub {
     owner = "Cockatrice";
     repo = "Cockatrice";
-    rev = version;
+    rev = finalAttrs.version;
     sha256 = "sha256-zXAK830SdGT3xN3ST8h9LLy/oWr4MH6TZf57gLfI0e8=";
   };
 
   buildInputs = [
-    qtbase
-    qtmultimedia
+    kdePackages.qtbase
+    kdePackages.qtmultimedia
     protobuf
-    qttools
-    qtwebsockets
+    kdePackages.qttools
+    kdePackages.qtwebsockets
   ];
 
   nativeBuildInputs = [
     cmake
-    wrapQtAppsHook
+    kdePackages.wrapQtAppsHook
   ];
 
   meta = {
@@ -41,4 +37,4 @@ mkDerivation rec {
     maintainers = with lib.maintainers; [evanjs];
     platforms = with lib.platforms; linux;
   };
-}
+})
