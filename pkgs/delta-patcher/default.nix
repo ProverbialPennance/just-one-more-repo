@@ -7,7 +7,11 @@
   cmake,
   pkg-config,
   gtk3,
+<<<<<<< HEAD
   wxGTK32,
+=======
+  wxGTK33,
+>>>>>>> 4e5a408 (pkgs: delta-patcher - wxWidgets gtk 3.3)
   xdelta,
   xz,
 }: let
@@ -33,7 +37,7 @@ in
 
     buildInputs = [
       gtk3
-      wxGTK32
+      wxGTK33
       xdelta
       xz
     ];
