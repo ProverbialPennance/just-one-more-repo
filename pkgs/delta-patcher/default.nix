@@ -8,6 +8,7 @@
   pkg-config,
   gtk3,
   wxGTK32,
+  wrapGAppsHook3,
   xdelta,
   xz,
 }: let
@@ -29,6 +30,7 @@ in
       cmake
       pkg-config
       copyDesktopItems
+      wrapGAppsHook3
     ];
 
     buildInputs = [
