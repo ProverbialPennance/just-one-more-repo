@@ -17,6 +17,7 @@
   boost,
   libogg,
   libvorbis,
+  miniaudio,
   libGL,
   python3Full,
   gnumake,
@@ -179,6 +180,7 @@ in
       boost
       libogg
       libvorbis
+      miniaudio
       libGL
       yaml-cpp
       libX11
