@@ -124,12 +124,12 @@ in
       postFetch = ''
         cd $out
         (git describe --tags HEAD 2>/dev/null || echo "") > PROJECT_VERSION
+        git log --pretty=format:%h -1 > PROJECT_VERSION_PATCH
         rm -rf .git
       '';
     };
 
     patches = [
-      ./version-information.patch
       ./dont-fetch-stb.patch
 
       (replaceVars ./git-deps.patch {
@@ -209,6 +209,12 @@ in
       cp ${stb_impl} ./stb/${stb_impl.name}
       substituteInPlace libultraship/cmake/dependencies/common.cmake \
         --replace-fail "\''${STB_DIR}" "$(readlink -f ./stb)"
+    '';
+
+    postPatch = ''
+      substituteInPlace CMakeLists.txt \
+      --replace-fail "COMMAND git describe --tags" "COMMAND echo $(cat PROJECT_VERSION)" \
+      --replace-fail "COMMAND git log --pretty=format:%h -1" "COMMAND echo $(cat PROJECT_VERSION_PATCH)"
     '';
 
     postBuild = ''
