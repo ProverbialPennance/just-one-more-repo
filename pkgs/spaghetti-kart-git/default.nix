@@ -4,7 +4,6 @@
   fetchurl,
   writeTextFile,
   cmake,
-  git,
   ninja,
   SDL2,
   SDL2_net,
@@ -14,13 +13,12 @@
   libzip,
   tinyxml-2,
   spdlog,
-  boost,
+  bzip2,
   libogg,
   libvorbis,
   miniaudio,
   libGL,
   python3Full,
-  gnumake,
   yaml-cpp,
   libX11,
   zenity,
@@ -160,16 +158,13 @@ in
       copyDesktopItems
       installShellFiles
       lsb-release
-      gnumake
-      git
-      ninja
       python3Full
       makeWrapper
+      ninja
       pkg-config
     ];
 
     buildInputs = [
-      dr-libs
       SDL2
       SDL2_net
       libpng
@@ -177,13 +172,14 @@ in
       libzip
       tinyxml-2
       spdlog
-      boost
+      bzip2
       libogg
       libvorbis
       miniaudio
       libGL
       yaml-cpp
       libX11
+      zenity
     ];
 
     cmakeFlags = [
@@ -223,8 +219,6 @@ in
     '';
 
     postInstall = ''
-      echo $(ls | xargs echo)
-      echo $(ls ..)
       mv Spaghettify spaghetti-kart
       installBin {spaghetti-kart,TorchExternal/src/TorchExternal-build/torch}
       mkdir -p $out/share/spaghetti-kart/
