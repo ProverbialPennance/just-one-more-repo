@@ -207,10 +207,12 @@ in
         --replace-fail "\''${STB_DIR}" "$(readlink -f ./stb)"
     '';
 
+    # I cannot wrap my head around why LTO breaks the build under nix
     postPatch = ''
       substituteInPlace CMakeLists.txt \
       --replace-fail "COMMAND git describe --tags" "COMMAND echo $(cat PROJECT_VERSION)" \
-      --replace-fail "COMMAND git log --pretty=format:%h -1" "COMMAND echo $(cat PROJECT_VERSION_PATCH)"
+      --replace-fail "COMMAND git log --pretty=format:%h -1" "COMMAND echo $(cat PROJECT_VERSION_PATCH)" \
+      --replace-fail "            -flto=auto \\" "\\"
     '';
 
     postBuild = ''
