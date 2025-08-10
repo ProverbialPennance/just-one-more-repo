@@ -11,6 +11,8 @@ final: prev: {
   factorio-2_0_55 = final.callPackage ./pkgs/factorio/2.0.55 {releaseType = "headless";};
   factorio-2_0_60 = final.callPackage ./pkgs/factorio/2.0.60 {releaseType = "headless";};
   cockatrice-git = final.callPackage ./pkgs/cockatrice-git {};
+  shipwright-ap = final.callPackage ./pkgs/shipwright-ap {};
+  cacert-pem = final.callPackage ./pkgs/cacert-pem {};
   # sm64baserom = final.callPackage ./pkgs/sm64baserom {};
   # sm64ex-ap = final.callPackage ./pkgs/sm64ex-ap {sm64baserom = final.callPackage ./pkgs/sm64baserom {};};
 }
