@@ -84,9 +84,7 @@ in
                 ++ lib.optional useGameMode pkgs.gamemode;
               # TODO: figure out a long-term solution for non useSteamRun users
               extraLibraries = pkgs:
-                []
-                ++ runtimeDeps
-                ++ lib.optional useGameMode pkgs.gamemode;
+                lib.optional useGameMode pkgs.gamemode;
               extraProfile = ''
                 unset TZ
               '';
@@ -97,7 +95,7 @@ in
         ''
       )
       + ''
-        wrapProgram $out/bin/XIVLauncher.Core --prefix GST_PLUGIN_SYSTEM_PATH_1_0 ":" "$GST_PLUGIN_SYSTEM_PATH_1_0" --prefix XL_NVNGXPATH ":" ${nvngxPath}
+        wrapProgram $out/bin/XIVLauncher.Core --prefix LD_LIBRARY_PATH ":" ${lib.makeLibraryPath runtimeDeps} --prefix GST_PLUGIN_SYSTEM_PATH_1_0 ":" "$GST_PLUGIN_SYSTEM_PATH_1_0" --prefix XL_NVNGXPATH ":" ${nvngxPath}
         # the reference to aria2 gets mangled as UTF-16LE and isn't detectable by nix: https://github.com/NixOS/nixpkgs/issues/220065
         mkdir -p $out/nix-support
         echo ${aria2} >> $out/nix-support/depends
