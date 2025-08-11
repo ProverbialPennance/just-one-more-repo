@@ -66,9 +66,11 @@ in
         --replace-fail 'ariaPath = "aria2c"' 'ariaPath = "${aria2}/bin/aria2c"'
     '';
 
+    # TODO: figure out the right incantation for wrapProgram, or patch needed to dlopen(3) our derivation's SDL2
     postInstall = ''
       mkdir -p $out/share/pixmaps
       cp src/XIVLauncher.Core/Resources/logo.png $out/share/pixmaps/xivlauncher.png
+      ln -s ${SDL2}/lib/libSDL2-2.0.so $out/lib/xivlauncher-rb/libSDL2-2.0.so
     '';
 
     postFixup =
