@@ -38,6 +38,8 @@ in
       xz
     ];
 
+    cmakeFlags = [(lib.cmakeBool "wxBUILD_SHARED" false)];
+
     postInstall = ''
       install -Dm644 ../graphics/icon256.png $out/share/pixmaps/DeltaPatcher.png
     '';
