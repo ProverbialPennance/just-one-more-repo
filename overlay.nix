@@ -15,12 +15,8 @@ final: prev: {
   factorio-experimental = final.callPackage ./pkgs/factorio/experimental/latest {releaseType = "headless";};
   delta-patcher = final.callPackage ./pkgs/delta-patcher {};
   cockatrice-git = final.callPackage ./pkgs/cockatrice-git {};
-<<<<<<< HEAD
-
-=======
   shipwright-ap = final.callPackage ./pkgs/shipwright-ap {};
   cacert-pem = final.callPackage ./pkgs/cacert-pem {};
->>>>>>> abb7d6f (checkpoint: currently builds. Graphical issue on file select)
   # sm64baserom = final.callPackage ./pkgs/sm64baserom {};
   # sm64ex-ap = final.callPackage ./pkgs/sm64ex-ap {sm64baserom = final.callPackage ./pkgs/sm64baserom {};};
 }

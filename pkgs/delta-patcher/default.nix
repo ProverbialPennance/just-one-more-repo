@@ -11,7 +11,11 @@
   xdelta,
   xz,
 }: let
+<<<<<<< HEAD
   tag = "3.1.6";
+=======
+  tag = "3.1.5-build-fix";
+>>>>>>> 376bef2 (Pkgs/delta patcher/init (#127))
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "delta-patcher";
@@ -21,7 +25,11 @@ in
       owner = "marco-calautti";
       repo = "DeltaPatcher";
       tag = "v${tag}";
+<<<<<<< HEAD
       hash = "sha256-gp31MKin/kQMmXRTQzzBFjAH5WiaOT3VilHL4ceyo6A=";
+=======
+      hash = "sha256-NvxkffQcSM/RbwGaDSQbeXu2BplSTdbF7w9lLyV7Yzg=";
+>>>>>>> 376bef2 (Pkgs/delta patcher/init (#127))
       fetchSubmodules = true;
     };
 
