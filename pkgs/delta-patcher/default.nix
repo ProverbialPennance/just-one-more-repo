@@ -7,7 +7,7 @@
   cmake,
   pkg-config,
   gtk3,
-  wxGTK33,
+  wxwidgets_3_3,
   xdelta,
   xz,
 }: let
@@ -33,7 +33,7 @@ in
 
     buildInputs = [
       gtk3
-      wxGTK33
+      wxwidgets_3_3
       xdelta
       xz
     ];
