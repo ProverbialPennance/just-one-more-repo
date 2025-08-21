@@ -42,8 +42,8 @@
     src = fetchFromGitHub {
       owner = "ocornut";
       repo = "imgui";
-      tag = "v1.91.6-docking";
-      hash = "sha256-28wyzzwXE02W5vbEdRCw2iOF8ONkb3M3Al8XlYBvz1A=";
+      tag = "v1.91.9b-docking";
+      hash = "sha256-mQOJ6jCN+7VopgZ61yzaCnt4R1QLrW7+47xxMhFRHLQ=";
     };
     patches = [
       "${_2ship2harkinian-git.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
@@ -90,17 +90,17 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "7d23c7fe154ba92570aca5d4ee97ec88bb0033dd";
+  rev' = "9e3d6e9c3f7fd598ef5f84d2972740a9a82db7b4";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "2ship2harkinian";
-    version = "1.1.2-unstable-2025-07-09";
+    version = "2.0.0-unstable-2025-08-20";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "2ship2harkinian";
       rev = rev';
-      hash = "sha256-DqAaAViL2RptDPBrQA8uhSy0UzawI2J3oyQhf4CWlZs=";
+      hash = "sha256-f32HhPDcDq5stpU5OmIeSuIMF2BHXWf86SSu4M/1IUs=";
       fetchSubmodules = true;
     };
 
@@ -111,7 +111,7 @@ in
         prism_src = fetchFromGitHub {
           owner = "KiritoDv";
           repo = "prism-processor";
-          rev = "493974843e910d0fac4e3bb1ec52656728b875b4";
+          rev = "7ae724a6fb7df8cbf547445214a1a848aefef747";
           hash = "sha256-Bq1+deZ2BL1wNxw4qs53EEnc1IFsNyK4wpLimkzFK9w=";
         };
       })
@@ -161,6 +161,7 @@ in
 
     cmakeFlags = [
       (lib.cmakeBool "NON_PORTABLE" true)
+      (lib.cmakeBool "INCLUDE_MPQ_SUPPORT" true)
       (lib.cmakeFeature "CMAKE_INSTALL_PREFIX" "${placeholder "out"}/2s2h")
       (lib.cmakeFeature "OPUSFILE_INCLUDE_DIR" "${opusfile.dev}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMGUI" "${imgui'}")

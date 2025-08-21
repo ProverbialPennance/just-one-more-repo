@@ -4,7 +4,6 @@
   fetchurl,
   writeTextFile,
   cmake,
-  git,
   ninja,
   SDL2,
   SDL2_net,
@@ -14,12 +13,12 @@
   libzip,
   tinyxml-2,
   spdlog,
-  boost,
+  bzip2,
   libogg,
   libvorbis,
+  miniaudio,
   libGL,
   python3Full,
-  gnumake,
   yaml-cpp,
   libX11,
   zenity,
@@ -107,28 +106,28 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "69f83ed625225b0d75d0c1079e3d6a9704bc803b";
+  rev' = "db01cf3d6fec1ef7f963e7e063251fd3e1e0a21b";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "spaghetti-kart";
-    version = "Latest2-unstable-2025-07-23";
+    version = "Latest2-unstable-2025-08-09";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "SpaghettiKart";
       rev = "${rev'}";
-      hash = "sha256-8+mUuCfw7HD4B0AGchap3VZAKqKxRKMb3iY4y24GJfo=";
+      hash = "sha256-2mDyeNYJawx1zKPBeVQIkjNi6DnCqNwtQJMQPsn/haI=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
         cd $out
         (git describe --tags HEAD 2>/dev/null || echo "") > PROJECT_VERSION
+        git log --pretty=format:%h -1 > PROJECT_VERSION_PATCH
         rm -rf .git
       '';
     };
 
     patches = [
-      ./version-information.patch
       ./dont-fetch-stb.patch
 
       (replaceVars ./git-deps.patch {
@@ -159,16 +158,13 @@ in
       copyDesktopItems
       installShellFiles
       lsb-release
-      gnumake
-      git
-      ninja
       python3Full
       makeWrapper
+      ninja
       pkg-config
     ];
 
     buildInputs = [
-      dr-libs
       SDL2
       SDL2_net
       libpng
@@ -176,12 +172,14 @@ in
       libzip
       tinyxml-2
       spdlog
-      boost
+      bzip2
       libogg
       libvorbis
+      miniaudio
       libGL
       yaml-cpp
       libX11
+      zenity
     ];
 
     cmakeFlags = [
@@ -209,14 +207,20 @@ in
         --replace-fail "\''${STB_DIR}" "$(readlink -f ./stb)"
     '';
 
+    # I cannot wrap my head around why LTO breaks the build under nix
+    postPatch = ''
+      substituteInPlace CMakeLists.txt \
+      --replace-fail "COMMAND git describe --tags" "COMMAND echo $(cat PROJECT_VERSION)" \
+      --replace-fail "COMMAND git log --pretty=format:%h -1" "COMMAND echo $(cat PROJECT_VERSION_PATCH)" \
+      --replace-fail "            -flto=auto \\" "\\"
+    '';
+
     postBuild = ''
       cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
       ./TorchExternal/src/TorchExternal-build/torch pack ../assets spaghetti.o2r o2r
     '';
 
     postInstall = ''
-      echo $(ls | xargs echo)
-      echo $(ls ..)
       mv Spaghettify spaghetti-kart
       installBin {spaghetti-kart,TorchExternal/src/TorchExternal-build/torch}
       mkdir -p $out/share/spaghetti-kart/
