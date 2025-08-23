@@ -17,18 +17,18 @@
     "pal-final"
     "jpn-final"
   ];
-  rev' = "19541418b09e000a13b051b861172c972c19d08a";
+  rev' = "498e1667a41e3fcec714952e8fdae4fa06e148f3";
 in
   assert lib.assertOneOf "romID" romID roms;
     stdenv.mkDerivation rec {
       pname = "perfect_dark";
-      version = "ci-dev-build-unstable-2025-08-10";
+      version = "ci-dev-build-unstable-2025-08-23";
 
       src = fetchFromGitHub {
         owner = "fgsfdsfgs";
         repo = "perfect_dark";
         rev = "${rev'}";
-        hash = "sha256-tjT9PvGxTMicW+1i7PPMXCPlt3/pMqLvRKb+cUhwsoY=";
+        hash = "sha256-CeorhwxFxp4Nrre3yMi1fFd00mVE6dzI3lc8zDNU7VI=";
       };
 
       buildInputs = [
