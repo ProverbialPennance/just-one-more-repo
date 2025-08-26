@@ -114,17 +114,18 @@ let
       version,
       tarDirectory,
       url,
-      needsAuth,
+      sha256,
+      needsAuth
     }:
     {
       inherit version tarDirectory;
       src =
         if !needsAuth then
-          fetchurl { inherit name url; }
+          fetchurl { inherit name url sha256; }
         else
           (lib.overrideDerivation
             (fetchurl {
-              inherit name url;
+              inherit name url sha256;
               curlOptsList = [
                 "--get"
                 "--data-urlencode"

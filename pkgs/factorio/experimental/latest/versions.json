@@ -4,6 +4,7 @@
       "experimental": {
         "name": "factorio_headless_x64-2.0.65.tar.xz",
         "needsAuth": false,
+        "sha256": "729480a81fc3b3bd105bd0c92e108ee1caaac7840cc168cb32b0f9db8759a28a",
         "tarDirectory": "x64",
         "url": "https://factorio.com/get-download/experimental/headless/linux64",
         "version": "2.0-experimental"
