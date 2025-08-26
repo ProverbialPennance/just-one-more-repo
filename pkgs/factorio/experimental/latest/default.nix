@@ -114,9 +114,7 @@ let
       version,
       tarDirectory,
       url,
-      sha256,
       needsAuth,
-      candidateHashFilenames ? [ ],
     }:
     {
       inherit version tarDirectory;
@@ -151,10 +149,7 @@ let
                   '';
               failureHook = ''
                 cat <<EOF
-                ${helpMsg {
-                  dlName = if candidateHashFilenames != [ ] then builtins.head candidateHashFilenames else name;
-                  storeName = name;
-                }}
+                failed.
                 EOF
               '';
             })
@@ -199,8 +194,6 @@ let
         --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
         $out/bin/factorio
     '';
-
-    passthru.updateScript = ./update.py;
 
     meta = {
       description = "Game in which you build and maintain factories";
