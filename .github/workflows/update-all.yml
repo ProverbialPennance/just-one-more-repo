@@ -19,7 +19,7 @@ jobs:
           source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
           diagnostic-endpoint: ""
 
-      - uses: yaxitech/nix-install-pkgs-action@v6
+      - uses: yaxitech/nix-install-pkgs-action@v7
         with:
           packages: "nixpkgs#jq, nixpkgs#gawk"
 
@@ -56,7 +56,7 @@ jobs:
           source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
           diagnostic-endpoint: ""
 
-      - uses: yaxitech/nix-install-pkgs-action@v6
+      - uses: yaxitech/nix-install-pkgs-action@v7
         with:
           # There's a fun little happenstance where upstream tries fetching from an invalid url
           # packages: "github:Mic92/nix-update, nixpkgs#jq"
