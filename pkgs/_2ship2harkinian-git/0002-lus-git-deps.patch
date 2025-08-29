@@ -8,7 +8,7 @@ index 5ca477b..6f84929 100644
  FetchContent_Declare(
      prism
 -    GIT_REPOSITORY https://github.com/KiritoDv/prism-processor.git
--    GIT_TAG 7ae724a6fb7df8cbf547445214a1a848aefef747
+-    GIT_TAG bbcbc7e3f890a5806b579361e7aa0336acd547e7
 +    URL @prism_src@
  )
 -FetchContent_MakeAvailable(prism)
