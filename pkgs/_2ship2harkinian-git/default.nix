@@ -111,8 +111,8 @@ in
         prism_src = fetchFromGitHub {
           owner = "KiritoDv";
           repo = "prism-processor";
-          rev = "7ae724a6fb7df8cbf547445214a1a848aefef747";
-          hash = "sha256-Bq1+deZ2BL1wNxw4qs53EEnc1IFsNyK4wpLimkzFK9w=";
+          rev = "bbcbc7e3f890a5806b579361e7aa0336acd547e7";
+          hash = "sha256-jRPwO1Vub0cH12YMlME6kd8zGzKmcfIrIJZYpQJeOks=";
         };
       })
       (replaceVars ./0003-mm-git-deps.patch {
