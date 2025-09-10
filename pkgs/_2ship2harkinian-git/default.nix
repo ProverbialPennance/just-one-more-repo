@@ -90,11 +90,11 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "72b48cdae019d149899862d8927a5fc755bed9ea";
+  rev' = "558f59b06f03dd1881071f6379ee31a062a8e4ea";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "2ship2harkinian";
-    version = "2.0.1-unstable-2025-09-03";
+    version = "2.0.1-unstable-2025-09-10";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
