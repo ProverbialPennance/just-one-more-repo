@@ -18,7 +18,7 @@
   libvorbis,
   miniaudio,
   libGL,
-  python3Full,
+  python3,
   yaml-cpp,
   libX11,
   zenity,
@@ -158,7 +158,7 @@ in
       copyDesktopItems
       installShellFiles
       lsb-release
-      python3Full
+      python3
       makeWrapper
       ninja
       pkg-config
