@@ -6,17 +6,17 @@
   protobuf,
   kdePackages,
 }: let
-  rev' = "891e7bf6e47921711d5cdb205c27e4ad2b4309f0";
+  rev' = "14991e1f9e5e3780c0e03ed347e17588788ca310";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "cockatrice";
-    version = "2025-09-15-Development-2.11.0-beta.30-unstable-2025-09-26";
+    version = "2025-09-26-Development-2.11.0-beta.31-unstable-2025-09-26";
 
     src = fetchFromGitHub {
       owner = "Cockatrice";
       repo = "Cockatrice";
       rev = "${rev'}";
-      sha256 = "sha256-SBnmcgwl8oQfRyzjuN6K5Dd+bzolEDK5xCo4GHFSDQc=";
+      sha256 = "sha256-k4ZwTveBb08gKL9S5BVfgkHqUNzEm5RAtZyH31Ydqjs=";
     };
 
     buildInputs = [
