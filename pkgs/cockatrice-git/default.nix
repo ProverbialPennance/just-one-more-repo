@@ -10,7 +10,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "cockatrice";
-    version = "2025-09-26-Development-2.11.0-beta.31-unstable-2025-09-29";
+    version = "2025-09-29-Development-2.11.0-beta.32-unstable-2025-09-29";
 
     src = fetchFromGitHub {
       owner = "Cockatrice";
