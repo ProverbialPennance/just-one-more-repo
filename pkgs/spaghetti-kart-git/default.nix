@@ -192,6 +192,11 @@ in
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_YAML-CPP" "${yaml-cpp.src}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_LIBGFXD" "${libgfxd}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
+      # yaml-cpp is the root dependency which causes a build error.
+      # the cause comes from the cmake version range specified in
+      # https://github.com/jbeder/yaml-cpp/blob/28f93bdec6387d42332220afa9558060c8016795/CMakeLists.txt#L3
+      # until HarbourMasters/Starship upgrades yaml-cpp a workaround is to specify our own minimum version
+      (lib.cmakeFeature "CMAKE_POLICY_VERSION_MINIMUM" "3.10")
     ];
 
     strictDeps = true;
