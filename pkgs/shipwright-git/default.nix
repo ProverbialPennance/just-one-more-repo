@@ -109,17 +109,17 @@
     tag = "macOS13_iOS16";
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
   };
-  rev' = "dc5e9686c0a5c1b4f1cdf285ad8bf581be6233e1";
+  rev' = "955ee9b9bab51e52180b3d1b46ba062c8a7ae2a1";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "9.0.5-unstable-2025-10-20";
+    version = "9.0.5-unstable-2025-10-21";
 
     src = fetchFromGitHub {
       owner = "harbourmasters";
       repo = "shipwright";
       rev = rev';
-      hash = "sha256-fc1LrHa0u4m9dOtPy0XElBzQnjsa8m697ILqu5SmDD4=";
+      hash = "sha256-7KUwRQNRkPp413hY1iXWNnecC6CZRK0DM1VNh526CMA=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
