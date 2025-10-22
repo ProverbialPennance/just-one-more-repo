@@ -8,7 +8,7 @@
         ],
         "name": "factorio_headless_x64-2.0.69.tar.xz",
         "needsAuth": false,
-        "sha256": "69b5be1a867fd99524f9914dfee900a1ac386cf4e74c4a63768c05dc4d2b2b0b",
+        "sha256": "235147bb3ed6b5f0a6993893c6c92fdfe535ba95ab866046f51f865284b57341",
         "tarDirectory": "x64",
         "url": "https://factorio.com/get-download/2.0.69/headless/linux64",
         "version": "2.0.69"
