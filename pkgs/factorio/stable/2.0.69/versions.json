@@ -1,7 +1,7 @@
 {
   "x86_64-linux": {
     "headless": {
-      "stablel": {
+      "stable": {
         "name": "factorio-headless_linux_2.0.69.tar.xz",
         "needsAuth": false,
         "sha256": "235147bb3ed6b5f0a6993893c6c92fdfe535ba95ab866046f51f865284b57341",
