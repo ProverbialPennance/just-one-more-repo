@@ -109,17 +109,17 @@
     tag = "macOS13_iOS16";
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
   };
-  rev' = "4c269cab30b2a278302e6c4096a6202338bba305";
+  rev' = "955ee9b9bab51e52180b3d1b46ba062c8a7ae2a1";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "9.0.5-unstable-2025-08-25";
+    version = "9.0.5-unstable-2025-10-21";
 
     src = fetchFromGitHub {
       owner = "harbourmasters";
       repo = "shipwright";
       rev = rev';
-      hash = "sha256-T7sNMmNyrmYrbSQFgX6zsuJ8YV2FrIJcYtWu6Qg17Ag=";
+      hash = "sha256-7KUwRQNRkPp413hY1iXWNnecC6CZRK0DM1VNh526CMA=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
@@ -230,7 +230,7 @@ in
     postBuild = ''
       port_ver=$(grep CMAKE_PROJECT_VERSION: "$PWD/CMakeCache.txt" | cut -d= -f2)
       cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
-      mv ../libultraship/src/graphic/Fast3D/shaders ../soh/assets/custom
+      mv ../libultraship/src/fast/shaders ../soh/assets/custom
       pushd ../OTRExporter
       python3 ./extract_assets.py -z ../build/ZAPD/ZAPD.out --norom --xml-root ../soh/assets/xml --custom-assets-path ../soh/assets/custom --custom-otr-file soh.o2r --port-ver $port_ver
       popd

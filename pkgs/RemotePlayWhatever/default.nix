@@ -16,13 +16,13 @@
 in
   stdenv.mkDerivation (finalAtrrs: {
     pname = "RemotePlayWhatever";
-    version = "0.2.10-alpha";
+    version = "0.2.12-alpha";
 
     src = fetchFromGitHub {
       owner = "m4dEngi";
       repo = "RemotePlayWhatever";
       tag = "${finalAtrrs.version}";
-      hash = "sha256-SHYjZZNUofEynOy50Kd+caJ2sQ7zTDZ4SDjlUCuPaNM=";
+      hash = "sha256-JfOxq8D9OnHJArY4ah/zGpA2mA4oPaAcJdl3YdQ8HHk=";
       fetchSubmodules = true;
     };
 

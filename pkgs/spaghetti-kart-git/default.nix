@@ -18,7 +18,7 @@
   libvorbis,
   miniaudio,
   libGL,
-  python3Full,
+  python3,
   yaml-cpp,
   libX11,
   zenity,
@@ -69,8 +69,8 @@
   prism = fetchFromGitHub {
     owner = "KiritoDv";
     repo = "prism-processor";
-    rev = "7ae724a6fb7df8cbf547445214a1a848aefef747";
-    hash = "sha256-G7koDUxD6PgZWmoJtKTNubDHg6Eoq8I+AxIJR0h3i+A=";
+    rev = "bbcbc7e3f890a5806b579361e7aa0336acd547e7";
+    hash = "sha256-jRPwO1Vub0cH12YMlME6kd8zGzKmcfIrIJZYpQJeOks=";
   };
 
   stb_impl = writeTextFile {
@@ -106,17 +106,17 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "db01cf3d6fec1ef7f963e7e063251fd3e1e0a21b";
+  rev' = "760fa3bf5226c2a6052a5d4d53fd0e27f2911e60";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "spaghetti-kart";
-    version = "Latest2-unstable-2025-08-09";
+    version = "Latest2-unstable-2025-09-27";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "SpaghettiKart";
       rev = "${rev'}";
-      hash = "sha256-2mDyeNYJawx1zKPBeVQIkjNi6DnCqNwtQJMQPsn/haI=";
+      hash = "sha256-MxaE2UplLTTTFQPe49TPSgrmZlrQdXq+ovV+ENAhMaI=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
@@ -158,7 +158,7 @@ in
       copyDesktopItems
       installShellFiles
       lsb-release
-      python3Full
+      python3
       makeWrapper
       ninja
       pkg-config
@@ -192,6 +192,11 @@ in
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_YAML-CPP" "${yaml-cpp.src}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_LIBGFXD" "${libgfxd}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
+      # yaml-cpp is the root dependency which causes a build error.
+      # the cause comes from the cmake version range specified in
+      # https://github.com/jbeder/yaml-cpp/blob/28f93bdec6387d42332220afa9558060c8016795/CMakeLists.txt#L3
+      # until HarbourMasters/Starship upgrades yaml-cpp a workaround is to specify our own minimum version
+      (lib.cmakeFeature "CMAKE_POLICY_VERSION_MINIMUM" "3.10")
     ];
 
     strictDeps = true;
