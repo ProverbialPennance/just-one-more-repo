@@ -11,6 +11,7 @@ final: prev: {
   factorio-2_0_55 = final.callPackage ./pkgs/factorio/stable/2.0.55 {releaseType = "headless";};
   factorio-2_0_60 = final.callPackage ./pkgs/factorio/stable/2.0.60 {releaseType = "headless";};
   factorio-2_0_66 = final.callPackage ./pkgs/factorio/stable/2.0.66 {releaseType = "headless";};
+  factorio-2_0_69 = final.callPackage ./pkgs/factorio/stable/2.0.69 {releaseType = "headless";};
   factorio-experimental = final.callPackage ./pkgs/factorio/experimental/latest {releaseType = "headless";};
   delta-patcher = final.callPackage ./pkgs/delta-patcher {};
   cockatrice-git = final.callPackage ./pkgs/cockatrice-git {};
