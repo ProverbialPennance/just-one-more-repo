@@ -12,13 +12,3 @@ index a55c0d63a..a97b006a3 100644
  )
  FetchContent_MakeAvailable(dr_libs)
 
-@@ -223,8 +222,7 @@ endif()
- include(FetchContent)
- FetchContent_Declare(
-     Boost
--    URL      https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.gz
--    URL_HASH SHA256=205666dea9f6a7cfed87c7a6dfbeb52a2c1b9de55712c9c1a87735d7181452b6
-+    URL @boost_src@
-     SOURCE_SUBDIR "null" # Set to a nonexistent directory so boost is not built (we don't need to build it)
-     DOWNLOAD_EXTRACT_TIMESTAMP false # supress timestamp warning, not needed since the url wont change
- )
