@@ -122,11 +122,6 @@ in
           rev = "da35f9d6c7374a95353fd1df1d394d44ab66cf01";
           hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
         };
-
-        boost_src = fetchurl {
-          url = "https://archives.boost.io/release/1.81.0/source/boost_1_81_0.tar.gz";
-          hash = "sha256-IFZm3qn2p8/th8em3761KiwbneVXEsnBqHc11xgUUrY=";
-        };
       })
     ];
 
