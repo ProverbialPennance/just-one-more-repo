@@ -1,8 +1,11 @@
 # This file provides a top-level function that will be used by both nixpkgs and nixos
 # to generate mod directories for use at runtime by factorio.
-{ lib, stdenv }:
-let
-  inherit (lib)
+{
+  lib,
+  stdenv,
+}: let
+  inherit
+    (lib)
     flatten
     head
     optionals
@@ -12,14 +15,13 @@ let
     splitString
     unique
     ;
-in
-{
-  mkModDirDrv =
-    mods: modsDatFile: # a list of mod derivations
-    let
-      recursiveDeps = modDrv: [ modDrv ] ++ map recursiveDeps modDrv.deps;
-      modDrvs = unique (flatten (map recursiveDeps mods));
-    in
+in {
+  mkModDirDrv = mods: modsDatFile:
+  # a list of mod derivations
+  let
+    recursiveDeps = modDrv: [modDrv] ++ map recursiveDeps modDrv.deps;
+    modDrvs = unique (flatten (map recursiveDeps mods));
+  in
     stdenv.mkDerivation {
       name = "factorio-mod-directory";
 
@@ -37,22 +39,24 @@ in
         '');
     };
 
-  modDrv =
-    { allRecommendedMods, allOptionalMods }:
-    {
-      src,
-      name ? null,
-      deps ? [ ],
-      optionalDeps ? [ ],
-      recommendedDeps ? [ ],
-    }:
+  modDrv = {
+    allRecommendedMods,
+    allOptionalMods,
+  }: {
+    src,
+    name ? null,
+    deps ? [],
+    optionalDeps ? [],
+    recommendedDeps ? [],
+  }:
     stdenv.mkDerivation {
-
       inherit src;
 
       # Use the name of the zip, but endstrip ".zip" and possibly the querystring that gets left in by fetchurl
-      name = replaceStrings [ "_" ] [ "-" ] (
-        if name != null then name else removeSuffix ".zip" (head (splitString "?" src.name))
+      name = replaceStrings ["_"] ["-"] (
+        if name != null
+        then name
+        else removeSuffix ".zip" (head (splitString "?" src.name))
       );
 
       deps =
