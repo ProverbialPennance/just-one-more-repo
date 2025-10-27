@@ -1,0 +1,72 @@
+diff --git a/soh/CMakeLists.txt b/soh/CMakeLists.txt
+index aa979f6ed..52014d0f9 100644
+--- a/soh/CMakeLists.txt
++++ b/soh/CMakeLists.txt
+@@ -306,8 +306,7 @@ if(BUILD_REMOTE_CONTROL)
+ 
+     FetchContent_Declare(
+             asio
+-            GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
+-            GIT_TAG asio-1-30-2
++            URL @asio_src@
+     )
+     FetchContent_MakeAvailable(asio)
+     target_include_directories(${PROJECT_NAME} PRIVATE ${asio_SOURCE_DIR}/asio/include)
+@@ -328,16 +326,14 @@ if(BUILD_REMOTE_CONTROL)
+ 
+     FetchContent_Declare(
+             wswrap
+-            GIT_REPOSITORY https://github.com/black-sliver/wswrap.git
+-            GIT_TAG 47438193ec50427ee28aadf294ba57baefd9f3f1
++            URL @wswrap_src@
+     )
+     FetchContent_MakeAvailable(wswrap)
+     target_include_directories(${PROJECT_NAME} PRIVATE ${wswrap_SOURCE_DIR}/include)
+ 
+     FetchContent_Declare(
+             apclientpp
+-            GIT_REPOSITORY https://github.com/black-sliver/apclientpp.git
+-            GIT_TAG 65638b7479f6894eda172e603cffa79762c0ddc1
++            URL @apclientpp_src@
+     )
+     FetchContent_MakeAvailable(apclientpp)
+     target_include_directories(${PROJECT_NAME} PRIVATE ${apclientpp_SOURCE_DIR})
+@@ -347,8 +343,7 @@ endif()
+ ################################################################################
+ FetchContent_Declare(
+         dr_libs
+-        GIT_REPOSITORY https://github.com/mackron/dr_libs.git
+-        GIT_TAG da35f9d6c7374a95353fd1df1d394d44ab66cf01
++        URL @dr_libs_src@
+ )
+ FetchContent_MakeAvailable(dr_libs)
+ 
+@@ -372,11 +367,13 @@ if (BUILD_REMOTE_CONTROL)
+     set(OPENSSL_USE_STATIC_LIBS ON)
+ 
+     if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-        file(STRINGS /etc/os-release distro REGEX "^NAME=")
+-        string(REGEX REPLACE "NAME=\"(.*)\"" "\\1" distro "${distro}")
++        if(EXISTS /etc/os-release)
++            file(STRINGS /etc/os-release distro REGEX "^NAME=")
++            string(REGEX REPLACE "NAME=\"(.*)\"" "\\1" distro "${distro}")
+ 
+-        if(${distro} MATCHES "Fedora Linux")
+-            set(OPENSSL_USE_STATIC_LIBS OFF)
++            if(${distro} MATCHES "Fedora Linux")
++                set(OPENSSL_USE_STATIC_LIBS OFF)
++            endif()
+         endif()
+     endif()
+ 
+@@ -389,9 +386,7 @@ if (BUILD_REMOTE_CONTROL)
+ 
+     FetchContent_Declare(
+         sslCertStore
+-        URL https://curl.se/ca/cacert.pem
+-        DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/networking
+-        DOWNLOAD_NO_EXTRACT TRUE
++        URL @cacert_src@
+     )
+ 
+     FetchContent_MakeAvailable(
