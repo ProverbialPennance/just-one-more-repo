@@ -31,6 +31,8 @@
   openssl,
   libzip,
   nlohmann_json,
+  valijson,
+  websocketpp,
   tinyxml-2,
   spdlog,
   writeTextFile,
@@ -114,18 +116,19 @@
 
   openssl' = openssl.override {static = true;};
 
-  rev' = "58a564077e6649e2addd427f95fa5c5fa80ba1d8";
+  rev' = "243acd2d4f23225787c6b3068e925d795336377d";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "0-unstable-2025-08-10";
+    version = "0.0.4-unstable-2025-10-27";
 
     src = fetchFromGitHub {
       #aMannus/Shipwright/tree/aManchipelago
       owner = "aMannus";
       repo = "shipwright";
       rev = rev';
-      hash = "sha256-zTu/uUzuYmmKIWyYc9ZDx8IlcpRNt8QUGbqY3shPBus=";
+      hash = "sha256-Af9nHHCaNc1xaznNyfk4iagnbubGfkftKesLuzNwQaE=";
+      # hash = lib.fakeHash;
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
@@ -140,7 +143,7 @@ in
     patches = [
       ./darwin-fixes.patch
       ./disable-downloading-stb_image.patch
-      (replaceVars ./dont-fetch-dr_libs.patch {
+      (replaceVars ./dont-fetch-deps.patch {
         dr_libs_src = fetchFromGitHub {
           owner = "mackron";
           repo = "dr_libs";
@@ -148,6 +151,24 @@ in
           hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
         };
         cacert_src = cacert;
+        asio_src = fetchFromGitHub {
+          owner = "chriskohlhoff";
+          repo = "asio";
+          tag = "asio-1-30-2";
+          hash = "sha256-g+ZPKBUhBGlgvce8uTkuR983unD2kbQKgoddko7x+fk=";
+        };
+        wswrap_src = fetchFromGitHub {
+          owner = "black-sliver";
+          repo = "wswrap";
+          rev = "47438193ec50427ee28aadf294ba57baefd9f3f1";
+          hash = "sha256-WWXi/OWfaC40V+tV4JNmVM8kImozuwaiRLeSdhIf0X8=";
+        };
+        apclientpp_src = fetchFromGitHub {
+          owner = "black-sliver";
+          repo = "apclientpp";
+          rev = "65638b7479f6894eda172e603cffa79762c0ddc1";
+          hash = "sha256-/pUa51tZmFL15moMO1KlX5iBmMcx/vYMhqO6PZckIPo=";
+        };
       })
     ];
 
@@ -179,6 +200,8 @@ in
         libpng
         libzip
         nlohmann_json
+        valijson
+        websocketpp
         tinyxml-2
         spdlog
         libvorbis
@@ -244,7 +267,7 @@ in
       echo $(ls)
       mkdir -p soh/networking
       cp ${cacert}/etc/ssl/certs/ca-no-trust-rules-bundle.crt soh/networking/cacert.pem
-      mv ../libultraship/src/graphic/Fast3D/shaders ../soh/assets/custom
+      mv ../libultraship/src/fast/shaders ../soh/assets/custom
       pushd ../OTRExporter
       python3 ./extract_assets.py -z ../build/ZAPD/ZAPD.out --norom --xml-root ../soh/assets/xml --custom-assets-path ../soh/assets/custom --custom-otr-file soh.o2r --port-ver $port_ver
       popd
@@ -306,7 +329,7 @@ in
     meta = {
       homepage = "https://github.com/HarbourMasters/Shipwright";
       description = "PC port of Ocarina of Time with modern controls, widescreen, high-resolution, and more";
-      mainProgram = "soh";
+      mainProgram = "soh-ap";
       platforms = lib.platforms.linux ++ lib.platforms.darwin;
       maintainers = with lib.maintainers; [
         j0lol
