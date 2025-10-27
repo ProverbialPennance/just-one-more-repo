@@ -30,11 +30,6 @@ in
         '';
       };
 
-      APP_VERSION =
-        if (lib.any (x: x != "") (lib.match "([0-9].[0-9].[0-9])" tag))
-        then tag
-        else null;
-
       nativeBuildInputs = [
         cmake
         kdePackages.wrapQtAppsHook
