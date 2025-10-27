@@ -1,0 +1,36 @@
+name: Format
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
+  merge_group:
+  pull_request:
+    branches: ["*"]
+    paths:
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
+  workflow_dispatch:
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@v20
+        with:
+          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+          diagnostic-endpoint: ""
+          extra-conf: |
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= just-one-more-cache.cachix.org-1:4nShcKEgcUEVlJqKFrgDwoGfqLnw5KPG4UDTV02jnr4=
+            substituters = https://cache.nixos.org/ https://just-one-more-cache.cachix.org/
+      - run: |
+          set -euxo pipefail
+          nix fmt . -- --check
