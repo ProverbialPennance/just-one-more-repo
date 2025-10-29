@@ -90,7 +90,7 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "ef1b1a9698ac24975d1a73ba56315c58255b14e1";
+  rev' = "78059b1ba9af17e99908201797e0358339c30a3d";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "2ship2harkinian";
@@ -100,7 +100,7 @@ in
       owner = "HarbourMasters";
       repo = "2ship2harkinian";
       rev = rev';
-      hash = "sha256-hRpCSrnyauVlHd+LbmEZQLohjiyT5W0OJ3HWXoDMKms=";
+      hash = "sha256-Q+Kkk7F8US10oiL5QcAkCChqZWJXoLH0j7c+qInuK9k=";
       fetchSubmodules = true;
     };
 
@@ -123,6 +123,8 @@ in
           hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
         };
       })
+      # should probably be reported upstream that z_en_item00.c has an empty return in a Actor* fn def
+      ./0004-mismatch-return.patch
     ];
 
     nativeBuildInputs = [
@@ -184,7 +186,7 @@ in
     '';
 
     postBuild = ''
-        cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
+      cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
       pushd ../OTRExporter
       python3 ./extract_assets.py -z ../build/ZAPD/ZAPD.out --norom --xml-root ../mm/assets/xml --custom-assets-path ../mm/assets/custom --custom-otr-file 2ship.o2r --port-ver ${finalAttrs.version}
       popd
