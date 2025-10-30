@@ -2,19 +2,10 @@ name: Format
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "**.nix"
-      - flake.lock
-      - .github/workflows/*.yml
+    branches: ["*"]
   merge_group:
   pull_request:
     branches: ["*"]
-    paths:
-      - "**.nix"
-      - flake.lock
-      - .github/workflows/*.yml
   workflow_dispatch:
 
 jobs:
