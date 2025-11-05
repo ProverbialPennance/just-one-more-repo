@@ -3,10 +3,22 @@ name: Format
 on:
   push:
     branches: ["*"]
+    paths:
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
   merge_group:
   pull_request:
     branches: ["*"]
+    paths:
+      - "**.nix"
+      - flake.lock
+      - .github/workflows/*.yml
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   format:
