@@ -24,6 +24,7 @@ jobs:
       - id: update-flake-lock
         uses: DeterminateSystems/update-flake-lock@v27
         with:
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           commit-msg: "flake: update inputs"
           pr-title: "flake: update inputs"
           pr-labels: "dependencies"
