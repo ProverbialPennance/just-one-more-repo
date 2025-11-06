@@ -123,8 +123,6 @@ in
           hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
         };
       })
-      # should probably be reported upstream that z_en_item00.c has an empty return in a Actor* fn def
-      ./0004-mismatch-return.patch
     ];
 
     nativeBuildInputs = [
