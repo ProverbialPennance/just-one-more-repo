@@ -28,6 +28,8 @@ jobs:
           commit-msg: "flake: update inputs"
           pr-title: "flake: update inputs"
           pr-labels: "dependencies"
+          git-author-name: github-actions[bot]
+          git-author-email: github-actions[bot]@users.noreply.github.com
 
       - uses: benc-uk/workflow-dispatch@v1
         if: ${{ contains(fromJSON('["created", "updated"]'), steps.update-flake-lock.outputs.pull-request-operation) }}
