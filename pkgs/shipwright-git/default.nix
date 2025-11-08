@@ -281,7 +281,7 @@ in
       (makeDesktopItem {
         name = "soh-git";
         icon = "soh";
-        exec = "soh-git";
+        exec = "soh";
         comment = finalAttrs.meta.description;
         genericName = "Ship of Harkinian (git)";
         desktopName = "soh-git";
