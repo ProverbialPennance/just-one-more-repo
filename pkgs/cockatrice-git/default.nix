@@ -6,7 +6,7 @@
   protobuf,
   kdePackages,
 }: let
-  rev' = "ec2d8f231d9259689b893f8f5e0bdb13418fa9f4";
+  rev' = "484e8e64a66a71e5906e5bf9c8d45e85a47e1325";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "cockatrice";
@@ -16,7 +16,7 @@ in
       owner = "Cockatrice";
       repo = "Cockatrice";
       rev = "${rev'}";
-      sha256 = "sha256-j4DFDcKQdQZoqYWMdo97hmFRlcjqrWY1vY5VHtd0X3I=";
+      sha256 = "sha256-eISx1E9E70E5dscWWYYOevnz9m8gA77WeNjCSeS6Kgo=";
     };
 
     buildInputs = [
