@@ -38,16 +38,10 @@
   writeTextFile,
   fixDarwinDylibNames,
   applyPatches,
+  sdl_gamecontrollerdb,
   shipwright,
 }: let
   # The following would normally get fetched at build time, or a specific version is required
-  gamecontrollerdb = fetchFromGitHub {
-    owner = "mdqinc";
-    repo = "SDL_GameControllerDB";
-    rev = "a74711e1e87733ccdf02d7020d8fa9e4fa67176e";
-    hash = "sha256-rXC4akz9BaKzr/C2CryZC6RGk6+fGVG7RsQryUFUUk0=";
-  };
-
   imgui' = applyPatches {
     src = fetchFromGitHub {
       owner = "ocornut";
@@ -70,8 +64,8 @@
   prism = fetchFromGitHub {
     owner = "KiritoDv";
     repo = "prism-processor";
-    rev = "7ae724a6fb7df8cbf547445214a1a848aefef747";
-    hash = "sha256-G7koDUxD6PgZWmoJtKTNubDHg6Eoq8I+AxIJR0h3i+A=";
+    rev = "bbcbc7e3f890a5806b579361e7aa0336acd547e7";
+    hash = "sha256-jRPwO1Vub0cH12YMlME6kd8zGzKmcfIrIJZYpQJeOks=";
   };
 
   stb_impl = writeTextFile {
@@ -263,7 +257,7 @@ in
 
     postBuild = ''
       port_ver=$(grep CMAKE_PROJECT_VERSION: "$PWD/CMakeCache.txt" | cut -d= -f2)
-      cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
+      cp ${sdl_gamecontrollerdb}/share/gamecontrollerdb.txt gamecontrollerdb.txt
       echo $(ls)
       mkdir -p soh/networking
       cp ${cacert}/etc/ssl/certs/ca-no-trust-rules-bundle.crt soh/networking/cacert.pem
