@@ -1,7 +1,6 @@
 {
   apple-sdk_13,
   stdenv,
-  replaceVars,
   cmake,
   lsb-release,
   ninja,
@@ -23,10 +22,6 @@
   makeWrapper,
   darwin,
   libicns,
-  libvorbis,
-  libogg,
-  libopus,
-  opusfile,
   libzip,
   nlohmann_json,
   tinyxml-2,
@@ -35,13 +30,20 @@
   fixDarwinDylibNames,
   applyPatches,
   shipwright,
+  libopus,
+  opusfile,
+  libogg,
+  libvorbis,
+  bzip2,
+  libX11,
+  sdl_gamecontrollerdb,
 }: let
   # The following would normally get fetched at build time, or a specific version is required
-  gamecontrollerdb = fetchFromGitHub {
-    owner = "mdqinc";
-    repo = "SDL_GameControllerDB";
-    rev = "a74711e1e87733ccdf02d7020d8fa9e4fa67176e";
-    hash = "sha256-rXC4akz9BaKzr/C2CryZC6RGk6+fGVG7RsQryUFUUk0=";
+  dr_libs = fetchFromGitHub {
+    owner = "mackron";
+    repo = "dr_libs";
+    rev = "da35f9d6c7374a95353fd1df1d394d44ab66cf01";
+    hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
   };
 
   imgui' = applyPatches {
@@ -109,6 +111,7 @@
     tag = "macOS13_iOS16";
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
   };
+
   rev' = "5249cd89df086e29510d2d77b4ce30d4019fe0d2";
 in
   stdenv.mkDerivation (finalAttrs: {
@@ -134,14 +137,6 @@ in
     patches = [
       ./darwin-fixes.patch
       ./disable-downloading-stb_image.patch
-      (replaceVars ./dont-fetch-dr_libs.patch {
-        dr_libs_src = fetchFromGitHub {
-          owner = "mackron";
-          repo = "dr_libs";
-          rev = "da35f9d6c7374a95353fd1df1d394d44ab66cf01";
-          hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
-        };
-      })
     ];
 
     nativeBuildInputs =
@@ -174,10 +169,12 @@ in
         nlohmann_json
         tinyxml-2
         spdlog
-        libvorbis
+        (lib.getDev libopus)
+        (lib.getDev opusfile)
         libogg
-        libopus
-        opusfile
+        libvorbis
+        bzip2
+        libX11
       ]
       ++ lib.optionals stdenv.hostPlatform.isLinux [
         libpulseaudio
@@ -193,12 +190,14 @@ in
         (lib.cmakeBool "BUILD_REMOTE_CONTROL" true)
         (lib.cmakeBool "NON_PORTABLE" true)
         (lib.cmakeFeature "CMAKE_INSTALL_PREFIX" "${placeholder "out"}/lib")
-        (lib.cmakeFeature "OPUSFILE_INCLUDE_DIR" "${opusfile.dev}")
+        (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_DR_LIBS" "${dr_libs}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMGUI" "${imgui'}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_LIBGFXD" "${libgfxd}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
+        (lib.cmakeFeature "OPUS_INCLUDE_DIR" "${lib.getDev libopus}/include/opus")
+        (lib.cmakeFeature "OPUSFILE_INCLUDE_DIR" "${lib.getDev opusfile}/include/opus")
       ]
       ++ lib.optionals stdenv.hostPlatform.isDarwin [
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_METALCPP" "${metalcpp}")
@@ -206,6 +205,8 @@ in
       ];
 
     env.NIX_CFLAGS_COMPILE = lib.optionalString stdenv.hostPlatform.isDarwin "-Wno-int-conversion -Wno-implicit-int -Wno-elaborated-enum-base";
+
+    strictDeps = true;
 
     dontAddPrefix = true;
 
@@ -229,7 +230,7 @@ in
 
     postBuild = ''
       port_ver=$(grep CMAKE_PROJECT_VERSION: "$PWD/CMakeCache.txt" | cut -d= -f2)
-      cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
+      cp ${sdl_gamecontrollerdb}/share/gamecontrollerdb.txt gamecontrollerdb.txt
       mv ../libultraship/src/fast/shaders ../soh/assets/custom
       pushd ../OTRExporter
       python3 ./extract_assets.py -z ../build/ZAPD/ZAPD.out --norom --xml-root ../soh/assets/xml --custom-assets-path ../soh/assets/custom --custom-otr-file soh.o2r --port-ver $port_ver
@@ -292,7 +293,7 @@ in
     meta = {
       homepage = "https://github.com/HarbourMasters/Shipwright";
       description = "PC port of Ocarina of Time with modern controls, widescreen, high-resolution, and more";
-      mainProgram = "soh";
+      mainProgram = "soh-git";
       platforms = lib.platforms.linux ++ lib.platforms.darwin;
       maintainers = with lib.maintainers; [
         j0lol
