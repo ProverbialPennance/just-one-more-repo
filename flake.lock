@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "crane": {
+      "locked": {
+        "lastModified": 1755993354,
+        "narHash": "sha256-FCRRAzSaL/+umLIm3RU3O/+fJ2ssaPHseI2SSFL8yZU=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "25bd41b24426c7734278c2ff02e53258851db914",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1762482733,
@@ -18,7 +33,29 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "wild": "wild"
+      }
+    },
+    "wild": {
+      "inputs": {
+        "crane": "crane",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762664973,
+        "narHash": "sha256-YNHT3yIJKO7f3hhKfVjIk/qP3SIif1sJh9eI85MmbF0=",
+        "owner": "davidlattimore",
+        "repo": "wild",
+        "rev": "3dbebc5a92b968b949ca2b3c884eed275dfabad7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "davidlattimore",
+        "repo": "wild",
+        "type": "github"
       }
     }
   },

@@ -1,11 +1,18 @@
 {
   description = "Because what's just one more flake, right?";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    wild = {
+      url = "github:davidlattimore/wild";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
   outputs = {
     self,
     nixpkgs,
+    wild,
   } @ inputs: let
     systems = [
       "x86_64-linux"
@@ -18,7 +25,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [self.overlays.default];
+        overlays = [(import wild) self.overlays.default];
       };
       overlay = self.overlays.default pkgs pkgs;
     in

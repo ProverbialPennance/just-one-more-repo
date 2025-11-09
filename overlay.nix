@@ -16,6 +16,7 @@ final: prev: {
   delta-patcher = final.callPackage ./pkgs/delta-patcher {};
   cockatrice-git = final.callPackage ./pkgs/cockatrice-git {};
   scopebuddy = final.callPackage ./pkgs/scopebuddy {};
+  wildStdenv = final.useWildLinker final.stdenv;
 
   # sm64baserom = final.callPackage ./pkgs/sm64baserom {};
   # sm64ex-ap = final.callPackage ./pkgs/sm64ex-ap {sm64baserom = final.callPackage ./pkgs/sm64baserom {};};
