@@ -9,6 +9,7 @@
     ./shipwright-git.nix
     ./perfect-dark-git.nix
     ./dolphin-memory-engine.nix
+    ./binfmt.nix
   ];
 
   nixpkgs.overlays = [
