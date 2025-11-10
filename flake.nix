@@ -29,6 +29,18 @@
 
     overlays.default = import ./overlay.nix;
     nixosModules.default = import ./modules;
+    checks = forAllSystems (
+      system: let
+        pkgs = import nixpkgs {inherit system;};
+      in let
+        forAllChecks = (import ./checks {lib = pkgs.lib;}).allChecks;
+      in
+        forAllChecks (check:
+          pkgs.callPackage check {
+            self = self;
+            pkgs = pkgs;
+          })
+    );
 
     formatter = forAllSystems (
       system: let
