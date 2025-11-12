@@ -103,3 +103,9 @@ jobs:
         with:
           workflow: format.yml
           ref: refs/heads/update_${{ matrix.package }}
+
+      - uses: benc-uk/workflow-dispatch@v1
+        if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
+        with:
+          workflow: nixos-modules.yml
+          ref: refs/heads/update_${{ matrix.package }}
