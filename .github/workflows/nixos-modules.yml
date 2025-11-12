@@ -22,10 +22,12 @@ concurrency:
 
 jobs:
   flake-checks:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm64]
-    runs-on: ${{ matrix.os }}
+    # It seems that ARM runners are not picking up requested jobs.
+    # disabling for now.
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest, ubuntu-24.04-arm64]
+    runs-on: [ubuntu-latest]
     name: Flake Checks
     steps:
       - uses: actions/checkout@v5
