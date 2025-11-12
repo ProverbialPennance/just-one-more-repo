@@ -2,6 +2,7 @@
 
 [![Build](https://github.com/ProverbialPennance/just-one-more-repo/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/ProverbialPennance/just-one-more-repo/actions/workflows/build.yml?branch=main)
 [![Format](https://github.com/ProverbialPennance/just-one-more-repo/actions/workflows/format.yml/badge.svg?branch=main)](https://github.com/ProverbialPennance/just-one-more-repo/actions/workflows/format.yml?branch=main)
+[![Checks](https://github.com/ProverbialPennance/just-one-more-repo/actions/workflows/nixos-modules.yml/badge.svg?branch=main)](https://github.com/ProverbialPennance/just-one-more-repo/actions/workflows/nixos-modules.yml?branch=main)
 
 because _what's the harm in one more flake input?_
 
