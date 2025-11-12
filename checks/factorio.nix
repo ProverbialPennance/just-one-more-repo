@@ -40,10 +40,14 @@ in
       start_all()
 
       for machine in machines:
+        print(machine)
+        print("waiting for factorio.service")
         machine.wait_for_unit("network-online.target")
         machine.wait_for_unit("factorio.service")
 
+        print("checking status")
         machine.succeed("systemctl status factorio.service --no-pager -l")
-        machine.shutdown()
+
+      join_all()
     '';
   })
