@@ -1,9 +1,8 @@
 {
   "x86_64-linux": {
     "headless": {
-      "stable": {
-        "candidateHashFilenames": ["factorio-headless_linux_2.0.71.tar.xz"],
-        "name": "factorio-headless_linux_2.0.71.tar.xz",
+      "experimental": {
+        "name": "factorio_headless_x64-2.0.71.tar.xz",
         "needsAuth": false,
         "sha256": "5f95599fd204ade051b1027f32902b3227da61a2822faf1e144cb1407b36a251",
         "tarDirectory": "x64",
