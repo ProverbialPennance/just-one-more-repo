@@ -31,7 +31,11 @@
     nixosModules.default = import ./modules;
     checks = forAllSystems (
       system: let
-        pkgs = import nixpkgs {inherit system;};
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [self.overlays.default];
+        };
       in let
         forAllChecks = (import ./checks {lib = pkgs.lib;}).allChecks;
       in
