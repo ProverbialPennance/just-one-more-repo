@@ -1,4 +1,13 @@
 pull_request_rules:
+  - name: rebase pull requests labeled with `rebase`, once
+    conditions:
+      - label = rebase
+    actions:
+      rebase:
+        bot_account: author=mergify[bot]
+      label:
+        remove:
+          - rebase
   - name: Auto-merge for dependency bump pull requests
     conditions:
       - or:
@@ -9,6 +18,13 @@ pull_request_rules:
           - label=dependencies
           - label=update
       - check-success=Build
+      - check-success=Format
+      - or:
+          - check-success=Checks
+          - check-neutral=Checks
+          - check-pending=Checks
+          - check-timed-out=Checks
+          - check-stale=Checks
     actions:
       merge:
         method: rebase
