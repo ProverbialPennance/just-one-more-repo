@@ -3,8 +3,7 @@ pull_request_rules:
     conditions:
       - label = rebase
     actions:
-      rebase:
-        bot_account: author=mergify[bot]
+      rebase: {}
       label:
         remove:
           - rebase
