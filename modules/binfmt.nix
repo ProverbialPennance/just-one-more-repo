@@ -41,6 +41,9 @@ in {
       etc = {
         "dotnet/install_location".text = "${cfg.package}/share/dotnet";
       };
+      variables = {
+        DOTNET_CLI_TELEMETRY_OPTOUT = 1;
+      };
     };
     boot.binfmt.registrations = {
       "dotnet" = {
