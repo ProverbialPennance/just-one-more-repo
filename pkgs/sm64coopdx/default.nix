@@ -25,7 +25,7 @@ stdenv.mkDerivation (finalAtrrs: {
     owner = "coop-deluxe";
     repo = "sm64coopdx";
     tag = "v${finalAtrrs.version}";
-    hash = "sha256-YPkn+fYPA27VPoCbY5r8q1B5psqB2uwYW8o8BgAte4E=";
+    hash = "sha256-9N5M0s2G8GT77c+vtN4octMyQimcFHXGdjkkC0NP51w=";
     deepClone = true;
     leaveDotGit = true;
   };
