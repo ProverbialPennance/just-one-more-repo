@@ -96,8 +96,7 @@ jobs:
         id: update-package
         run: |
           echo "${{ matrix.package }}" | grep '\-git' >/dev/null && \
-          nix-update ${{ matrix.package }} --flake --commit --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)' --version=branch || \
-          nix-update ${{ matrix.package }} --flake --commit --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)' --version=unstable
+          nix-update ${{ matrix.package }} --flake --commit --use-update-script
 
       - name: Create Pull Request
         id: cpr
