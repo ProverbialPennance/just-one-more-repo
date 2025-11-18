@@ -27,7 +27,11 @@ in
       fetchSubmodules = true;
     };
 
-    passthru.updateScript = generic-updater {};
+    passthru.updateScript = generic-updater {
+      extraArgs = [
+        "--version=unstable"
+      ];
+    };
 
     nativeBuildInputs = [
       cmake
