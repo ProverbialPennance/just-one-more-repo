@@ -58,9 +58,7 @@ jobs:
 
       - uses: yaxitech/nix-install-pkgs-action@v7
         with:
-          # There's a fun little happenstance where upstream tries fetching from an invalid url
-          # packages: "github:Mic92/nix-update, nixpkgs#jq"
-          packages: "github:ProverbialPennance/nix-update"
+          packages: "github:Mic92/nix-update, nixpkgs#jq"
 
       - name: Configure git
         run: |
