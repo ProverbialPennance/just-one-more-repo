@@ -95,7 +95,6 @@ jobs:
       - name: Update package
         id: update-package
         run: |
-          echo "${{ matrix.package }}" | grep '\-git' >/dev/null && \
           nix-update ${{ matrix.package }} --flake --commit --use-update-script
 
       - name: Create Pull Request
