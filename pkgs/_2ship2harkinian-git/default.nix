@@ -1,5 +1,6 @@
 {
   lib,
+  _generic-updater,
   fetchFromGitHub,
   applyPatches,
   _2ship2harkinian-git,
@@ -102,6 +103,10 @@ in
       rev = rev';
       hash = "sha256-ZdUr9h9KLpRd/BjW+ybb4UiHb88XC7QDavAk9LJJSXQ=";
       fetchSubmodules = true;
+    };
+
+    passthru.updateScript = _generic-updater {
+      extraArgs = ["--version=branch"];
     };
 
     patches = [

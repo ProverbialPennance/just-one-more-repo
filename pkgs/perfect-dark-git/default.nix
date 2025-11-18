@@ -1,5 +1,6 @@
 {
   romID ? "ntsc-final",
+  _generic-updater,
   lib,
   fetchFromGitHub,
   stdenv,
@@ -29,6 +30,10 @@ in
         repo = "perfect_dark";
         rev = "${rev'}";
         hash = "sha256-wP0qUNOx0nlycTxE0BIfK9nvzfk2asAABwWDsPhi2UY=";
+      };
+
+      passthru.updateScript = _generic-updater {
+        extraArgs = ["--version=branch"];
       };
 
       buildInputs = [

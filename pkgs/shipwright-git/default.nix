@@ -1,5 +1,6 @@
 {
   apple-sdk_13,
+  _generic-updater,
   stdenv,
   cmake,
   lsb-release,
@@ -132,6 +133,12 @@ in
         (git describe --tags --abbrev=0 --exact-match HEAD 2>/dev/null || echo "") > GIT_COMMIT_TAG
         rm -rf .git
       '';
+    };
+
+    passthru.updateScript = _generic-updater {
+      extraArgs = [
+        "--version=branch"
+      ];
     };
 
     patches = [

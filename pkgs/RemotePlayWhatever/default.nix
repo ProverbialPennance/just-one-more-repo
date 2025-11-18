@@ -1,5 +1,6 @@
 {
   lib,
+  _generic-updater,
   fetchFromGitHub,
   stdenv,
   fetchurl,
@@ -25,6 +26,8 @@ in
       hash = "sha256-r6OtvLW/qWfEwI9vN2ZCy3dRae9YRofvn0wH/CUzFAk=";
       fetchSubmodules = true;
     };
+
+    passthru.updateScript = _generic-updater {};
 
     nativeBuildInputs = [
       cmake

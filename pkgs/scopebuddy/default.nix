@@ -1,5 +1,6 @@
 {
   lib,
+  _generic-updater,
   perl,
   jq,
   stdenvNoCC,

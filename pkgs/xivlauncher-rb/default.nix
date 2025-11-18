@@ -17,6 +17,7 @@
   copyDesktopItems,
   makeDesktopItem,
   makeWrapper,
+  writeScript,
   useSteamRun ? true,
   useGameMode ? false,
   nvngxPath ? "",
@@ -34,6 +35,12 @@ in
       hash = "sha256-L3Z6MNtzq88ol3hSgWRbl5+R5NCNCN0pU/DqAe2o+Rc=";
       fetchSubmodules = true;
     };
+
+    passthru.updateScript = writeScript "update-xivlauncher-rb" ''
+      #!/usr/bin/env nix-shell
+      #!nix-shell -i bash -p nix-update
+      nix-update ${pname} --flake --version-regex '(?:v|rb-v|)(.*)(?:-.*|\+.*|)' --version=unstable
+    '';
 
     nativeBuildInputs = [
       copyDesktopItems
