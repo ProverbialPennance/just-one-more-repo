@@ -1,6 +1,6 @@
 {
   lib,
-  _generic-updater,
+  generic-updater,
   fetchFromGitHub,
   stdenv,
   fetchurl,
@@ -27,7 +27,7 @@ in
       fetchSubmodules = true;
     };
 
-    passthru.updateScript = _generic-updater {};
+    passthru.updateScript = generic-updater {};
 
     nativeBuildInputs = [
       cmake

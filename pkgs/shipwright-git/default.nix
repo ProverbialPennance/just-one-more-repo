@@ -1,6 +1,6 @@
 {
   apple-sdk_13,
-  _generic-updater,
+  generic-updater,
   stdenv,
   cmake,
   lsb-release,
@@ -135,7 +135,7 @@ in
       '';
     };
 
-    passthru.updateScript = _generic-updater {
+    passthru.updateScript = generic-updater {
       extraArgs = [
         "--version=branch"
       ];

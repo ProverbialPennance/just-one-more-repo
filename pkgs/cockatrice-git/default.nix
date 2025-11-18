@@ -1,6 +1,6 @@
 {
   lib,
-  _generic-updater,
+  generic-updater,
   fetchFromGitHub,
   stdenv,
   cmake,
@@ -20,7 +20,7 @@ in
       sha256 = "sha256-PMEs7FJcXGVg9CJVDFcJYitJJR/GO3O/5Fnj50ZduGI=";
     };
 
-    passthru.updateScript = _generic-updater {
+    passthru.updateScript = generic-updater {
       extraArgs = ["--version=branch"];
     };
 

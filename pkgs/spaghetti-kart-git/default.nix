@@ -1,6 +1,6 @@
 {
   lib,
-  _generic-updater,
+  generic-updater,
   fetchFromGitHub,
   fetchurl,
   writeTextFile,
@@ -128,7 +128,7 @@ in
       '';
     };
 
-    passthru.updateScript = _generic-updater {
+    passthru.updateScript = generic-updater {
       extraArgs = [
         "--version=branch"
       ];

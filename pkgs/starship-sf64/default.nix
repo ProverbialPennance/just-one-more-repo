@@ -5,7 +5,7 @@
   writeTextFile,
   fetchurl,
   stdenv,
-  _generic-updater,
+  generic-updater,
   replaceVars,
   yaml-cpp,
   srcOnly,
@@ -114,7 +114,7 @@ in
       fetchSubmodules = true;
     };
 
-    passthru.updateScript = _generic-updater {};
+    passthru.updateScript = generic-updater {};
 
     patches = [
       # Don't fetch stb as we will patch our own

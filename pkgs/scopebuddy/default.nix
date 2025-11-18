@@ -1,6 +1,6 @@
 {
   lib,
-  _generic-updater,
+  generic-updater,
   perl,
   jq,
   stdenvNoCC,
@@ -17,6 +17,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     rev = "${finalAttrs.version}";
     sha256 = "sha256-e3+/IKB9w50snYNa+85TZ0T2e4FmRmnmJK3NwGGunbc=";
   };
+
+  passthru.updateScript = generic-updater {};
 
   nativeBuildInputs = [makeWrapper];
 

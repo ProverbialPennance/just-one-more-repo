@@ -1,6 +1,6 @@
 {
   romID ? "ntsc-final",
-  _generic-updater,
+  generic-updater,
   lib,
   fetchFromGitHub,
   stdenv,
@@ -32,7 +32,7 @@ in
         hash = "sha256-wP0qUNOx0nlycTxE0BIfK9nvzfk2asAABwWDsPhi2UY=";
       };
 
-      passthru.updateScript = _generic-updater {
+      passthru.updateScript = generic-updater {
         extraArgs = ["--version=branch"];
       };
 
