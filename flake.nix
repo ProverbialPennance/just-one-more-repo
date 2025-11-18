@@ -25,7 +25,7 @@
       overlay;
   in {
     inherit (import ./flake.nix) nixConfig;
-    packages = forAllSystems pkgsFor;
+    packages = builtins.mapAttrs (name: value: removeAttrs value ["generic-updater"]) (forAllSystems pkgsFor);
 
     overlays.default = import ./overlay.nix;
     nixosModules.default = import ./modules;
