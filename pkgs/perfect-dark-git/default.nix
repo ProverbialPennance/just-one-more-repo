@@ -22,7 +22,7 @@ in
   assert lib.assertOneOf "romID" romID roms;
     stdenv.mkDerivation rec {
       pname = "perfect_dark";
-      version = "ci-dev-build";
+      version = "ci-dev-build-unstable-2025-11-09";
 
       src = fetchFromGitHub {
         owner = "fgsfdsfgs";
