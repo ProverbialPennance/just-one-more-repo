@@ -55,7 +55,6 @@ in
       enableParallelBuilding = true;
 
       hardeningDisable = ["format"]; # otherwise fails to build
-      hardeningEnable = ["pie"];
 
       preConfigure = ''
         patchShebangs .
