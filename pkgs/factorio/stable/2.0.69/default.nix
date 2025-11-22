@@ -16,6 +16,7 @@
   libxkbcommon,
   makeDesktopItem,
   makeWrapper,
+  writeScript,
   releaseType,
   stdenv,
   wayland,
@@ -207,7 +208,9 @@ assert releaseType
         $out/bin/factorio
     '';
 
-    passthru.updateScript = ./update.py;
+    passthru.updateScript = writeScript "null-update" ''
+      exit 0
+    '';
 
     meta = {
       description = "Game in which you build and maintain factories";
