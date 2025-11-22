@@ -170,9 +170,6 @@ in
     # Linking fails without this
     hardeningDisable = ["format"];
 
-    # Pie needs to be enabled or else it segfaults
-    hardeningEnable = ["pie"];
-
     preConfigure = ''
       # mirror 2ship's stb
       mkdir stb
