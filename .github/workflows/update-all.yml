@@ -11,6 +11,22 @@ on:
       - .github/workflows/update-all.yml
 
 jobs:
+  determine-base:
+    runs-on: ubuntu-latest
+    outputs:
+      base_ref: ${{ steps.define-base.outputs.base_ref }}
+
+    steps:
+      - name: determine base ref
+        id: define-base
+        run: |
+          set -euxo pipefail
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ] || [ "$GITHUB_EVENT_NAME" = "pull_request_target" ]; then
+            echo "base_ref=$GITHUB_BASE_REF" >> "$GITHUB_OUTPUT"
+          else
+            echo "base_ref=main" >> "$GITHUB_OUTPUT"
+          fi
+
   define-matrix:
     runs-on: ubuntu-latest
     outputs:
@@ -47,7 +63,9 @@ jobs:
       actions: write
       contents: write
       pull-requests: write
-    needs: define-matrix
+    needs:
+      - define-matrix
+      - determine-base
     strategy:
       # max-parallel: 1
       matrix:
@@ -85,6 +103,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
+          base: ${{ needs.determine-base.outputs.base_ref }}
           branch: update_${{ matrix.package }}
           delete-branch: true
           committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
