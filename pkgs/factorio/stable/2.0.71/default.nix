@@ -16,6 +16,7 @@
   libxkbcommon,
   makeDesktopItem,
   makeWrapper,
+  writeScript,
   releaseType,
   stdenv,
   wayland,
@@ -194,6 +195,10 @@ assert releaseType == "headless"; let
       patchelf \
         --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
         $out/bin/factorio
+    '';
+
+    passthru.updateScript = writeScript "null-update" ''
+      exit 0
     '';
 
     meta = {
