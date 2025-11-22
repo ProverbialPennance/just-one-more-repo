@@ -8,7 +8,7 @@
   nodejs,
   electron,
   fetchFromGitHub,
-  nix-update-script,
+  generic-updater,
   makeWrapper,
   makeDesktopItem,
   copyDesktopItems,
@@ -23,8 +23,6 @@ stdenv.mkDerivation (finalAttrs: {
     rev = "v${finalAttrs.version}";
     hash = "sha256-Z+KCeRTkbHi1vRU/MkkOgaYVQikFkX0OgkncOLsgsQc=";
   };
-
- passthru.updateScript = generic-updater {};
 
   offlineCache = fetchYarnDeps {
     yarnLock = "${finalAttrs.src}/yarn.lock";
@@ -114,7 +112,7 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = generic-updater {};
 
   meta = {
     changelog = "https://github.com/ebkr/r2modmanPlus/releases/tag/v${finalAttrs.version}";
