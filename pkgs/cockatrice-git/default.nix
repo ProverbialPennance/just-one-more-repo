@@ -1,5 +1,6 @@
 {
   lib,
+  generic-updater,
   fetchFromGitHub,
   stdenv,
   cmake,
@@ -17,6 +18,10 @@ in
       repo = "Cockatrice";
       rev = "${rev'}";
       sha256 = "sha256-PMEs7FJcXGVg9CJVDFcJYitJJR/GO3O/5Fnj50ZduGI=";
+    };
+
+    passthru.updateScript = generic-updater {
+      extraArgs = ["--version=branch"];
     };
 
     buildInputs = [

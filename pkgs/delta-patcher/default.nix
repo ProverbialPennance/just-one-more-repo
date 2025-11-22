@@ -1,5 +1,6 @@
 {
   lib,
+  generic-updater,
   stdenv,
   fetchFromGitHub,
   copyDesktopItems,
@@ -24,6 +25,8 @@ in
       hash = "sha256-gp31MKin/kQMmXRTQzzBFjAH5WiaOT3VilHL4ceyo6A=";
       fetchSubmodules = true;
     };
+
+    passthru.updateScript = generic-updater {};
 
     nativeBuildInputs = [
       cmake

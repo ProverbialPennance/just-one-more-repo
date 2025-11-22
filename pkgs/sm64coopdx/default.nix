@@ -1,5 +1,6 @@
 {
   lib,
+  generic-updater,
   fetchFromGitHub,
   makeWrapper,
   curl,
@@ -29,6 +30,8 @@ stdenv.mkDerivation (finalAtrrs: {
     deepClone = true;
     leaveDotGit = true;
   };
+
+  passthru.updateScript = generic-updater {};
 
   nativeBuildInputs = [
     makeWrapper

@@ -1,5 +1,6 @@
 {
   lib,
+  generic-updater,
   fetchFromGitHub,
   fetchurl,
   writeTextFile,
@@ -125,6 +126,12 @@ in
         git log --pretty=format:%h -1 > PROJECT_VERSION_PATCH
         rm -rf .git
       '';
+    };
+
+    passthru.updateScript = generic-updater {
+      extraArgs = [
+        "--version=branch"
+      ];
     };
 
     patches = [

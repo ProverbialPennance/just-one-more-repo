@@ -1,5 +1,6 @@
 {
   lib,
+  generic-updater,
   kdePackages,
   cmake,
   stdenv,
@@ -29,6 +30,8 @@ in
           rm -rf .git
         '';
       };
+
+      passthru.updateScript = generic-updater {};
 
       nativeBuildInputs = [
         cmake

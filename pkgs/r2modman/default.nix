@@ -8,7 +8,7 @@
   nodejs,
   electron,
   fetchFromGitHub,
-  nix-update-script,
+  generic-updater,
   makeWrapper,
   makeDesktopItem,
   copyDesktopItems,
@@ -112,7 +112,7 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = generic-updater {};
 
   meta = {
     changelog = "https://github.com/ebkr/r2modmanPlus/releases/tag/v${finalAttrs.version}";

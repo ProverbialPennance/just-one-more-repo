@@ -5,6 +5,7 @@
   writeTextFile,
   fetchurl,
   stdenv,
+  generic-updater,
   replaceVars,
   yaml-cpp,
   srcOnly,
@@ -112,6 +113,8 @@ in
       hash = "sha256-pjftFMUE3UQuFe6WJI+n9GllV9uT2bvhHaUICaPHz+Q=";
       fetchSubmodules = true;
     };
+
+    passthru.updateScript = generic-updater {};
 
     patches = [
       # Don't fetch stb as we will patch our own

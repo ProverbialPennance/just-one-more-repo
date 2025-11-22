@@ -1,5 +1,6 @@
 {
   lib,
+  generic-updater,
   fetchFromGitHub,
   stdenv,
   fetchurl,
@@ -24,6 +25,12 @@ in
       tag = "${finalAtrrs.version}";
       hash = "sha256-r6OtvLW/qWfEwI9vN2ZCy3dRae9YRofvn0wH/CUzFAk=";
       fetchSubmodules = true;
+    };
+
+    passthru.updateScript = generic-updater {
+      extraArgs = [
+        "--version=unstable"
+      ];
     };
 
     nativeBuildInputs = [
