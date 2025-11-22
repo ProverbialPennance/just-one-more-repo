@@ -24,6 +24,8 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Z+KCeRTkbHi1vRU/MkkOgaYVQikFkX0OgkncOLsgsQc=";
   };
 
+ passthru.updateScript = generic-updater {};
+
   offlineCache = fetchYarnDeps {
     yarnLock = "${finalAttrs.src}/yarn.lock";
     hash = "sha256-V6N0RIjT3etoP6XdZhnQv4XViLRypp/JWxnb0sBc6Oo=";
