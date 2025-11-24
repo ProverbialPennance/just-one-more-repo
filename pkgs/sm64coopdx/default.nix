@@ -20,13 +20,13 @@
 }:
 stdenv.mkDerivation (finalAtrrs: {
   pname = "sm64coopdx";
-  version = "1.3.2";
+  version = "1.4";
 
   src = fetchFromGitHub {
     owner = "coop-deluxe";
     repo = "sm64coopdx";
     tag = "v${finalAtrrs.version}";
-    hash = "sha256-9N5M0s2G8GT77c+vtN4octMyQimcFHXGdjkkC0NP51w=";
+    hash = "sha256-UpOLFmuwFLDkSr75V80NimKWSwOh/nPiPbVhc4hDzQ8=";
     deepClone = true;
     leaveDotGit = true;
   };
