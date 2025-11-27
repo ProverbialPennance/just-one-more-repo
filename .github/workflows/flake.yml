@@ -24,7 +24,7 @@ jobs:
           diagnostic-endpoint: ""
 
       - id: update-flake-lock
-        uses: DeterminateSystems/update-flake-lock@v27
+        uses: DeterminateSystems/update-flake-lock@v28
         with:
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           commit-msg: "flake: update inputs"
