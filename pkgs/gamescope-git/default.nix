@@ -8,7 +8,7 @@
   fetchFromGitHub,
   gamescope,
 }: let
-  rev' = "9416ca9334da7ff707359e5f6aa65dcfff66aa01";
+  rev' = "70614184ebf6d12dd1e390082d98ad569e7601aa";
   shortRev = builtins.substring 0 7 rev';
 in
   gamescope.overrideAttrs (prevAttrs: {
@@ -18,7 +18,7 @@ in
       owner = "ValveSoftware";
       repo = "gamescope";
       rev = "${rev'}";
-      sha256 = "sha256-bZXyNmhLG1ZcD9nNKG/BElp6I57GAwMSqAELu2IZnqA=";
+      sha256 = "sha256-StmXf8G3SIacddFxg5xMyvHI2ESiaWaivw3ZM9jAQM4=";
       fetchSubmodules = true;
     };
 
