@@ -114,7 +114,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "0.0.4-unstable-2025-11-09";
+    version = "0-unstable-2025-11-02";
 
     src = fetchFromGitHub {
       #aMannus/Shipwright/tree/aManchipelago
