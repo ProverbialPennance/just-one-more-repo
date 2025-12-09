@@ -1,3 +1,7 @@
+# MIT License
+#
+# Copyright (c) 2023 Pedro Henrique Lara Campos <nyx@pedrohlc.com>
+#
 {
   lib,
   generic-updater,
