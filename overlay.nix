@@ -22,7 +22,6 @@ final: prev: {
   generic-updater = final.callPackage ./scripts/update/generic-updater.nix {};
 
   shipwright-ap = final.callPackage ./pkgs/shipwright-ap {};
-  cacert-pem = final.callPackage ./pkgs/cacert-pem {};
   # sm64baserom = final.callPackage ./pkgs/sm64baserom {};
   # sm64ex-ap = final.callPackage ./pkgs/sm64ex-ap {sm64baserom = final.callPackage ./pkgs/sm64baserom {};};
 }
