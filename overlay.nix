@@ -20,6 +20,8 @@ final: prev: {
   r2modman = final.callPackage ./pkgs/r2modman {};
   generic-updater = final.callPackage ./scripts/update/generic-updater.nix {};
 
+  gamescope-git = final.callPackage ./pkgs/gamescope-git {};
+
   # sm64baserom = final.callPackage ./pkgs/sm64baserom {};
   # sm64ex-ap = final.callPackage ./pkgs/sm64ex-ap {sm64baserom = final.callPackage ./pkgs/sm64baserom {};};
 }
