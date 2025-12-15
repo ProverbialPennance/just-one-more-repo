@@ -13,7 +13,6 @@
   python3,
   glew,
   cacert,
-  # boost,
   SDL2,
   SDL2_net,
   pkg-config,
@@ -40,6 +39,7 @@
   applyPatches,
   sdl_gamecontrollerdb,
   shipwright,
+  generic-updater,
 }: let
   # The following would normally get fetched at build time, or a specific version is required
   imgui' = applyPatches {
@@ -132,6 +132,12 @@ in
         (git describe --tags --abbrev=0 --exact-match HEAD 2>/dev/null || echo "") > GIT_COMMIT_TAG
         rm -rf .git
       '';
+    };
+
+    passthru.updateScript = generic-updater {
+      extraArgs = [
+        "--version=branch=aManchipelago"
+      ];
     };
 
     patches = [
