@@ -17,9 +17,11 @@ final: prev: {
   delta-patcher = final.callPackage ./pkgs/delta-patcher {};
   cockatrice-git = final.callPackage ./pkgs/cockatrice-git {};
   scopebuddy = final.callPackage ./pkgs/scopebuddy {};
+
   r2modman = final.callPackage ./pkgs/r2modman {};
   generic-updater = final.callPackage ./scripts/update/generic-updater.nix {};
 
+  shipwright-ap = final.callPackage ./pkgs/shipwright-ap {};
   # sm64baserom = final.callPackage ./pkgs/sm64baserom {};
   # sm64ex-ap = final.callPackage ./pkgs/sm64ex-ap {sm64baserom = final.callPackage ./pkgs/sm64baserom {};};
 }
