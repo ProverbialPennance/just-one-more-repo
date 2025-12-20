@@ -7,11 +7,11 @@
   protobuf,
   kdePackages,
 }: let
-  rev' = "ebb02b27b27fe579449502615b24dd58faa2b49c";
+  rev' = "715ee1d6fed8298b1dd19dd40817114ccf03ab2d";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "cockatrice";
-    version = "2025-12-18-Development-2.11.0-beta.40-unstable-2025-12-18";
+    version = "2025-12-18-Development-2.11.0-beta.40-unstable-2025-12-19";
 
     src = fetchFromGitHub {
       owner = "Cockatrice";
