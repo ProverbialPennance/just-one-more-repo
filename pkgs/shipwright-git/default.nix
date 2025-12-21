@@ -302,10 +302,10 @@ in
       description = "PC port of Ocarina of Time with modern controls, widescreen, high-resolution, and more";
       mainProgram = "soh-git";
       platforms = lib.platforms.linux ++ lib.platforms.darwin;
-      maintainers = with lib.maintainers; [
-        j0lol
-        matteopacini
-      ];
+      # maintainers = with lib.maintainers; [
+      #   j0lol
+      #   matteopacini
+      # ];
       license = with lib.licenses; [
         # OTRExporter, OTRGui, ZAPDTR, libultraship
         mit
