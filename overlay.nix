@@ -17,6 +17,7 @@ final: prev: {
   delta-patcher = final.callPackage ./pkgs/delta-patcher {};
   cockatrice-git = final.callPackage ./pkgs/cockatrice-git {};
   scopebuddy = final.callPackage ./pkgs/scopebuddy {};
+  wildStdenv = final.useWildLinker final.stdenv;
 
   r2modman = final.callPackage ./pkgs/r2modman {};
   generic-updater = final.callPackage ./scripts/update/generic-updater.nix {};
