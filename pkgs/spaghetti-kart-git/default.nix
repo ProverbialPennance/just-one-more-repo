@@ -1,51 +1,43 @@
 {
   lib,
-  generic-updater,
   fetchFromGitHub,
-  fetchurl,
+  applyPatches,
   writeTextFile,
+  fetchurl,
+  fetchpatch,
+  stdenv,
+  replaceVars,
+  yaml-cpp,
+  srcOnly,
   cmake,
+  copyDesktopItems,
+  installShellFiles,
+  lsb-release,
+  makeWrapper,
   ninja,
+  pkg-config,
+  libGL,
+  libvorbis,
+  libx11,
+  libzip,
+  nlohmann_json,
   SDL2,
   SDL2_net,
-  lsb-release,
-  libpng,
-  nlohmann_json,
-  libzip,
-  tinyxml-2,
   spdlog,
-  bzip2,
-  libogg,
-  libvorbis,
-  miniaudio,
-  libGL,
-  python3,
-  yaml-cpp,
-  libX11,
+  tinyxml-2,
+  tomlplusplus,
   zenity,
-  pkg-config,
-  stdenv,
-  applyPatches,
-  replaceVars,
-  srcOnly,
-  installShellFiles,
-  makeDesktopItem,
-  copyDesktopItems,
-  makeWrapper,
+  sdl_gamecontrollerdb,
   spaghetti-kart-git,
+  makeDesktopItem,
+  generic-updater,
 }: let
-  dr-libs = fetchFromGitHub {
+  # The following are either normally fetched during build time or a specific version is required
+  dr_libs = fetchFromGitHub {
     owner = "mackron";
     repo = "dr_libs";
     rev = "da35f9d6c7374a95353fd1df1d394d44ab66cf01";
     hash = "sha256-ydFhQ8LTYDBnRTuETtfWwIHZpRciWfqGsZC6SuViEn0=";
-  };
-
-  gamecontrollerdb = fetchFromGitHub {
-    owner = "mdqinc";
-    repo = "SDL_GameControllerDB";
-    rev = "e84a52679007c6a6346794cda1fdbcb941ac6494";
-    hash = "sha256-npgsTvRQRQkgT8C1nwisJqq2m+DT9q/r/Zev2NipGcU=";
   };
 
   imgui' = applyPatches {
@@ -72,6 +64,12 @@
     repo = "prism-processor";
     rev = "bbcbc7e3f890a5806b579361e7aa0336acd547e7";
     hash = "sha256-jRPwO1Vub0cH12YMlME6kd8zGzKmcfIrIJZYpQJeOks=";
+  };
+
+  semver = fetchurl {
+    name = "semver.hpp";
+    url = "https://raw.githubusercontent.com/Neargye/semver/refs/tags/v1.0.0-rc/include/semver.hpp";
+    hash = "sha256-rywMUxJNx/UsWKcgXkWK0++6wvYc5Vrd+cj5QzigQYI=";
   };
 
   stb_impl = writeTextFile {
@@ -107,17 +105,28 @@
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
   };
 
-  rev' = "eec7d650482134352b7cde4801b979ce1ed2044e";
+  # Include cmake4 patch
+  # Remove when yaml-cpp.src is updated to include it
+  yaml-patched = applyPatches {
+    src = yaml-cpp.src;
+    patches = [
+      (fetchpatch {
+        name = "yaml-cpp-fix-cmake-4.patch";
+        url = "https://github.com/jbeder/yaml-cpp/commit/c2680200486572baf8221ba052ef50b58ecd816e.patch";
+        hash = "sha256-1kXRa+xrAbLEhcJxNV1oGHPmayj1RNIe6dDWXZA3mUA=";
+      })
+    ];
+  };
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "spaghetti-kart";
-    version = "0.9.9.1-unstable-2025-12-06";
+    version = "1.0.0-unstable-2026-03-10";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "SpaghettiKart";
-      rev = "${rev'}";
-      hash = "sha256-BVI8DCqS+T+5Pt2+sNmVBEk3SSKAMYfr68rC4jhLtOU=";
+      rev = "f7aab65da475d3fc4661c166aa40f2692a8b3c52";
+      hash = "sha256-OLR3Nn5X2gqWaoV2N0W6SkMYPwKmD4Xov2nffEDN08s=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
@@ -135,8 +144,10 @@ in
     };
 
     patches = [
+      # Don't fetch stb as we will patch our own
       ./dont-fetch-stb.patch
 
+      # Can't fetch these torch deps in the sandbox
       (replaceVars ./git-deps.patch {
         libgfxd_src = fetchFromGitHub {
           owner = "glankk";
@@ -158,57 +169,54 @@ in
         };
         tinyxml2_src = srcOnly tinyxml-2;
       })
+
+      # Can't fetch in the sandbox
+      ./semver.patch
     ];
+
+    # Recent builds enabled LTO which won't build with nix
+    env.NIX_CFLAGS_COMPILE = "-fno-lto";
 
     nativeBuildInputs = [
       cmake
       copyDesktopItems
       installShellFiles
       lsb-release
-      python3
       makeWrapper
       ninja
       pkg-config
     ];
 
     buildInputs = [
+      libGL
+      libvorbis
+      libx11
+      libzip
+      nlohmann_json
       SDL2
       SDL2_net
-      libpng
-      nlohmann_json
-      libzip
-      tinyxml-2
       spdlog
-      bzip2
-      libogg
-      libvorbis
-      miniaudio
-      libGL
-      yaml-cpp
-      libX11
+      tinyxml-2
+      tomlplusplus
       zenity
     ];
 
     cmakeFlags = [
       (lib.cmakeFeature "CMAKE_INSTALL_PREFIX" "${placeholder "out"}")
-      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_DR_LIBS" "${dr-libs}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_DR_LIBS" "${dr_libs}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMGUI" "${imgui'}")
-      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
-      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
-      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_TINYXML2" "${tinyxml-2}")
-      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_YAML-CPP" "${yaml-cpp.src}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_LIBGFXD" "${libgfxd}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
-      # yaml-cpp is the root dependency which causes a build error.
-      # the cause comes from the cmake version range specified in
-      # https://github.com/jbeder/yaml-cpp/blob/28f93bdec6387d42332220afa9558060c8016795/CMakeLists.txt#L3
-      # until HarbourMasters/Starship upgrades yaml-cpp a workaround is to specify our own minimum version
-      (lib.cmakeFeature "CMAKE_POLICY_VERSION_MINIMUM" "3.10")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_TINYXML2" "${tinyxml-2}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_TOMLPLUSPLUS" "${tomlplusplus.src}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_YAML-CPP" "${yaml-patched}")
     ];
 
     strictDeps = true;
 
-    enableParallelBuilding = true;
+    # Linking fails without this
     hardeningDisable = ["format"];
 
     preConfigure = ''
@@ -217,65 +225,79 @@ in
       cp ${stb_impl} ./stb/${stb_impl.name}
       substituteInPlace libultraship/cmake/dependencies/common.cmake \
         --replace-fail "\''${STB_DIR}" "$(readlink -f ./stb)"
+
+      mkdir semver
+      cp ${semver} ./semver/semver.hpp
+      substituteInPlace CMakeLists.txt \
+        --replace-fail "\''${SEMVER_DIR}" "$(readlink -f ./semver)"
+
     '';
 
-    # I cannot wrap my head around why LTO breaks the build under nix
     postPatch = ''
       substituteInPlace CMakeLists.txt \
       --replace-fail "COMMAND git describe --tags" "COMMAND echo $(cat PROJECT_VERSION)" \
-      --replace-fail "COMMAND git log --pretty=format:%h -1" "COMMAND echo $(cat PROJECT_VERSION_PATCH)" \
-      --replace-fail "            -flto=auto \\" "\\"
+      --replace-fail "COMMAND git log --pretty=format:%h -1" "COMMAND echo $(cat PROJECT_VERSION_PATCH)"
+
+      # We need to use GetAppDirectoryPath on nix or else it crashes
+      substituteInPlace src/port/GameExtractor.cpp \
+      --replace-fail "const std::string assets_path = Ship::Context::GetAppBundlePath();" "const std::string assets_path = Ship::Context::GetAppDirectoryPath();"
     '';
 
     postBuild = ''
-      cp ${gamecontrollerdb}/gamecontrollerdb.txt gamecontrollerdb.txt
+      cp ${sdl_gamecontrollerdb}/share/gamecontrollerdb.txt gamecontrollerdb.txt
       ./TorchExternal/src/TorchExternal-build/torch pack ../assets spaghetti.o2r o2r
     '';
 
     postInstall = ''
-      mv Spaghettify spaghetti-kart
-      installBin {spaghetti-kart,TorchExternal/src/TorchExternal-build/torch}
-      mkdir -p $out/share/spaghetti-kart/
-      cp -r yamls $out/share/spaghetti-kart
-      install -Dm644 -t $out/share/spaghetti-kart {spaghetti.o2r,config.yml,gamecontrollerdb.txt}
-      install -Dm644 ../icon.png $out/share/pixmaps/spaghetti-kart.png
-      # TODO: there isn't a license in the upstream yet
-      # install -Dm644 -t $out/share/licenses/spaghetti-kart ../LICENSE.md
-      install -Dm644 -t $out/share/licenses/spaghetti-kart/SDL_GameControllerDB ${gamecontrollerdb}/LICENSE
-      install -Dm644 -t $out/share/licenses/spaghetti-kart/libgfxd ${libgfxd}/LICENSE
-      install -Dm644 -t $out/share/licenses/spaghetti-kart/libultraship ../libultraship/LICENSE
+      installBin Spaghettify
+      mkdir -p $out/share/spaghettikart
+      cp -r ../yamls $out/share/spaghettikart/
+      cp -r ../meta $out/share/spaghettikart/
+      install -Dm644 -t $out/share/spaghettikart {spaghetti.o2r,config.yml,gamecontrollerdb.txt}
+      install -Dm644 ../icon.png $out/share/icons/hicolor/256x256/apps/spaghettikart.png
+      install -Dm644 -t $out/share/licenses/spaghettikart/libgfxd ${libgfxd}/LICENSE
+      install -Dm644 -t $out/share/licenses/spaghettikart/libultraship ../libultraship/LICENSE
+      install -Dm644 -t $out/share/licenses/spaghettikart/thread_pool ${thread_pool}/LICENSE.txt
     '';
+
+    # Unfortunately, spaghettikart really wants a writable working directory
+    # Create $HOME/.local/share/spaghettikart and symlink required files
 
     postFixup = ''
-      wrapProgram $out/bin/spaghetti-kart \
+      wrapProgram $out/bin/Spaghettify \
         --prefix PATH ":" ${lib.makeBinPath [zenity]} \
-        --run 'mkdir -p ~/.local/share/spaghetti-kart' \
-        --run "ln -sf $out/share/spaghetti-kart/spaghetti.o2r ~/.local/share/spaghetti-kart/spaghetti.o2r" \
-        --run "ln -sf $out/share/spaghetti-kart/config.yml ~/.local/share/spaghetti-kart/config.yml" \
-        --run "ln -sfT $out/share/spaghetti-kart/yamls ~/.local/share/spaghetti-kart/yamls" \
-        --run "ln -sf $out/share/spaghetti-kart/gamecontrollerdb.txt ~/.local/share/spaghetti-kart/gamecontrollerdb.txt" \
-        --run 'cd ~/.local/share/spaghetti-kart'
+        --run 'mkdir -p ~/.local/share/spaghettikart' \
+        --run "ln -sf $out/share/spaghettikart/spaghetti.o2r ~/.local/share/spaghettikart/spaghetti.o2r" \
+        --run "ln -sf $out/share/spaghettikart/config.yml ~/.local/share/spaghettikart/config.yml" \
+        --run "ln -sfT $out/share/spaghettikart/yamls ~/.local/share/spaghettikart/yamls" \
+        --run "ln -sfT $out/share/spaghettikart/meta ~/.local/share/spaghettikart/meta" \
+        --run "ln -sf $out/share/spaghettikart/gamecontrollerdb.txt ~/.local/share/spaghettikart/gamecontrollerdb.txt" \
+        --run 'cd ~/.local/share/spaghettikart'
     '';
 
-    desktopItems = makeDesktopItem {
-      name = "Spaghetti Kart";
-      icon = "spaghetti-kart";
-      exec = "spaghetti-kart";
-      comment = finalAttrs.meta.description;
-      genericName = "spaghetti-kart";
-      desktopName = "spaghetti-kart";
-      categories = ["Game"];
-    };
+    desktopItems = [
+      (makeDesktopItem {
+        name = "spaghettikart";
+        icon = "spaghettikart";
+        exec = "Spaghettify";
+        comment = finalAttrs.meta.description;
+        genericName = "spaghettikart";
+        desktopName = "spaghettikart";
+        categories = ["Game"];
+      })
+    ];
 
     meta = {
-      description = "Mario Kart 64 PC port";
-      license = lib.licenses.unfree;
-      mainProgram = "spaghetti-kart";
       homepage = "https://github.com/HarbourMasters/SpaghettiKart";
-      changelog = "https://github.com/HarbourMasters/SpaghettiKart/releases/tag/Latest";
-      sourceProvenance = with lib.sourceTypes; [
-        fromSource
-      ];
+      description = "Mario Kart 64 PC Port";
+      mainProgram = "Spaghettify";
       platforms = ["x86_64-linux"];
+      # maintainers = with lib.maintainers; [qubitnano];
+      license = with lib.licenses; [
+        # libultraship, libgfxd, thread_pool, dr_libs, prism-processor
+        mit
+        # Reverse engineering
+        unfree
+      ];
     };
   })

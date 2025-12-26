@@ -1,7 +1,5 @@
-(c) qubitnano - https://github.com/NixOS/nixpkgs/pull/395865/files
-Submodule Torch contains modified content
 diff --git a/torch/CMakeLists.txt b/torch/CMakeLists.txt
-index ba3859a..58a1775 100644
+index ba3859a..cf3da99 100644
 --- a/torch/CMakeLists.txt
 +++ b/torch/CMakeLists.txt
 @@ -36,8 +36,7 @@ if(USE_STANDALONE)
@@ -12,7 +10,7 @@ index ba3859a..58a1775 100644
 -        GIT_TAG 96fd3b849f38b3a7c7b7f3ff03c5921d328e6cdf
 +        URL @libgfxd_src@
      )
-
+ 
      FetchContent_GetProperties(libgfxd)
 @@ -205,8 +204,7 @@ set(YAML_CPP_BUILD_TESTS OFF)
  set(YAML_CPP_DISABLE_UNINSTALL ON)
@@ -30,9 +28,9 @@ index ba3859a..58a1775 100644
  		spdlog
 -		GIT_REPOSITORY https://github.com/gabime/spdlog.git
 -		GIT_TAG 7e635fca68d014934b4af8a1cf874f63989352b7
-+		URL @spdlog_src@
++        URL @spdlog_src@
  	)
-
+ 
  	FetchContent_MakeAvailable(spdlog)
 @@ -234,8 +231,7 @@ endif()
  set(tinyxml2_BUILD_TESTING OFF)
