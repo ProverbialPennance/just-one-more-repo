@@ -8,7 +8,7 @@
   copyDesktopItems,
   makeDesktopItem,
 }: let
-  tag = "1.3.0";
+  tag = "1.3.1";
 in
   stdenv.mkDerivation (
     finalAttrs: {
@@ -19,7 +19,7 @@ in
         owner = "aldelaro5";
         repo = "dolphin-memory-engine";
         tag = "${tag}";
-        hash = "sha256-uITVOPeYeh3rtHBRAv1Hzz3IQyK+LekXC+y+Uxazb0U=";
+        hash = "sha256-kgk7jVDUyMzjfNn48j/TMP3iSQU26+1IwLjpXmaZcBU=";
         fetchSubmodules = true;
         deepClone = true;
         postFetch = ''
