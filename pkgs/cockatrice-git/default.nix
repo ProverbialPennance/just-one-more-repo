@@ -7,17 +7,17 @@
   protobuf,
   kdePackages,
 }: let
-  rev' = "c1f93b37abafd4c4d4ef2dc6dac3931ff3af0fb4";
+  rev' = "93a4647b04ce2b3fe48dd931b5ac260f96433234";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "cockatrice";
-    version = "2026-01-01-Development-2.11.0-beta.42-unstable-2026-01-01";
+    version = "2026-01-01-Development-2.11.0-beta.42-unstable-2026-01-02";
 
     src = fetchFromGitHub {
       owner = "Cockatrice";
       repo = "Cockatrice";
       rev = "${rev'}";
-      sha256 = "sha256-4xH2Qsnhz0erWzNL7h2u+4Cdm+7Ju/DedY2sWhzCmqg=";
+      sha256 = "sha256-z/G2ZzC2qJ1omXJCNEx+f86AAd6HFbWQ7gvhW4TQVOQ=";
     };
 
     passthru.updateScript = generic-updater {
