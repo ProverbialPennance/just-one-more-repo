@@ -95,7 +95,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "2ship2harkinian";
-    version = "3.0.1-unstable-2026-01-05";
+    version = "3.0.2-unstable-2026-01-05";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
