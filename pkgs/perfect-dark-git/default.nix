@@ -18,18 +18,18 @@
     "pal-final"
     "jpn-final"
   ];
-  rev' = "6e6ffad1a14d070b74af0a402d8875c7121e95dc";
+  rev' = "246d737663c3eae4c1cfdc0cb32f92b3fd353d8a";
 in
   assert lib.assertOneOf "romID" romID roms;
     stdenv.mkDerivation rec {
       pname = "perfect_dark";
-      version = "ci-dev-build-unstable-2026-01-04";
+      version = "ci-dev-build-unstable-2026-01-07";
 
       src = fetchFromGitHub {
         owner = "fgsfdsfgs";
         repo = "perfect_dark";
         rev = "${rev'}";
-        hash = "sha256-mzuDjkuOmejnC4YB/IY9Bi/mopicHQMJ1+gUcGq98iY=";
+        hash = "sha256-lLc/r86X+5h/CJDs1+Uaeajyd2k6QO9YAhvX2M/yOrU=";
       };
 
       passthru.updateScript = generic-updater {
