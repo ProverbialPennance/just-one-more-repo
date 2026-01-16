@@ -113,17 +113,17 @@
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
   };
 
-  rev' = "c7e4e8cceec33fb14c3dcc69c26be643db68d2d0";
+  rev' = "6e4c010ffe2bca36b3534875699781f86872343d";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "reindeer-games-2025-1-unstable-2026-01-15";
+    version = "reindeer-games-2025-1-unstable-2026-01-16";
 
     src = fetchFromGitHub {
       owner = "harbourmasters";
       repo = "shipwright";
       rev = rev';
-      hash = "sha256-KuWiHtYCQbu5l3t349bcAohQupNFaFFN27trPIY8S+s=";
+      hash = "sha256-cvMF6q1kHssZ5L26uuMcLM6KXCVjXLAkV3CWfqU4Qow=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
