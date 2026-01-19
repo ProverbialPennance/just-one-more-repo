@@ -114,7 +114,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "reindeer-games-2025-1-unstable-2025-12-07";
+    version = "9.1.2-unstable-2025-12-07";
 
     src = fetchFromGitHub {
       #aMannus/Shipwright/tree/aManchipelago
