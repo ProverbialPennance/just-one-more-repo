@@ -61,6 +61,7 @@ in
 
     meta = {
       homepage = "https://github.com/marco-calautti/DeltaPatcher";
+      changelog = "https://github.com/marco-calautti/DeltaPatcher/releases/tag/v${finalAttrs.version}";
       description = "Delta Patcher is a GUI software that is able to create and apply xdelta patches.";
       mainProgram = "DeltaPatcher";
       platforms = ["x86_64-linux"];

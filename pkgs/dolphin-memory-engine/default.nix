@@ -73,6 +73,7 @@ in
 
       meta = {
         homepage = "https://github.com/aldelaro5/dolphin-memory-engine";
+        changelog = "https://github.com/aldelaro5/dolphin-memory-engine/releases/tag/${finalAttrs.version}";
         description = "A RAM search made specifically to search, monitor and edit the Dolphin emulator's emulated memory";
         mainProgram = "dolphin-memory-engine";
         platforms = lib.platforms.linux;

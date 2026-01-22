@@ -39,6 +39,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   meta = with lib; {
     description = "A manager script to make gamescope easier to use on desktop ";
+    changelog = "https://github.com/HikariKnight/ScopeBuddy/releases/tag/${finalAttrs.version}";
     homepage = "https://github.com/HikariKnight/ScopeBuddy";
     license = licenses.asl20;
     maintainers = [];
