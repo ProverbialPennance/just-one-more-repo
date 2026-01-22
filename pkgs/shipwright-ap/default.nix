@@ -110,18 +110,18 @@
 
   openssl' = openssl.override {static = true;};
 
-  rev' = "7b7c2e064e8ebcb8ab3f65da6e7b14b3dafc6942";
+  rev' = "f6ddc67e344c1c18a6e2f143c0478b8fd842934e";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "9.1.2-unstable-2025-12-07";
+    version = "0-unstable-2026-01-22";
 
     src = fetchFromGitHub {
-      #aMannus/Shipwright/tree/aManchipelago
-      owner = "HarbourMasters";
-      repo = "shipwright";
+      #currently only on jeromkiller's fork
+      owner = "jeromkiller";
+      repo = "Shipwright_archipellago";
       rev = rev';
-      hash = "sha256-pVQj/xBTUsopy+BG3xHH/Rr/XsErYhfTEz3C/B23uDk=";
+      hash = "sha256-IeFwEOE8ROdEIPFz6mqJVWt1QAazw2WK7aB3hyQjKI0=";
       # hash = lib.fakeHash;
       fetchSubmodules = true;
       deepClone = true;
@@ -136,7 +136,7 @@ in
 
     passthru.updateScript = generic-updater {
       extraArgs = [
-        "--version=branch=reindeer-games"
+        "--version=branch=Harkipellago"
       ];
     };
 
