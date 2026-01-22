@@ -14,13 +14,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "r2modman";
-  version = "3.2.11";
+  version = "3.2.13";
 
   src = fetchFromGitHub {
     owner = "ebkr";
     repo = "r2modmanPlus";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-/cnaP5DbEqYEkTPd1QWNArvMMr7UbX/danXa7ISfPpc=";
+    hash = "sha256-dy+xVGh5VNGXI34ecglLFl/h6SXyUdfzyvLCjXYmC/w=";
   };
 
   missingHashes = ./missing-hashes.json;
@@ -110,12 +110,12 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.updateScript = writeScript "update-r2modman" ''
     #!/usr/bin/env nix-shell
     #!nix-shell -i bash -p nix-update yarn-berry yarn-berry.yarn-berry-fetcher
+    nix-update ${finalAttrs.pname} --flake
     missingHashesPath=./pkgs/${finalAttrs.pname}/missing-hashes.json
     yarn-berry-fetcher missing-hashes ${finalAttrs.src}/yarn.lock > $missingHashesPath
     newYarnHash=$(yarn-berry-fetcher prefetch ${finalAttrs.src}/yarn.lock $missingHashesPath)
 
     sed --debug -i "s%${finalAttrs.offlineCache.outputHash}%$newYarnHash%" ./pkgs/${finalAttrs.pname}/default.nix
-    nix-update ${finalAttrs.pname} --flake
   '';
 
   meta = {
