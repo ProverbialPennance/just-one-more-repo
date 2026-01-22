@@ -27,7 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
   offlineCache = yarn-berry.fetchYarnBerryDeps {
     inherit (finalAttrs) src patches missingHashes;
     yarnLock = "${finalAttrs.src}/yarn.lock";
-    hash = "sha256-XusNho027MjQLaBxaXMOb/2rTiSLmi4mfwY2hjHQZgk=";
+    hash = "sha256-5XTkUa31D83oZRZBQ9yUDjgf/4gWCDd+pr4FTNDW9F0=";
   };
 
   patches = [
