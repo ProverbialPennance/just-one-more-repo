@@ -76,7 +76,7 @@ in
         description = "A RAM search made specifically to search, monitor and edit the Dolphin emulator's emulated memory";
         mainProgram = "dolphin-memory-engine";
         platforms = lib.platforms.linux;
-        maintainers = [];
+        # maintainers = [];
         license = with lib.licenses; [mit];
       };
     }
