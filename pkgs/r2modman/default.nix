@@ -8,7 +8,7 @@
   fetchurl,
   makeDesktopItem,
   makeWrapper,
-  generic-updater,
+  writeScript,
   nodejs,
   yarn-berry,
 }:
@@ -107,7 +107,16 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
-  passthru.updateScript = generic-updater {};
+  passthru.updateScript = writeScript "update-r2modman" ''
+    #!/usr/bin/env nix-shell
+    #!nix-shell -i bash -p nix-update yarn-berry yarn-berry.yarn-berry-fetcher
+    missingHashesPath=./pkgs/${finalAttrs.pname}/missing-hashes.json
+    yarn-berry-fetcher missing-hashes ${finalAttrs.src}/yarn.lock > $missingHashesPath
+    newYarnHash=$(yarn-berry-fetcher prefetch ${finalAttrs.src}/yarn.lock $missingHashesPath)
+
+    sed --debug -i "s%${finalAttrs.offlineCache.outputHash}%$newYarnHash%" ./pkgs/${finalAttrs.pname}/default.nix
+    nix-update ${finalAttrs.pname} --flake
+  '';
 
   meta = {
     changelog = "https://github.com/ebkr/r2modmanPlus/releases/tag/v${finalAttrs.version}";
