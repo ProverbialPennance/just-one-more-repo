@@ -251,7 +251,7 @@ in
       description = "SF64 PC Port";
       mainProgram = "starship-sf64";
       platforms = ["x86_64-linux"];
-      maintainers = with lib.maintainers; [qubitnano];
+      # maintainers = with lib.maintainers; [qubitnano];
       license = with lib.licenses; [
         # libultraship, libgfxd, thread_pool, dr_libs, prism-processor
         mit
