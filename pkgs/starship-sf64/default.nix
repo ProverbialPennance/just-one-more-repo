@@ -248,6 +248,7 @@ in
 
     meta = {
       homepage = "https://github.com/HarbourMasters/Starship";
+      changelog = "https://github.com/HarbourMasters/Starship/releases/tag/v${finalAttrs.version}";
       description = "SF64 PC Port";
       mainProgram = "starship-sf64";
       platforms = ["x86_64-linux"];

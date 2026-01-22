@@ -131,6 +131,7 @@ in
 
     meta = with lib; {
       description = "Custom launcher for FFXIV";
+      changelog = "https://github.com/rankynbass/XIVLauncher.Core/releases/tag/rb-v${version}";
       homepage = "https://github.com/rankynbass/XIVLauncher.Core";
       license = licenses.gpl3;
       #maintainers = with maintainers; [ sersorrel witchof0x20 ];
