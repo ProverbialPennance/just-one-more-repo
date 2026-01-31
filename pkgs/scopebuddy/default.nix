@@ -9,13 +9,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "scopebuddy";
-  version = "1.3.1";
+  version = "1.4.0";
 
   src = fetchFromGitHub {
     owner = "HikariKnight";
     repo = "ScopeBuddy";
     rev = "${finalAttrs.version}";
-    sha256 = "sha256-mTDg36TQd0Q3CsNCfOxM55JhyXYHEcV41NWsiaUB0+4=";
+    sha256 = "sha256-1n1lZidbtDV9Lm8QKd1s35bOS6Uh8sI3KtBJZ+FwdxQ=";
   };
 
   passthru.updateScript = generic-updater {};
