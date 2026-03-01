@@ -17,7 +17,7 @@
       "F405"
     ];
   } (builtins.readFile ./krisp-patcher.py);
-  binaryName = lib.last (builtins.split "/" (lib.getExe discord));
+  binaryName = "Discord";
   node_module = "\\$HOME/.config/discord/${discord.version}/modules/discord_krisp.node";
 in
   discord.overrideAttrs (prevAttrs: {
@@ -27,5 +27,5 @@ in
         wrapProgramShell $out/opt/${binaryName}/${binaryName} \
           --run "${patch-krisp} ${node_module}"
       '';
-    passthru = removeAttrs prevAttrs.passthru ["updateScriipt"];
+    passthru = removeAttrs prevAttrs.passthru ["updateScript"];
   })
