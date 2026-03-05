@@ -113,17 +113,17 @@
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
   };
 
-  rev' = "63597ec6335d95d3ec057a6fcce585e11d183d56";
+  rev' = "6340ad3d5c3f02a61750f1938596ff5fe22ebe0b";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "9.1.2-unstable-2026-03-04";
+    version = "9.1.2-unstable-2026-03-05";
 
     src = fetchFromGitHub {
       owner = "harbourmasters";
       repo = "shipwright";
       rev = rev';
-      hash = "sha256-CdsMZprpP1Q7nBiZCvEQj8eMzYQU+4eEZLisJWM6dAo=";
+      hash = "sha256-xcnbTuM0l2IB5sWSv4T/eXjXcK6I529XQx/iT3zsI/E=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
