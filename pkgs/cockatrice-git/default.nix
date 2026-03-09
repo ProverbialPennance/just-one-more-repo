@@ -7,7 +7,7 @@
   protobuf,
   kdePackages,
 }: let
-  rev' = "c375cdbb1ae84faedc142eadf11ca5a63332bdfe";
+  rev' = "e79bbc67b9be76d31f149b04fb7cadeb2ef6c224";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "cockatrice";
@@ -17,7 +17,7 @@ in
       owner = "Cockatrice";
       repo = "Cockatrice";
       rev = "${rev'}";
-      sha256 = "sha256-28/Mz+5y70pwimbnByQD16wk7TR0j7W9n9YDnCOxi3w=";
+      sha256 = "sha256-2q5/qsi12eQH4GX7/GJkBjgIP8uLHFsHQmkurZCJZoc=";
     };
 
     passthru.updateScript = generic-updater {
