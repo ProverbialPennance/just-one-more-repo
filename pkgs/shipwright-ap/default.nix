@@ -110,18 +110,18 @@
 
   openssl' = openssl.override {static = true;};
 
-  rev' = "9b03ff97a298b807e978a2330de877f724d184eb";
+  rev' = "9838f983cc1297f06feab4f887ce4de544272fb8";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "0-unstable-2026-02-28";
+    version = "0-unstable-2026-03-10";
 
     src = fetchFromGitHub {
       #currently only on jeromkiller's fork
       owner = "jeromkiller";
       repo = "Shipwright_archipellago";
       rev = rev';
-      hash = "sha256-Hnehk+yyROQCyQw2Ln+2L/4TVjBmFgcOg7+brVMAVxs=";
+      hash = "sha256-P1xLGzeOv7qjoX1AdByRelVOkQZK37HzEy0OvKP6zDQ=";
       # hash = lib.fakeHash;
       fetchSubmodules = true;
       deepClone = true;
