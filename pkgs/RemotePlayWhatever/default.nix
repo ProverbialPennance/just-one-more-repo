@@ -40,7 +40,7 @@ in
     ];
 
     buildInputs = [
-      wxGTK32
+      wxwidgets_3_2
     ];
 
     enableParallelBuilding = true;
