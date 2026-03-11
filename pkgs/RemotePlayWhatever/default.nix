@@ -6,7 +6,7 @@
   fetchurl,
   cmake,
   git,
-  wxGTK32,
+  wxwidgets_3_2,
   imagemagick,
   makeDesktopItem,
 }: let
