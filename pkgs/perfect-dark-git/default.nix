@@ -18,7 +18,7 @@
     "pal-final"
     "jpn-final"
   ];
-  rev' = "d58a423e5fbba416f73c3b5ece5a7f6fb632be35";
+  rev' = "11df50b3ad0f500eab21bd05eab48880b908946f";
 in
   assert lib.assertOneOf "romID" romID roms;
     stdenv.mkDerivation rec {
@@ -29,7 +29,7 @@ in
         owner = "fgsfdsfgs";
         repo = "perfect_dark";
         rev = "${rev'}";
-        hash = "sha256-OXS2sBn1yw5aGBs9iS0UaurervKzF6n0CyWnDWiGyKk=";
+        hash = "sha256-WRLimMwlimBbEQtdcIHaDIy7Vg+PcM/H6sYSSDd4oFo=";
       };
 
       passthru.updateScript = generic-updater {
