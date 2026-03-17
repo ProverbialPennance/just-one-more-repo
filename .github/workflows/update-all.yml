@@ -37,7 +37,6 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
-          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
           diagnostic-endpoint: ""
 
       - uses: yaxitech/nix-install-pkgs-action@v7
@@ -76,7 +75,6 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
-          source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
           diagnostic-endpoint: ""
 
       - uses: yaxitech/nix-install-pkgs-action@v7
