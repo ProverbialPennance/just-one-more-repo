@@ -52,6 +52,7 @@ jobs:
       - name: Define packages matrix
         id: define
         run: |
+          set -euxo pipefail
           nix flake show --json \
           | jq --compact-output --arg keyName x86_64-linux '.packages.[$keyName]|keys' \
           | awk '{print "packages="$1}' >> "$GITHUB_OUTPUT"
