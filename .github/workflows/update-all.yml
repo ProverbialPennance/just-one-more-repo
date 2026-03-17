@@ -42,11 +42,6 @@ jobs:
         with:
           diagnostic-endpoint: ""
 
-      - uses: yaxitech/nix-install-pkgs-action@v7
-        with:
-          inputs-from: 'github:ProverbialPennance/just-one-more-repo'
-          packages: "nixpkgs#jq, nixpkgs#gawk"
-
       - run: |
           mkdir -p ~/.config/nixpkgs
           echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
@@ -81,11 +76,6 @@ jobs:
         with:
           diagnostic-endpoint: ""
 
-      - uses: yaxitech/nix-install-pkgs-action@v7
-        with:
-          inputs-from: 'github:ProverbialPennance/just-one-more-repo'
-          packages: "github:Mic92/nix-update, nixpkgs#jq"
-
       - name: Configure git
         run: |
           git config user.name 'github-actions[bot]'
@@ -98,7 +88,7 @@ jobs:
       - name: Update package
         id: update-package
         run: |
-          nix-update ${{ matrix.package }} --flake --commit --use-update-script
+          nix run nixpkgs#nix-update -- ${{ matrix.package }} --flake --commit --use-update-script
 
       - name: Create Pull Request
         id: cpr
