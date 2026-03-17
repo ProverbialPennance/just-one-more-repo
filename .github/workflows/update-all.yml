@@ -31,7 +31,7 @@ jobs:
           fi
 
   define-matrix:
-    runs-on: ubuntu-latest
+    runs-on: [X64, Linux]
     outputs:
       packages: ${{ steps.define.outputs.packages }}
 
@@ -49,7 +49,8 @@ jobs:
       - name: Define packages matrix
         id: define
         run: |
-          nix flake show --json \
+          set -euxo pipefail
+          nix flake show --json 2> /dev/null \
           | jq --compact-output --arg keyName x86_64-linux '.packages.[$keyName]|keys' \
           | awk '{print "packages="$1}' >> "$GITHUB_OUTPUT"
 
