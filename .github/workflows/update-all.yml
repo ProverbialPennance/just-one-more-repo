@@ -46,6 +46,9 @@ jobs:
           mkdir -p ~/.config/nixpkgs
           echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
 
+      - run: |
+          nix profile add nixpkgs#gawk
+
       - name: Define packages matrix
         id: define
         run: |
