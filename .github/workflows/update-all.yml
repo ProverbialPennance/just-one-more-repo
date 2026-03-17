@@ -53,7 +53,8 @@ jobs:
         id: define
         run: |
           set -euxo pipefail
-          nix flake show --json \
+          nix flake show --json 2> /dev/null \
+          | echo \
           | jq --compact-output --arg keyName x86_64-linux '.packages.[$keyName]|keys' \
           | awk '{print "packages="$1}' >> "$GITHUB_OUTPUT"
 
