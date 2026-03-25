@@ -18,7 +18,6 @@
     "pal-final"
     "jpn-final"
   ];
-  rev' = "11df50b3ad0f500eab21bd05eab48880b908946f";
 in
   assert lib.assertOneOf "romID" romID roms;
     stdenv.mkDerivation rec {
@@ -28,7 +27,7 @@ in
       src = fetchFromGitHub {
         owner = "fgsfdsfgs";
         repo = "perfect_dark";
-        rev = "${rev'}";
+        rev = "11df50b3ad0f500eab21bd05eab48880b908946f";
         hash = "sha256-WRLimMwlimBbEQtdcIHaDIy7Vg+PcM/H6sYSSDd4oFo=";
       };
 
