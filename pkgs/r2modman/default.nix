@@ -118,9 +118,7 @@ stdenv.mkDerivation (finalAttrs: {
     LATEST_VERSION=$(curl -sL https://api.github.com/repos/ebkr/r2modmanPlus/releases/latest | jq --raw-output .tag_name)
     LATEST_VERSION=$(echo "$LATEST_VERSION" | sed 's/^v//')
 
-    CURRENT_VERSION=$(nix-instantiate --eval --expr \
-    '(builtins.getFlake "github:ProverbialPennance/just-one-more-repo").packages.x86_64-linux.r2modman.version' \
-    | tr -d '"')
+    CURRENT_VERSION=$(nix-instantiate --eval --expr "with import $PWD/. {}; r2modman.version" | tr -d '"')
     if [[ "$CURRENT_VERSION" != "$LATEST_VERSION" ]]; then
         nix-update r2modman --version "$LATEST_VERSION" || true
 
