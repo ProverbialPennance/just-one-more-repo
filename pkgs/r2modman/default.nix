@@ -111,7 +111,7 @@ stdenv.mkDerivation (finalAttrs: {
     #!/usr/bin/env nix-shell
     #!nix-shell -i bash -p curl gnused jq nix bash coreutils nix-update yarn-berry.yarn-berry-fetcher
 
-    set -eoux pipefail
+    set -eou pipefail
 
     PACKAGE_DIR=$(realpath $(dirname "$0"))
 
