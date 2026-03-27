@@ -109,13 +109,31 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru.updateScript = writeScript "update-r2modman" ''
     #!/usr/bin/env nix-shell
-    #!nix-shell -i bash -p nix-update yarn-berry yarn-berry.yarn-berry-fetcher
-    nix-update ${finalAttrs.pname} --flake
-    missingHashesPath=./pkgs/${finalAttrs.pname}/missing-hashes.json
-    yarn-berry-fetcher missing-hashes ${finalAttrs.src}/yarn.lock > $missingHashesPath
-    newYarnHash=$(yarn-berry-fetcher prefetch ${finalAttrs.src}/yarn.lock $missingHashesPath)
+    #!nix-shell -i bash -p curl gnused jq nix bash coreutils nix-update yarn-berry.yarn-berry-fetcher
 
-    sed --debug -i "s%${finalAttrs.offlineCache.outputHash}%$newYarnHash%" ./pkgs/${finalAttrs.pname}/default.nix
+    set -eoux pipefail
+
+    PACKAGE_DIR=$(realpath $(dirname "$0"))
+
+    LATEST_VERSION=$(curl -sL https://api.github.com/repos/ebkr/r2modmanPlus/releases/latest | jq --raw-output .tag_name)
+    LATEST_VERSION=$(echo "$LATEST_VERSION" | sed 's/^v//')
+
+    CURRENT_VERSION=$(nix-instantiate --eval --expr \
+    '(builtins.getFlake "github:ProverbialPennance/just-one-more-repo").packages.x86_64-linux.r2modman.version' \
+    | tr -d '"')
+    if [[ "$CURRENT_VERSION" != "$LATEST_VERSION" ]]; then
+        nix-update r2modman --version "$LATEST_VERSION" || true
+
+        export HOME=$(mktemp -d)
+        export REPO_DIR=$PWD
+        src=$(nix-build --no-link $PWD -A r2modman.src)
+        WORKDIR=$(mktemp -d)
+        cp --recursive --no-preserve=mode $src/* $WORKDIR
+        pushd $WORKDIR
+        yarn-berry-fetcher missing-hashes yarn.lock >$REPO_DIR/pkgs/r2modman/missing-hashes.json
+        popd
+        nix-update r2modman --version skip || true
+    fi
   '';
 
   meta = {
