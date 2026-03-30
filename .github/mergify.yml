@@ -19,4 +19,3 @@ pull_request_rules:
     actions:
       merge:
         method: rebase
-      delete_head_branch:
