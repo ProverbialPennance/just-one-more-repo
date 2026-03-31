@@ -113,7 +113,7 @@
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
   };
 
-  rev' = "317c057e86277d963807f5e3c200432689c8a126";
+  rev' = "7363e1c2640f5d9b9c031c25162dc02495926f82";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
@@ -123,7 +123,7 @@ in
       owner = "harbourmasters";
       repo = "shipwright";
       rev = rev';
-      hash = "sha256-1N5PtMEcvF6R49Odt0p0DMCKBbfJyany9Gu9tATQvSs=";
+      hash = "sha256-V3DXxNgFwZy2XuQccfL29HILe8jLS9QDxRB4ntaBAks=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
