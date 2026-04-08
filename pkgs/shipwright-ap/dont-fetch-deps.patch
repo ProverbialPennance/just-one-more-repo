@@ -26,7 +26,7 @@ index aa979f6ed..52014d0f9 100644
      FetchContent_Declare(
              apclientpp
 -            GIT_REPOSITORY https://github.com/black-sliver/apclientpp.git
--            GIT_TAG 65638b7479f6894eda172e603cffa79762c0ddc1
+-            GIT_TAG 557d70c9a8ba415c80f98b8c9774739e3bab16bf
 +            URL @apclientpp_src@
      )
      FetchContent_MakeAvailable(apclientpp)

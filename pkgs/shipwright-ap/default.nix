@@ -110,18 +110,18 @@
 
   openssl' = openssl.override {static = true;};
 
-  rev' = "4e018e34be4ccc909a22b2fb1a28d898c6b0e5f1";
+  rev' = "eef445034a988c1f7b7cc3ea4cc6efb120b8f838";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "0-unstable-2026-03-28";
+    version = "Client_1.2.x-unstable-2026-04-17";
 
     src = fetchFromGitHub {
       #currently only on jeromkiller's fork
       owner = "jeromkiller";
       repo = "Shipwright_archipellago";
       rev = rev';
-      hash = "sha256-PBCLJvtBHZTFyp4pUx3QK4pJbmxBSIBgPJ5Te2fGZ3Q=";
+      hash = "sha256-28GgK84885x5s+E7hEOw8d6qibgP0dr4p3tM9B0nuCI=";
       # hash = lib.fakeHash;
       fetchSubmodules = true;
       deepClone = true;
@@ -166,8 +166,8 @@ in
         apclientpp_src = fetchFromGitHub {
           owner = "black-sliver";
           repo = "apclientpp";
-          rev = "65638b7479f6894eda172e603cffa79762c0ddc1";
-          hash = "sha256-/pUa51tZmFL15moMO1KlX5iBmMcx/vYMhqO6PZckIPo=";
+          rev = "557d70c9a8ba415c80f98b8c9774739e3bab16bf";
+          hash = "sha256-J7nGanqaAf6K1VFZFpajY8m5aOzYR9kYEEcRwWYKnOU=";
         };
       })
     ];
@@ -233,6 +233,7 @@ in
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
+        (lib.cmakeBool "APCLIENTPP_BUILD_TESTING" false)
       ]
       ++ lib.optionals stdenv.hostPlatform.isDarwin [
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_METALCPP" "${metalcpp}")
