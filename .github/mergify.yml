@@ -1,12 +1,4 @@
 pull_request_rules:
-  - name: rebase pull requests labeled with `rebase`, once
-    conditions:
-      - label = rebase
-    actions:
-      rebase: {}
-      label:
-        remove:
-          - rebase
   - name: Auto-merge for dependency bump pull requests
     conditions:
       - or:
