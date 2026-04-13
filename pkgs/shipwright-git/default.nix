@@ -117,7 +117,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "9.2.1-unstable-2026-04-11";
+    version = "9.2.2-unstable-2026-04-11";
 
     src = fetchFromGitHub {
       owner = "harbourmasters";
