@@ -38,7 +38,7 @@
   fixDarwinDylibNames,
   applyPatches,
   sdl_gamecontrollerdb,
-  shipwright,
+  shipwright-ap,
   generic-updater,
 }: let
   # The following would normally get fetched at build time, or a specific version is required
@@ -50,7 +50,7 @@
       hash = "sha256-4L37NRR+dlkhdxuDjhLR45kgjyZK2uelKBlGZ1nQzgY=";
     };
     patches = [
-      "${shipwright.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
+      "${shipwright-ap.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
     ];
   };
 
@@ -90,7 +90,7 @@
       hash = "sha256-HTi2FKzKCbRaP13XERUmHkJgw8IfKaRJvsK3+YxFFdc=";
     };
     patches = [
-      "${shipwright.src}/libultraship/cmake/dependencies/patches/stormlib-optimizations.patch"
+      "${shipwright-ap.src}/libultraship/cmake/dependencies/patches/stormlib-optimizations.patch"
     ];
   };
 
