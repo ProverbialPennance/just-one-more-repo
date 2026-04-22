@@ -30,6 +30,7 @@
   tinyxml-2,
   zenity,
   makeDesktopItem,
+  withDebug ? true,
 }: let
   # The following are either normally fetched during build time or a specific version is required
   gamecontrollerdb = fetchFromGitHub {
@@ -108,6 +109,11 @@ in
     passthru.updateScript = generic-updater {
       extraArgs = ["--version=branch"];
     };
+
+    cmakeBuildType =
+      if withDebug
+      then "RelWithDebInfo"
+      else "MinSizeRel";
 
     patches = [
       # remove fetching stb as we will patch our own
