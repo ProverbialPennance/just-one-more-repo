@@ -1,5 +1,4 @@
 {
-  apple-sdk_13,
   generic-updater,
   stdenv,
   cmake,
@@ -30,13 +29,13 @@
   writeTextFile,
   fixDarwinDylibNames,
   applyPatches,
-  shipwright,
+  shipwright-git,
   libopus,
   opusfile,
   libogg,
   libvorbis,
   bzip2,
-  libX11,
+  libx11,
   sdl_gamecontrollerdb,
 }: let
   # The following would normally get fetched at build time, or a specific version is required
@@ -51,11 +50,11 @@
     src = fetchFromGitHub {
       owner = "ocornut";
       repo = "imgui";
-      tag = "v1.91.9-docking";
-      hash = "sha256-4L37NRR+dlkhdxuDjhLR45kgjyZK2uelKBlGZ1nQzgY=";
+      tag = "v1.91.9b-docking";
+      hash = "sha256-mQOJ6jCN+7VopgZ61yzaCnt4R1QLrW7+47xxMhFRHLQ=";
     };
     patches = [
-      "${shipwright.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
+      "${shipwright-git.src}/libultraship/cmake/dependencies/patches/imgui-fixes-and-config.patch"
     ];
   };
 
@@ -95,7 +94,7 @@
       hash = "sha256-HTi2FKzKCbRaP13XERUmHkJgw8IfKaRJvsK3+YxFFdc=";
     };
     patches = [
-      "${shipwright.src}/libultraship/cmake/dependencies/patches/stormlib-optimizations.patch"
+      "${shipwright-git.src}/libultraship/cmake/dependencies/patches/stormlib-optimizations.patch"
     ];
   };
 
@@ -112,18 +111,15 @@
     tag = "macOS13_iOS16";
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
   };
-
-  rev' = "92ba43d67557814dd36c7c235fc3919a56d66f4c";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "9.2.3-unstable-2026-04-22";
-
+    version = "9.2.3-unstable-2026-04-17";
     src = fetchFromGitHub {
       owner = "harbourmasters";
       repo = "shipwright";
-      rev = rev';
-      hash = "sha256-D0y/9gGbnuTdPbFMEoHXJB4QAG1KGmzLPl8l/z34UZc=";
+      rev = "52a08daf04145e66992db030df8828a0e9357959";
+      hash = "sha256-MsAqjPLVOV1cIHOrv94UPOEK5SSnKOGKpKC5iQDM7Ms=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
@@ -137,7 +133,7 @@ in
 
     passthru.updateScript = generic-updater {
       extraArgs = [
-        "--version=branch"
+        "--version=branch=develop"
       ];
     };
 
@@ -181,15 +177,11 @@ in
         libogg
         libvorbis
         bzip2
-        libX11
+        libx11
       ]
       ++ lib.optionals stdenv.hostPlatform.isLinux [
         libpulseaudio
         zenity
-      ]
-      ++ lib.optionals stdenv.hostPlatform.isDarwin [
-        # Metal.hpp requires macOS 13.x min.
-        apple-sdk_13
       ];
 
     cmakeFlags =
@@ -253,7 +245,7 @@ in
       lib.optionalString stdenv.hostPlatform.isLinux ''
         mkdir -p $out/bin
         ln -s $out/lib/soh.elf $out/bin/soh-git
-        install -Dm644 ../soh/macosx/sohIcon.png $out/share/pixmaps/soh.png
+        install -Dm644 ../soh/macosx/sohIcon.png $out/share/icons/soh.png
       ''
       + lib.optionalString stdenv.hostPlatform.isDarwin ''
         # Recreate the macOS bundle (without using cpack)
@@ -302,10 +294,7 @@ in
       description = "PC port of Ocarina of Time with modern controls, widescreen, high-resolution, and more";
       mainProgram = "soh-git";
       platforms = lib.platforms.linux ++ lib.platforms.darwin;
-      # maintainers = with lib.maintainers; [
-      #   j0lol
-      #   matteopacini
-      # ];
+      # maintainers = with lib.maintainers; [matteopacini];
       license = with lib.licenses; [
         # OTRExporter, OTRGui, ZAPDTR, libultraship
         mit
