@@ -22,9 +22,20 @@ in {
         starship-sf64 package to use.
       '';
     };
+    buildWithDebug = mkOption {
+      type = types.bool;
+      default = true;
+      description = lib.mdDoc ''
+        Whether to build as a `RelWithDebInfo` binary or `MinSizeRel`.
+        **N.B** incompatible with other packages than those provided by JOMR.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [cfg.package];
+    environment.systemPackages =
+      if cfg.buildWithDebug
+      then [cfg.package.override {withDebug = cfg.buildWithDebug;}]
+      else [cfg.package];
   };
 }
