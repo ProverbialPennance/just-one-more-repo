@@ -40,6 +40,7 @@
   sdl_gamecontrollerdb,
   shipwright-ap,
   generic-updater,
+  withDebug ? true,
 }: let
   # The following would normally get fetched at build time, or a specific version is required
   imgui' = applyPatches {
@@ -139,6 +140,11 @@ in
         "--version=branch=Harkipellago"
       ];
     };
+
+    cmakeBuildType =
+      if withDebug
+      then "RelWithDebInfo"
+      else "MinSizeRel";
 
     patches = [
       ./darwin-fixes.patch

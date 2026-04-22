@@ -31,6 +31,7 @@
   spaghetti-kart-git,
   makeDesktopItem,
   generic-updater,
+  withDebug ? true,
 }: let
   # The following are either normally fetched during build time or a specific version is required
   dr_libs = fetchFromGitHub {
@@ -142,6 +143,11 @@ in
         "--version=branch"
       ];
     };
+
+    cmakeBuildType =
+      if withDebug
+      then "RelWithDebInfo"
+      else "MinSizeRel";
 
     patches = [
       # Don't fetch stb as we will patch our own

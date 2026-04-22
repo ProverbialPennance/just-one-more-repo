@@ -37,6 +37,7 @@
   bzip2,
   libx11,
   sdl_gamecontrollerdb,
+  withDebug ? true,
 }: let
   # The following would normally get fetched at build time, or a specific version is required
   dr_libs = fetchFromGitHub {
@@ -136,6 +137,11 @@ in
         "--version=branch=develop"
       ];
     };
+
+    cmakeBuildType =
+      if withDebug
+      then "RelWithDebInfo"
+      else "MinSizeRel";
 
     patches = [
       ./darwin-fixes.patch
