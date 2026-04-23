@@ -1,6 +1,6 @@
 {
   romID ? "ntsc-final",
-  generic-updater,
+  unstableGitUpdater,
   lib,
   fetchFromGitHub,
   stdenv,
@@ -31,9 +31,7 @@ in
         hash = "sha256-WRLimMwlimBbEQtdcIHaDIy7Vg+PcM/H6sYSSDd4oFo=";
       };
 
-      passthru.updateScript = generic-updater {
-        extraArgs = ["--version=branch"];
-      };
+      passthru.updateScript = unstableGitUpdater {hardcodeZeroVersion = true;};
 
       buildInputs = [
         libGL
