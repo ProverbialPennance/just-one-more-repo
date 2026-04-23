@@ -35,7 +35,7 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages =
       if cfg.buildWithDebug
-      then [cfg.package.override {withDebug = cfg.buildWithDebug;}]
+      then [(cfg.package.override {withDebug = cfg.buildWithDebug;})]
       else [cfg.package];
   };
 }
