@@ -48,7 +48,7 @@ jobs:
           # build (main branch)
           set -euxo pipefail
           om ci run --include-all-dependencies --results=om.json -- --show-trace
-          cachix-push --cache just-one-more-repo --subflake ROOT --prefix "${BRANCH_NAME}" < om.json
+          nix run github:juspay/cachix-push -- --cache just-one-more-repo --subflake ROOT --prefix "${BRANCH_NAME}" < om.json
       - if: env.BRANCH_NAME != 'main'
         name: build (${{ github.head_ref || github.ref_name }})
         run: |
