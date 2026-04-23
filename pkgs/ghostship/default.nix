@@ -195,6 +195,8 @@ in
 
     # dontAddPrefix = true;
 
+    dontStrip = withDebug;
+
     # Linking fails without this
     hardeningDisable = ["format"];
 

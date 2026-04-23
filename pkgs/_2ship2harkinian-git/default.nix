@@ -181,6 +181,8 @@ in
     # Linking fails without this
     hardeningDisable = ["format"];
 
+    dontStrip = withDebug;
+
     preConfigure = ''
       # mirror 2ship's stb
       mkdir stb
