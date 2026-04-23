@@ -45,13 +45,13 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - if: env.BRANCH_NAME == 'main'
         run: |
-          # build (main)
+          # build (main branch)
           set -euxo pipefail
           om ci run --include-all-dependencies --results=om.json -- --show-trace
           cachix-push --cache just-one-more-repo --subflake ROOT --prefix "${BRANCH_NAME}" < om.json
       - if: env.BRANCH_NAME != 'main'
         name: build (${{ github.head_ref || github.ref_name }})
         run: |
-          # build ("${{ env.BRANCH_NAME }}")
+          # build ("${{ env.BRANCH_NAME }}" branch)
           set -euxo pipefail
           om ci run --include-all-dependencies -- --show-trace | xargs cachix push just-one-more-cache
