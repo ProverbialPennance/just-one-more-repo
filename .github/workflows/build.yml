@@ -25,6 +25,8 @@ jobs:
   build:
     name: Build
     runs-on: [X64, Linux]
+    env:
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
     steps:
       - uses: actions/checkout@v6
@@ -36,11 +38,17 @@ jobs:
             substituters = https://cache.nixos.org/ https://just-one-more-cache.cachix.org/
       - uses: yaxitech/nix-install-pkgs-action@v7
         with:
-          packages: "nixpkgs#omnix"
+          packages: "nixpkgs#omnix, github:juspay/cachix-push"
       - uses: cachix/cachix-action@v17
         with:
           name: just-one-more-cache
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - run: |
+      - if: env.BRANCH_NAME == 'main'
+        run: |
+          set -euxo pipefail
+          om ci run --include-all-dependencies --results=om.json -- --show-trace
+          cachix-push --cache just-one-more-repo --subflake ROOT --prefix "${BRANCH_NAME}" < om.json
+      - if: env.BRANCH_NAME != 'main'
+        run: |
           set -euxo pipefail
           om ci run --include-all-dependencies -- --show-trace | xargs cachix push just-one-more-cache
