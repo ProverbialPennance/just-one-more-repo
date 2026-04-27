@@ -60,8 +60,8 @@ in
     nugetDeps = ./deps.json; # File generated with `nix-build -A xivlauncher-rb.passthru.fetch-deps`
 
     # please do not unpin these even if they match the defaults, xivlauncher is sensitive to .NET versions
-    dotnet-sdk = dotnetCorePackages.sdk_10_0;
-    dotnet-runtime = dotnetCorePackages.runtime_10_0;
+    dotnet-sdk = with dotnetCorePackages; combinePackages [sdk_10_0 sdk_9_0];
+    dotnet-runtime = with dotnetCorePackages; combinePackages [runtime_10_0 runtime_9_0];
 
     dotnetFlags = [
       "-p:BuildHash=${tag}"
