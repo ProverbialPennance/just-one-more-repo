@@ -28,6 +28,24 @@ in {
       '';
     };
 
+    enableMangohud = mkOption {
+      type = types.bool;
+      default =
+        lib.lists.length (lib.lists.filter (
+            elem: lib.strings.hasInfix "mangohud" (toString elem)
+          )
+          config.environment.systemPackages)
+        != 0;
+      defaultText = literalExpression "lib.lists.length (lib.lists.filter(elem: lib.strings.hasInfix \"mangohud\" (toString elem))) != 0";
+      description = ''
+        Enable the ability to use mangohud with xivlauncher.
+
+        This will conditionally add mangohud to launcher's environment.
+        it is also neccessary to ensure that mangohud
+        is available in the host environment as well.
+      '';
+    };
+
     nvidia = {
       enableDLSS = mkOption {
         type = types.bool;
@@ -68,6 +86,7 @@ in {
           if cfg.nvidia.enableDLSS
           then cfg.nvidia.nvngxPath
           else "";
+        useMangoHud = cfg.enableMangohud;
       })
     ];
   };
