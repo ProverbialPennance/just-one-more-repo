@@ -47,11 +47,30 @@ jobs:
         run: |
           # build (main branch)
           set -euxo pipefail
-          om ci run --include-all-dependencies --results=om.json -- --show-trace
-          nix run github:juspay/cachix-push -- --cache just-one-more-cache --subflake ROOT --prefix "${BRANCH_NAME}" < om.json
+          om ci run .#packages --include-all-dependencies --results=om.json -- --show-trace
+
+          declare -A derivationArray=()
+
+          _triplet=$(jq -rc '.systems[]' ./om.json)
+          triplet=${_triplet//\"/}
+
+          derivationsMap=$(jq -rc 'del(.result.ROOT.build.byName."vm-test-run-Factorio", .result.ROOT.build.byName."vm-test-run-dotnet-binfmt_misc-integration-test") | .result.ROOT.build.byName' ./om.json \
+            | sed -r 's/(\{|\})//g' \
+            | tr ',' '\n' \
+            | tr ':' ',')
+
+          while IFS="," read -r name _path; do
+            key=${name//\"/}
+            path=${_path//\"/}
+            derivationArray["$key"]="$path"
+          done < <(echo "$derivationsMap")
+
+          for key in "${!derivationArray[@]}"; do
+            cachix pin -v just-one-more-cache "${{env.BRANCH_NAME}}-$triplet-$key" "${derivationArray[$key]}" --keep-revisions 1
+          done
       - if: env.BRANCH_NAME != 'main'
         name: build (${{ github.head_ref || github.ref_name }})
         run: |
           # build ("${{ env.BRANCH_NAME }}" branch)
           set -euxo pipefail
-          om ci run --include-all-dependencies -- --show-trace | xargs cachix push just-one-more-cache
+          om ci run .#packages --include-all-dependencies -- --show-trace | xargs cachix push just-one-more-cache
