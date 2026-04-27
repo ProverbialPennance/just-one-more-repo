@@ -40,7 +40,8 @@
         forAllChecks = (import ./checks {lib = pkgs.lib;}).allChecks;
       in
         forAllChecks (check:
-          pkgs.callPackage check {
+          pkgs.callPackage (./checks
+            + "/${check}.nix") {
             self = self;
             pkgs = pkgs;
           })
