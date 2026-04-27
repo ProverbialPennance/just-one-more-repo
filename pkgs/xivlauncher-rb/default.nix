@@ -20,6 +20,7 @@
   writeScript,
   useSteamRun ? true,
   useGameMode ? false,
+  useMangoHud ? false,
   nvngxPath ? "",
 }: let
   tag = "1.4.0.2";
@@ -88,10 +89,12 @@ in
                   pkgs.libunwind
                   pkgs.zstd
                 ]
-                ++ lib.optional useGameMode pkgs.gamemode;
+                ++ lib.optional useGameMode pkgs.gamemode
+                ++ lib.optional useMangoHud pkgs.mangohud;
               # TODO: figure out a long-term solution for non useSteamRun users
               extraLibraries = pkgs:
-                lib.optional useGameMode pkgs.gamemode;
+                lib.optional useGameMode pkgs.gamemode
+                ++ lib.optional useMangoHud pkgs.mangohud;
               extraProfile = ''
                 unset TZ
               '';
