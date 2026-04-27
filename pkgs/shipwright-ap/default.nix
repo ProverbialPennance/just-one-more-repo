@@ -111,18 +111,18 @@
 
   openssl' = openssl.override {static = true;};
 
-  rev' = "da0cbf0866ec88a70a6cb3ec8e09be3ea9fc38d5";
+  rev' = "34d87c7797969850e3127f12a266c83d53ae95ae";
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "Client_1.2.x-unstable-2026-04-25";
+    version = "Client_1.2.x-unstable-2026-04-27";
 
     src = fetchFromGitHub {
       #currently only on jeromkiller's fork
       owner = "jeromkiller";
       repo = "Shipwright_archipellago";
       rev = rev';
-      hash = "sha256-Lk6mgTpk2gzVW1UfEq3PZVP2ZL134WDV20yZr/jFWvA=";
+      hash = "sha256-OWHydHn0HCaDLh1UIp56q1Gci+HbUEeAPlyJNoIkzFo=";
       # hash = lib.fakeHash;
       fetchSubmodules = true;
       deepClone = true;
@@ -166,14 +166,14 @@ in
         wswrap_src = fetchFromGitHub {
           owner = "black-sliver";
           repo = "wswrap";
-          rev = "47438193ec50427ee28aadf294ba57baefd9f3f1";
-          hash = "sha256-WWXi/OWfaC40V+tV4JNmVM8kImozuwaiRLeSdhIf0X8=";
+          rev = "d0505e0ec53a26743f11051949a0dc66bcf44951";
+          hash = "sha256-BmRgWnIeTyH8B2kDF/7KsEy0dcoq+ckKyxzbrHdK/no=";
         };
         apclientpp_src = fetchFromGitHub {
           owner = "black-sliver";
           repo = "apclientpp";
-          rev = "557d70c9a8ba415c80f98b8c9774739e3bab16bf";
-          hash = "sha256-J7nGanqaAf6K1VFZFpajY8m5aOzYR9kYEEcRwWYKnOU=";
+          rev = "7f33a3849887983378258c2fe8fc3887f687c430";
+          hash = "sha256-y3XVvXMlK7nwKMZsgsPtdfqOBgRruU5nknZxHZZUlvY=";
         };
       })
     ];
