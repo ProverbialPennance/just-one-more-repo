@@ -48,7 +48,24 @@ jobs:
           # build (main branch)
           set -euxo pipefail
           om ci run .#packages --include-all-dependencies --results=om.json -- --show-trace
-          nix run github:juspay/cachix-push -- --cache just-one-more-cache --subflake ROOT --prefix "${BRANCH_NAME}" < om.json
+
+          _triplet=$(jq -rc '.systems[]')
+          triplet=${_triplet//\"/}
+
+          derivationsMap=$(jq -rc 'del(.result.ROOT.build.byName."vm-test-run-Factorio", .result.ROOT.build.byName."vm-test-run-dotnet-binfmt_misc-integration-test") | .result.ROOT.build.byName' ./result \
+            | sed -r 's/(\{|\})//g' \
+            | tr ',' '\n' \
+            | tr ':' ',')
+
+          while IFS="," read -r name _path; do
+            key=${name//\"/}
+            path=${_path//\"/}
+            derivationArray["$key"]="$path"
+          done < <(echo "$derivationsMap")
+
+          for key in "${!derivationArray[@]}"; do
+            cachix pin -v just-one-more-cache "${GIT_BRANCH}-${triplet}" "${derivationArray[$key]}" --keep-revisions 1
+          done
       - if: env.BRANCH_NAME != 'main'
         name: build (${{ github.head_ref || github.ref_name }})
         run: |
