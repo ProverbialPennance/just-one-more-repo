@@ -121,13 +121,13 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "spaghetti-kart";
-    version = "1.0.0-unstable-2026-05-01";
+    version = "1.0.0-unstable-2026-05-02";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "SpaghettiKart";
-      rev = "7b2879029087bb7bafc3880550caf0fd3319a0d7";
-      hash = "sha256-BluRvV9Ks1XRn/Don4gXv1CpidynjGR0pvpaW3bDr14=";
+      rev = "40d4f12580b02fe440709f06cf6f4cbbfd48de2e";
+      hash = "sha256-jZbFXqm+sTzPNTiAhUct8xScI4aJt2nKyD/oxG9ztow=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
