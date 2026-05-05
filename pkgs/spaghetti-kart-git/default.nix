@@ -21,6 +21,7 @@
   libx11,
   libzip,
   nlohmann_json,
+  python3,
   SDL2,
   SDL2_net,
   spdlog,
@@ -104,6 +105,13 @@
     repo = "thread-pool";
     tag = "v4.1.0";
     hash = "sha256-zhRFEmPYNFLqQCfvdAaG5VBNle9Qm8FepIIIrT9sh88=";
+  };
+
+  monocypher_src = fetchFromGitHub {
+    owner = "LoupVaillant";
+    repo = "Monocypher";
+    rev = "0d85f98c9d9b0227e42cf795cb527dff372b40a4";
+    hash = "sha256-RrM8Ep/CM7U5Q4+4FAHfBknb6b0upohoiqy4f7eMye0=";
   };
 
   # Include cmake4 patch
@@ -191,6 +199,7 @@ in
       makeWrapper
       ninja
       pkg-config
+      python3
     ];
 
     buildInputs = [
@@ -216,6 +225,7 @@ in
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_TINYXML2" "${tinyxml-2}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONOCYPHER" "${monocypher_src}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_TOMLPLUSPLUS" "${tomlplusplus.src}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_YAML-CPP" "${yaml-patched}")
     ];
