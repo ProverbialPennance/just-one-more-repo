@@ -14,13 +14,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "r2modman";
-  version = "3.2.16";
+  version = "3.2.17";
 
   src = fetchFromGitHub {
     owner = "ebkr";
     repo = "r2modmanPlus";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-ya7VPb+bmOvtXNex9R80N6rZLSCVoyntqCzaHXIwb1M=";
+    hash = "sha256-DXGgTezCcMl37Vu7R+2dwWJmuqsXXtlWRYMX9gqm7+w=";
   };
 
   missingHashes = ./missing-hashes.json;
