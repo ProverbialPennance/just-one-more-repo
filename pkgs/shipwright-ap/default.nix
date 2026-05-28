@@ -239,6 +239,8 @@ in
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
+        (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_VALIJSON" "${valijson}")
+        (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_WEBSOCKETPP" "${websocketpp}")
         (lib.cmakeBool "APCLIENTPP_BUILD_TESTING" false)
       ]
       ++ lib.optionals stdenv.hostPlatform.isDarwin [
