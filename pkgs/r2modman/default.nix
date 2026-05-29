@@ -31,12 +31,6 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   patches = [
-    # Temporary fix for MiSide cover image https://github.com/ebkr/r2modmanPlus/pull/2024
-    (fetchurl {
-      url = "https://github.com/ebkr/r2modmanPlus/commit/24a2b8386c7fe9a6856cea06967c96aa685d3660.patch";
-      hash = "sha256-6NmwFRtn8+t9XRPHHVLM05idbCSYcBG0VmUOd8fZKs0=";
-    })
-
     # Make it possible to launch Steam games from r2modman.
     ./steam-launch-fix.patch
   ];
