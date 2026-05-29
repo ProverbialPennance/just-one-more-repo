@@ -115,7 +115,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "9.2.3-unstable-2026-05-25";
+    version = "reindeer-games-2025-1-unstable-2026-05-25";
     src = fetchFromGitHub {
       owner = "harbourmasters";
       repo = "shipwright";
