@@ -81,7 +81,7 @@ in
       '';
 
       postFixup = ''
-        rm $out/share/applications/io.github.fgsfdsfgs.perfect_dark.desktop
+        rm $out/share/applications/io.github.perfect_dark_pc_port.perfect_dark.desktop
       '';
 
       desktopItems = makeDesktopItem {
