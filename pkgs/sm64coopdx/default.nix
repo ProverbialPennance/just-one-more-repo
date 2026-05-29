@@ -26,7 +26,7 @@ stdenv.mkDerivation (finalAtrrs: {
     owner = "coop-deluxe";
     repo = "sm64coopdx";
     tag = "v${finalAtrrs.version}";
-    hash = "sha256-wTT4pMTcX7w0dwxK9YjiptA71vYk+5uL6gBJaPkAGYI=";
+    hash = "sha256-xSKdwkk73pcpSy4HY3P30yV1SRf7pbEVJCK6IlK19Y8=";
   };
 
   passthru.updateScript = generic-updater {
