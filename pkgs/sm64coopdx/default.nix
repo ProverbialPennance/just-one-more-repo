@@ -29,7 +29,9 @@ stdenv.mkDerivation (finalAtrrs: {
     hash = "sha256-wTT4pMTcX7w0dwxK9YjiptA71vYk+5uL6gBJaPkAGYI=";
   };
 
-  passthru.updateScript = generic-updater {};
+  passthru.updateScript = generic-updater {
+    extraArgs = ["--commit"];
+  };
 
   nativeBuildInputs = [
     makeWrapper
