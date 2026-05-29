@@ -27,8 +27,6 @@ stdenv.mkDerivation (finalAtrrs: {
     repo = "sm64coopdx";
     tag = "v${finalAtrrs.version}";
     hash = "sha256-wTT4pMTcX7w0dwxK9YjiptA71vYk+5uL6gBJaPkAGYI=";
-    deepClone = true;
-    leaveDotGit = true;
   };
 
   passthru.updateScript = generic-updater {};
