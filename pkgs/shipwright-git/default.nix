@@ -24,6 +24,7 @@
   libicns,
   libzip,
   nlohmann_json,
+  monocypher,
   tinyxml-2,
   spdlog,
   writeTextFile,
@@ -111,6 +112,13 @@
     repo = "single-header-metal-cpp";
     tag = "macOS13_iOS16";
     hash = "sha256-CSYIpmq478bla2xoPL/cGYKIWAeiORxyFFZr0+ixd7I";
+  };
+
+  monocypher_src = fetchFromGitHub {
+    owner = "LoupVaillant";
+    repo = "Monocypher";
+    rev = "0d85f98c9d9b0227e42cf795cb527dff372b40a4";
+    hash = "sha256-RrM8Ep/CM7U5Q4+4FAHfBknb6b0upohoiqy4f7eMye0=";
   };
 in
   stdenv.mkDerivation (finalAttrs: {
@@ -201,6 +209,7 @@ in
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
         (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
+        (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONOCYPHER" "${monocypher_src}")
         (lib.cmakeFeature "OPUS_INCLUDE_DIR" "${lib.getDev libopus}/include/opus")
         (lib.cmakeFeature "OPUSFILE_INCLUDE_DIR" "${lib.getDev opusfile}/include/opus")
       ]
