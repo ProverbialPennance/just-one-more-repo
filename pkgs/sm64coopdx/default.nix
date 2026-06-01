@@ -20,13 +20,13 @@
 }:
 stdenv.mkDerivation (finalAtrrs: {
   pname = "sm64coopdx";
-  version = "1.5";
+  version = "1.5.1";
 
   src = fetchFromGitHub {
     owner = "coop-deluxe";
     repo = "sm64coopdx";
     tag = "v${finalAtrrs.version}";
-    hash = "sha256-xSKdwkk73pcpSy4HY3P30yV1SRf7pbEVJCK6IlK19Y8=";
+    hash = "sha256-AadjXTjUBnSbHP8tRHKvWotW58s5tMUJGtxbdPxYg6E=";
   };
 
   passthru.updateScript = generic-updater {
