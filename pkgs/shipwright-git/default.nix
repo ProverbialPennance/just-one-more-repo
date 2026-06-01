@@ -24,7 +24,6 @@
   libicns,
   libzip,
   nlohmann_json,
-  monocypher,
   tinyxml-2,
   spdlog,
   writeTextFile,
