@@ -11,7 +11,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "cockatrice";
-    version = "2026-05-27-Development-3.1.0-beta.2-unstable-2026-05-31";
+    version = "2026-06-01-Development-3.1.0-beta.3-unstable-2026-05-31";
 
     src = fetchFromGitHub {
       owner = "Cockatrice";
