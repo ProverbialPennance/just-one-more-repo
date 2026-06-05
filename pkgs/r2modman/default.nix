@@ -14,7 +14,7 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "r2modman";
-  version = "null";
+  version = "3.2.17";
 
   src = fetchFromGitHub {
     owner = "ebkr";
