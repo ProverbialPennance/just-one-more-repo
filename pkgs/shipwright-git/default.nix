@@ -122,12 +122,12 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright";
-    version = "reindeer-games-2025-1-unstable-2026-06-06";
+    version = "reindeer-games-2025-1-unstable-2026-06-20";
     src = fetchFromGitHub {
       owner = "harbourmasters";
       repo = "shipwright";
-      rev = "d4d88de8272cc05a7ef0e87078ca4d5fbee5ca7f";
-      hash = "sha256-bmcCvJ0NhqyIqkeV/pWGgFSVcZXPGI/YePt6l5H+P2I=";
+      rev = "446c6c4802418842eabbe40141be91f6ab77719a";
+      hash = "sha256-2J5dLO+WjeSs36HFNP02ZpWQfd6gqnAlltkPf3ZawkU=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
