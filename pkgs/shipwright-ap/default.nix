@@ -115,14 +115,14 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap";
-    version = "Client_1.4.x-unstable-2026-06-24";
+    version = "Client_1.4.1-unstable-2026-06-24";
 
     src = fetchFromGitHub {
       #currently only on jeromkiller's fork
       owner = "jeromkiller";
       repo = "Shipwright_archipellago";
       rev = rev';
-      hash = "sha256-fEiMR0hHK84TtmAOFAA369Sq68i3/BBrsrde7VnnXHs=";
+      hash = "sha256-kEmy0e+dXIiSQee16XVY6wPaPywnrWD8hSr791/S1Ss=";
       # hash = lib.fakeHash;
       fetchSubmodules = true;
       deepClone = true;
