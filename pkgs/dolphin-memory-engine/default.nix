@@ -8,7 +8,7 @@
   copyDesktopItems,
   makeDesktopItem,
 }: let
-  tag = "2026.06.18";
+  tag = "2026.06.25";
 in
   stdenv.mkDerivation (
     finalAttrs: {
@@ -19,7 +19,7 @@ in
         owner = "aldelaro5";
         repo = "dolphin-memory-engine";
         tag = "${tag}";
-        hash = "sha256-CVGmqs8XgS8nE1eXHTY+tFl/LKaNLtYprFozcPfL69A=";
+        hash = "sha256-yKukMsRza0Odryu5O31IWgZDO1rWxDq8CP6OYZoMfSM=";
         fetchSubmodules = true;
         deepClone = true;
         postFetch = ''
