@@ -73,4 +73,4 @@ jobs:
         run: |
           # build ("${{ env.BRANCH_NAME }}" branch)
           set -euxo pipefail
-          om ci run .#packages -- --show-trace | xargs cachix push -j 2 -l 9 just-one-more-cache
+          om ci run .#packages -- --show-trace --max-jobs 1 | xargs cachix push -j 2 -l 9 just-one-more-cache
