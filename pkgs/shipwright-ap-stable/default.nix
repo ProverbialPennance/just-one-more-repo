@@ -116,7 +116,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "shipwright-ap-stable";
-    version = "Client_1.4.1";
+    version = "Client_1.4.2";
 
     src = fetchFromGitHub {
       #currently only on jeromkiller's fork
