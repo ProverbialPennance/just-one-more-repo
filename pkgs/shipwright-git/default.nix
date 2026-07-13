@@ -1,5 +1,5 @@
 {
-  generic-updater,
+  writeScript,
   stdenv,
   cmake,
   lsb-release,
@@ -121,7 +121,7 @@
   };
 in
   stdenv.mkDerivation (finalAttrs: {
-    pname = "shipwright";
+    pname = "shipwright-git";
     version = "reindeer-games-2025-1-unstable-2026-06-06";
     src = fetchFromGitHub {
       owner = "harbourmasters";
@@ -139,11 +139,11 @@ in
       '';
     };
 
-    passthru.updateScript = generic-updater {
-      extraArgs = [
-        "--version=branch=develop"
-      ];
-    };
+    passthru.updateScript = writeScript "update-shipwright-git" ''
+      #!/usr/bin/env nix-shell
+      #!nix-shell -i bash -p nix-update
+      nix-update ${finalAttrs.pname} --flake --version=branch=develop --version-regex='(\d\.\d\.\d-unstable-.*)'
+    '';
 
     cmakeBuildType =
       if withDebug
