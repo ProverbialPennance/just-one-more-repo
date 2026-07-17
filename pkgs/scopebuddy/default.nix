@@ -12,7 +12,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   version = "1.4.0";
 
   src = fetchFromGitHub {
-    owner = "HikariKnight";
+    owner = "OpenGamingCollective";
     repo = "ScopeBuddy";
     rev = "${finalAttrs.version}";
     sha256 = "sha256-1n1lZidbtDV9Lm8QKd1s35bOS6Uh8sI3KtBJZ+FwdxQ=";
