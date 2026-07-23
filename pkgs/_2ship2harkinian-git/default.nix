@@ -85,6 +85,13 @@
     ];
   };
 
+  prism = fetchFromGitHub {
+    owner = "KiritoDv";
+    repo = "prism-processor";
+    rev = "1de054450e7b3c5f777d2e3dfcb228ad120c329d";
+    hash = "sha256-5MlscqbKlUm4nYW+Obf5KlnUdtHK/xlDUc4wxr52ySM=";
+  };
+
   thread_pool = fetchFromGitHub {
     owner = "bshoshany";
     repo = "thread-pool";
@@ -118,14 +125,6 @@ in
     patches = [
       # remove fetching stb as we will patch our own
       ./0001-deps.patch
-      (replaceVars ./0002-lus-git-deps.patch {
-        prism_src = fetchFromGitHub {
-          owner = "KiritoDv";
-          repo = "prism-processor";
-          rev = "bbcbc7e3f890a5806b579361e7aa0336acd547e7";
-          hash = "sha256-jRPwO1Vub0cH12YMlME6kd8zGzKmcfIrIJZYpQJeOks=";
-        };
-      })
       (replaceVars ./0003-mm-git-deps.patch {
         dr_libs_src = fetchFromGitHub {
           owner = "mackron";
@@ -173,6 +172,7 @@ in
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMGUI" "${imgui'}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_LIBGFXD" "${libgfxd}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_STORMLIB" "${stormlib'}")
+      (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_PRISM" "${prism}")
       (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_THREADPOOL" "${thread_pool}")
     ];
 
