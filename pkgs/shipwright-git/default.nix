@@ -234,6 +234,9 @@ in
       cp ${stb_impl} ./stb/${stb_impl.name}
       substituteInPlace libultraship/cmake/dependencies/common.cmake \
         --replace-fail "\''${STB_DIR}" "$(readlink -f ./stb)"
+
+      substituteInPlace libultraship/src/ship/Context.cpp \
+        --replace-fail "GetInstance()" "GetRawInstance()"
     '';
 
     postPatch = ''
