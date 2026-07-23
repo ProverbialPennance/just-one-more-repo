@@ -69,8 +69,8 @@
   prism = fetchFromGitHub {
     owner = "KiritoDv";
     repo = "prism-processor";
-    rev = "bbcbc7e3f890a5806b579361e7aa0336acd547e7";
-    hash = "sha256-jRPwO1Vub0cH12YMlME6kd8zGzKmcfIrIJZYpQJeOks=";
+    rev = "1de054450e7b3c5f777d2e3dfcb228ad120c329d";
+    hash = "sha256-5MlscqbKlUm4nYW+Obf5KlnUdtHK/xlDUc4wxr52ySM=";
   };
 
   stb_impl = writeTextFile {
