@@ -51,8 +51,8 @@ jobs:
         run: |
           set -euxo pipefail
           FLAKE_JSON=$(nix flake show --json 2>/dev/null)
-          JQ_OUT=(jq --compact-output --arg keyName x86_64-linux '.packages.[$keyName]|keys' <(echo $FLAKE_JSON))
-          echo $JQ_OUT | awk '{print "packages="$1}' >> "$GITHUB_OUTPUT"
+          JQ_OUT=$(jq --compact-output --arg keyName x86_64-linux '.packages.[$keyName]|keys' < <(echo $FLAKE_JSON))
+          awk '{print "packages="$1}' < <(echo $JQ_OUT) >> "$GITHUB_OUTPUT"
 
   update:
     name: Update
