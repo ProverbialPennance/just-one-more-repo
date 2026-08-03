@@ -1,6 +1,7 @@
 {
   lib,
   generic-updater,
+  awk,
   perl,
   jq,
   stdenvNoCC,
@@ -33,8 +34,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   fixupPhase = ''
-    wrapProgram $out/bin/scopebuddy --prefix PATH : ${lib.makeBinPath [perl jq]}
-    wrapProgram $out/bin/scb --prefix PATH : ${lib.makeBinPath [perl jq]}
+    wrapProgram $out/bin/scopebuddy --prefix PATH : ${lib.makeBinPath [perl jq awk]}
+    wrapProgram $out/bin/scb --prefix PATH : ${lib.makeBinPath [perl jq awk]}
   '';
 
   meta = with lib; {
