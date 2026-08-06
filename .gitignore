@@ -2,3 +2,6 @@ result/
 /result*
 checkouts/
 logs/
+
+# local LSP stuff
+.cache/
