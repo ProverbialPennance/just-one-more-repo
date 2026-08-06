@@ -199,9 +199,6 @@ in
 
       substituteInPlace libultraship/cmake/dependencies/common.cmake \
             --replace-fail "\''${STB_DIR}" "$(readlink -f ./stb)"
-
-      substituteInPlace libultraship/src/ship/Context.cpp \
-            --replace-fail "GetInstance()" "GetRawInstance()"
     '';
 
     postBuild = ''
