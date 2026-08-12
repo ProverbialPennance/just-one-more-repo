@@ -23,7 +23,7 @@
   useMangoHud ? false,
   nvngxPath ? "",
 }: let
-  tag = "1.4.0.8";
+  tag = "1.4.0.9";
 in
   buildDotnetModule rec {
     pname = "xivlauncher-rb";
@@ -33,7 +33,7 @@ in
       owner = "rankynbass";
       repo = "XIVLauncher.Core";
       rev = "rb-v${tag}";
-      hash = "sha256-hZCuxGdaH+UuYK+pARocBDggE+pQ0WNJWfw+M96LFhY=";
+      hash = "sha256-kB2nZmLv/oF79J8USOJnOth6MvbZbE0eQuwYh705Ics=";
       fetchSubmodules = true;
     };
 
