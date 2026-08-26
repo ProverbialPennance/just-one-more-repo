@@ -15,6 +15,11 @@
     "hash": "sha256-Nb4ftf+RREzgiVOpc+xSxd4b+PiLGmFQM3okA/wGO54="
   },
   {
+    "pname": "DiscordRPCBridge-Wine",
+    "version": "1.0.0",
+    "hash": "sha256-mCNB08SxNlKU6DWtrPOV17GJMjLmRWBo644qSoUTkPg="
+  },
+  {
     "pname": "goaaats.Steamworks",
     "version": "2.3.4",
     "hash": "sha256-Wk9arQvVPPeMSgt8lL9rVRVkO1NrBNYzME4ZuOWcHc4="
