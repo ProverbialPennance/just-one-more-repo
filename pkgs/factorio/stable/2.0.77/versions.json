@@ -1,0 +1,14 @@
+{
+  "x86_64-linux": {
+    "headless": {
+      "experimental": {
+        "name": "factorio-headless_linux_2.0.77.tar.xz",
+        "needsAuth": false,
+        "sha256": "c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f",
+        "tarDirectory": "x64",
+        "url": "https://factorio.com/get-download/2.0.77/headless/linux64",
+        "version": "2.0.77"
+      }
+    }
+  }
+}
