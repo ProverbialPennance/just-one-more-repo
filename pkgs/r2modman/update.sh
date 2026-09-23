@@ -22,7 +22,7 @@ src=$(nix-build --no-link $PWD -A r2modman.src)
 WORKDIR=$(mktemp -d)
 cp --recursive --no-preserve=mode $src/* $WORKDIR
 pushd $WORKDIR
-yarn-berry-fetcher missing-hashes yarn.lock >$PACKAGE_DIR/missing-hashes.json
+# yarn-berry-fetcher missing-hashes yarn.lock >$PACKAGE_DIR/missing-hashes.json
 popd
 
 nix-update r2modman --version skip || true
