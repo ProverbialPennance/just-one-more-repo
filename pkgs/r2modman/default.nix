@@ -16,20 +16,20 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "r2modman";
-    version = "3.2.19";
+    version = "3.2.20";
 
     src = fetchFromGitHub {
       owner = "ebkr";
       repo = "r2modmanPlus";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-ZPwGAoYy3Q69QVgxictibydZPugEMdz4hpx52d7ScCU=";
+      hash = "sha256-7zigBXnHiUYL9matqT6da5c+cXwQH8CdqpSrsrOURYE=";
     };
 
     pnpmDeps = fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
       inherit pnpm;
       fetcherVersion = 4;
-      hash = "sha256-S32i+QGY6MWw+N9XS4A2K2HRfN1W6Wmf2PfaCfXDwNc=";
+      hash = "sha256-xfafdQkOTLHUPeFxKn3fujZrEmK+AJ2TN85eHAvilj8=";
     };
 
     patches = [
@@ -122,10 +122,10 @@ in
       homepage = "https://github.com/ebkr/r2modmanPlus";
       license = lib.licenses.mit;
       mainProgram = "r2modman";
-      maintainers = with lib.maintainers; [
-        huantian
-        hythera
-      ];
+      # maintainers = with lib.maintainers; [
+      #   huantian
+      #   hythera
+      # ];
       inherit (electron.meta) platforms;
     };
   })
