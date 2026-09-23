@@ -5,10 +5,8 @@
   dart-sass,
   electron,
   fetchFromGitHub,
-  fetchurl,
   makeDesktopItem,
   makeWrapper,
-  writeScript,
   nodejs,
   yarn-berry,
 }:
@@ -33,8 +31,15 @@ stdenv.mkDerivation (finalAttrs: {
     # Make it possible to launch Steam games from r2modman.
     ./steam-launch-fix.patch
 
+    # Remove after upstream updates to Yarn 4.14
+    # https://github.com/ebkr/r2modmanPlus/blob/develop/package.json#L118
     ./yarn-4.14-support.patch
+
+    # Fix copying of wrapper files to game directory
+    ./wrapper-fix.patch
   ];
+
+  __darwinAllowLocalNetworking = true;
 
   nativeBuildInputs = [
     copyDesktopItems
@@ -49,6 +54,11 @@ stdenv.mkDerivation (finalAttrs: {
     # Required, as the build process won't have network access. Uses the wrapped electron binary instead.
     ELECTRON_SKIP_BINARY_DOWNLOAD = true;
   };
+
+  postPatch = ''
+    # Hide update banner
+    echo "<template></template>" > src/components/banner/ManagerUpdateBanner.vue
+  '';
 
   buildPhase = ''
     runHook preBuild
@@ -102,32 +112,7 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
-  passthru.updateScript = writeScript "update-r2modman" ''
-    #!/usr/bin/env nix-shell
-    #!nix-shell -i bash -p curl gnused jq nix bash coreutils nix-update yarn-berry.yarn-berry-fetcher
-
-    set -eou pipefail
-
-    PACKAGE_DIR=$(realpath $(dirname "$0"))
-
-    LATEST_VERSION=$(curl -sL https://api.github.com/repos/ebkr/r2modmanPlus/releases/latest | jq --raw-output .tag_name)
-    LATEST_VERSION=$(echo "$LATEST_VERSION" | sed 's/^v//')
-
-    CURRENT_VERSION=$(nix-instantiate --eval --expr "with import $PWD/. {}; r2modman.version" | tr -d '"')
-    if [[ "$CURRENT_VERSION" != "$LATEST_VERSION" ]]; then
-        nix-update r2modman --version "$LATEST_VERSION" || true
-
-        export HOME=$(mktemp -d)
-        export REPO_DIR=$PWD
-        src=$(nix-build --no-link $PWD -A r2modman.src)
-        WORKDIR=$(mktemp -d)
-        cp --recursive --no-preserve=mode $src/* $WORKDIR
-        pushd $WORKDIR
-        yarn-berry-fetcher missing-hashes yarn.lock >$REPO_DIR/pkgs/r2modman/missing-hashes.json
-        popd
-        nix-update r2modman --version skip || true
-    fi
-  '';
+  passthru.updateScript = ./update.sh;
 
   meta = {
     changelog = "https://github.com/ebkr/r2modmanPlus/releases/tag/v${finalAttrs.version}";
@@ -137,6 +122,7 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "r2modman";
     # maintainers = with lib.maintainers; [
     #   huantian
+    #   hythera
     # ];
     inherit (electron.meta) platforms;
   };
