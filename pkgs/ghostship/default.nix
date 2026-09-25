@@ -99,13 +99,13 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "ghostship";
-    version = "1.0.2";
+    version = "3.0.0";
 
     src = fetchFromGitHub {
       owner = "HarbourMasters";
       repo = "Ghostship";
       tag = "${finalAttrs.version}";
-      hash = "sha256-4QIfgBaN6HhPfkP9kRXf14whY5ZaCrJOXEASTnmWSgI=";
+      hash = "sha256-6t/QPDSiHOcqCxzv7aN8ddhdJmebW+NFtpTY3l4DnXU=";
       fetchSubmodules = true;
       deepClone = true;
       postFetch = ''
