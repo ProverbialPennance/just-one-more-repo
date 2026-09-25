@@ -24,7 +24,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: [X64, Linux]
+    runs-on: [X64, Linux, ubuntu-latest]
     env:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
