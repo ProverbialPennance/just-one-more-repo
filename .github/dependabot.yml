@@ -6,3 +6,9 @@ updates:
       interval: daily
     commit-message:
       prefix: "ci"
+  - package-ecosystem: "nix"
+    directory: "/"
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: "nix"
